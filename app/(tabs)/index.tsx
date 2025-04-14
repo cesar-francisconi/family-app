@@ -1,3 +1,4 @@
+import { Colors } from '@/constants/Colors';
 import {
   StyleSheet,
   Text,
@@ -19,5 +20,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: Colors.primary.main,
   },
 });
