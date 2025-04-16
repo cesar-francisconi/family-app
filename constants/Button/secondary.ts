@@ -42,6 +42,10 @@ export type ButtonTokens = {
     };
 };
 
+// set button size
+const mediumHeight = 50;
+const smallHeight = 32;
+
 export const secondary: ButtonTokens = {
     variant: {
         filled: {
@@ -53,7 +57,7 @@ export const secondary: ButtonTokens = {
                             background: {
                                 backgroundColor: Colors.inverseSurface.main,
                                 paddingHorizontal: Spacing["2xl"],
-                                height: 44,
+                                height: mediumHeight,
                                 borderRadius: BorderRadius["2xl"],
                                 gap: Spacing['lg'],
                             },
@@ -67,7 +71,7 @@ export const secondary: ButtonTokens = {
                             background: {
                                 backgroundColor: Colors.inverseSurface.main,
                                 paddingHorizontal: Spacing["2xl"],
-                                height: 44,
+                                height: mediumHeight,
                                 borderRadius: BorderRadius['sm'],
                                 gap: Spacing['lg'],
                             },
@@ -81,7 +85,7 @@ export const secondary: ButtonTokens = {
                             background: {
                                 backgroundColor: Colors.inverseSurface.main,
                                 paddingHorizontal: Spacing["2xl"],
-                                height: 44,
+                                height: mediumHeight,
                                 borderRadius: BorderRadius['xs'],
                                 gap: Spacing['lg'],
                             },
@@ -95,7 +99,7 @@ export const secondary: ButtonTokens = {
                             background: {
                                 backgroundColor: Colors.inverseSurface.main,
                                 paddingHorizontal: Spacing["2xl"],
-                                height: 44,
+                                height: mediumHeight,
                                 borderRadius: BorderRadius['none'],
                                 gap: Spacing['lg'],
                             },
@@ -115,7 +119,7 @@ export const secondary: ButtonTokens = {
                             background: {
                                 backgroundColor: Colors.inverseSurface.main,
                                 paddingHorizontal: Spacing['xl'],
-                                height: 32,
+                                height: smallHeight,
                                 borderRadius: BorderRadius["2xl"],
                                 gap: Spacing['md'],
                             },
@@ -129,7 +133,7 @@ export const secondary: ButtonTokens = {
                             background: {
                                 backgroundColor: Colors.inverseSurface.main,
                                 paddingHorizontal: Spacing['xl'],
-                                height: 32,
+                                height: smallHeight,
                                 borderRadius: BorderRadius['sm'],
                                 gap: Spacing['md'],
                             },
@@ -143,7 +147,7 @@ export const secondary: ButtonTokens = {
                             background: {
                                 backgroundColor: Colors.inverseSurface.main,
                                 paddingHorizontal: Spacing['xl'],
-                                height: 32,
+                                height: smallHeight,
                                 borderRadius: BorderRadius['xs'],
                                 gap: Spacing['md'],
                             },
@@ -157,7 +161,7 @@ export const secondary: ButtonTokens = {
                             background: {
                                 backgroundColor: Colors.inverseSurface.main,
                                 paddingHorizontal: Spacing['xl'],
-                                height: 32,
+                                height: smallHeight,
                                 borderRadius: BorderRadius['none'],
                                 gap: Spacing['md'],
                             },
@@ -180,7 +184,7 @@ export const secondary: ButtonTokens = {
                             background: {
                                 backgroundColor: 'transparent',
                                 paddingHorizontal: Spacing["2xl"],
-                                height: 44,
+                                height: mediumHeight,
                                 borderRadius: BorderRadius["2xl"],
                                 gap: Spacing['lg'],
                             },
@@ -197,7 +201,7 @@ export const secondary: ButtonTokens = {
                             background: {
                                 backgroundColor: 'transparent',
                                 paddingHorizontal: Spacing["2xl"],
-                                height: 44,
+                                height: mediumHeight,
                                 borderRadius: BorderRadius['sm'],
                                 gap: Spacing['lg'],
                             },
@@ -214,7 +218,7 @@ export const secondary: ButtonTokens = {
                             background: {
                                 backgroundColor: 'transparent',
                                 paddingHorizontal: Spacing["2xl"],
-                                height: 44,
+                                height: mediumHeight,
                                 borderRadius: BorderRadius['xs'],
                                 gap: Spacing['lg'],
                             },
@@ -231,7 +235,7 @@ export const secondary: ButtonTokens = {
                             background: {
                                 backgroundColor: 'transparent',
                                 paddingHorizontal: Spacing["2xl"],
-                                height: 44,
+                                height: mediumHeight,
                                 borderRadius: BorderRadius['none'],
                                 gap: Spacing['lg'],
                             },
@@ -254,7 +258,7 @@ export const secondary: ButtonTokens = {
                             background: {
                                 backgroundColor: 'transparent',
                                 paddingHorizontal: Spacing['xl'],
-                                height: 32,
+                                height: smallHeight,
                                 borderRadius: BorderRadius["2xl"],
                                 gap: Spacing['md'],
                             },
@@ -271,7 +275,7 @@ export const secondary: ButtonTokens = {
                             background: {
                                 backgroundColor: 'transparent',
                                 paddingHorizontal: Spacing['xl'],
-                                height: 32,
+                                height: smallHeight,
                                 borderRadius: BorderRadius['sm'],
                                 gap: Spacing['md'],
                             },
@@ -288,7 +292,7 @@ export const secondary: ButtonTokens = {
                             background: {
                                 backgroundColor: 'transparent',
                                 paddingHorizontal: Spacing['xl'],
-                                height: 32,
+                                height: smallHeight,
                                 borderRadius: BorderRadius['xs'],
                                 gap: Spacing['md'],
                             },
@@ -305,7 +309,7 @@ export const secondary: ButtonTokens = {
                             background: {
                                 backgroundColor: 'transparent',
                                 paddingHorizontal: Spacing['xl'],
-                                height: 32,
+                                height: smallHeight,
                                 borderRadius: BorderRadius['none'],
                                 gap: Spacing['md'],
                             },
