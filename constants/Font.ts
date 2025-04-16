@@ -97,13 +97,13 @@ export const Font: FontProps = {
     label: {
         extraLarge: {
             fontFamily: 'Roboto_400Regular',
-            fontSize: 14,
+            fontSize: 16,
             lineHeight: 18,
             letterSpacing: 0.1,
         },
         extraLargeProminent: {
             fontFamily: 'Roboto_600SemiBold',
-            fontSize: 14,
+            fontSize: 16,
             lineHeight: 18,
             letterSpacing: 0.1,
         },
