@@ -1,23 +1,14 @@
-import {
-    Entypo,
-    MaterialCommunityIcons,
-    Feather,
-    Ionicons,
-    MaterialIcons,
-    AntDesign,
-    Octicons,
-    Fontisto,
-} from "@expo/vector-icons";
+import * as VectorIcons from "@expo/vector-icons";
 
 export const iconMap = {
-    AntDesign,
-    Entypo,
-    Feather,
-    Fontisto,
-    Ionicons,
-    MaterialCommunityIcons,
-    MaterialIcons,
-    Octicons,
+    AntDesign: VectorIcons.AntDesign,
+    Entypo: VectorIcons.Entypo,
+    Feather: VectorIcons.Feather,
+    Fontisto: VectorIcons.Fontisto,
+    Ionicons: VectorIcons.Ionicons,
+    MaterialCommunityIcons: VectorIcons.MaterialCommunityIcons,
+    MaterialIcons: VectorIcons.MaterialIcons,
+    Octicons: VectorIcons.Octicons,
 };
 
 const iconNames = {
@@ -34,7 +25,10 @@ const iconNames = {
 type IconNames = typeof iconNames;
 
 export type glyphMap = {
-    [K in keyof IconNames]: Extract<keyof typeof import("@expo/vector-icons")[K]['glyphMap'], IconNames[K][number]>
+    [K in keyof IconNames]: Extract<
+        keyof (typeof VectorIcons)[K]["glyphMap"],
+        IconNames[K][number]
+    >
 };
 
 export type IconFontName = keyof glyphMap;
@@ -44,12 +38,4 @@ export type IconProps<K extends IconFontName = IconFontName> = {
     icon: glyphMap[K];
     size?: 'large' | 'medium' | 'small' | 'extraSmall';
     color?: string;
-};
-
-export type IconComponentMap = {
-    [K in IconFontName]: React.ComponentType<{
-        name: glyphMap[K];
-        size?: number;
-        color?: string;
-    }>;
 };
