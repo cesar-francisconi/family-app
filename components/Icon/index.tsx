@@ -21,7 +21,7 @@ export function Icon<K extends IconFontName>({
         extraSmall: 12,
     } as const;
 
-    const resolvedSize = sizeMap[size as keyof typeof sizeMap] ?? sizeMap.large;
+    const resolvedSize = sizeMap[size] ?? sizeMap.large;
 
     return <IconComponent name={icon} size={resolvedSize} color={color} />;
 }
