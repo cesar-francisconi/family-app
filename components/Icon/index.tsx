@@ -15,7 +15,7 @@ export function Icon<K extends IconFontName>({
     }>;
 
     const sizeMap = {
-        large: 32,
+        large: 38,
         medium: 22,
         small: 16,
         extraSmall: 12,
