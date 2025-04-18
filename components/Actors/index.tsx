@@ -1,6 +1,7 @@
 import {
     FlatList,
     Text,
+    TouchableOpacity,
     View,
 } from 'react-native';
 import { ActorsCardProps } from './types';
@@ -10,7 +11,7 @@ import { ActorCard } from '../ActorCard';
 export function Actors(props: ActorsCardProps) {
 
     const {
-        actors,
+        data,
         title = 'Actors',
         showTitle = true,
         actorCardStroke,
@@ -37,16 +38,20 @@ export function Actors(props: ActorsCardProps) {
                 contentContainerStyle={styles.contentContainerStyle}
                 style={styles.container}
                 showsHorizontalScrollIndicator
-                data={actors}
+                data={data}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => {
                     return (
-                        <ActorCard
-                            name={item.name}
-                            imageUrl={item.imageUrl}
-                            {...actorCardProps}
-                        />
+                        <TouchableOpacity
+                            onPress={() => {
 
+                            }}
+                        >
+                            <ActorCard
+                                {...item}
+                                {...actorCardProps}
+                            />
+                        </TouchableOpacity>
                     );
                 }}
             />

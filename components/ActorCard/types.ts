@@ -1,4 +1,5 @@
 export type ActorCardProps = {
+    id: string;
     name: string;
     imageUrl: string;
     stroke?: boolean;

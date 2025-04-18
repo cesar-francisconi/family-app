@@ -1,11 +1,7 @@
-type Actors = {
-    id: string;
-    name: string;
-    imageUrl: string;
-}
+import { ActorCardProps } from "../ActorCard/types";
 
 export type ActorsCardProps = {
-    actors: Actors[];
+    data: ActorCardProps[];
     title?: string;
     showTitle?: boolean;
     actorCardStroke?: boolean;
