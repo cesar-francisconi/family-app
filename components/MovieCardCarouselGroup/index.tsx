@@ -8,7 +8,12 @@ import { MovieCardCarousel } from '../MovieCardCarousel/Index';
 
 export function MovieCardCarouselGroup(props: MovieCardCarouselGroupProps) {
 
-    const { movieCardCarousels } = props;
+    const { movieCardCarousels, showMovieCardTitle, movieCardCarouselButtonTitle } = props;
+
+    const movieCardCarouselProps = {
+        showMovieCardTitle,
+        buttonTitle: movieCardCarouselButtonTitle,
+    };
 
     return (
         <View style={styles.mainContainer}>
@@ -19,7 +24,7 @@ export function MovieCardCarouselGroup(props: MovieCardCarouselGroupProps) {
                     return (
                         <MovieCardCarousel
                             {...item}
-                            buttonTitle='Ver mais'
+                            {...movieCardCarouselProps}
                         />
                     );
                 }}
