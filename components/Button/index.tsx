@@ -9,7 +9,7 @@ import { ButtonProps } from "./types";
 import { getButtonToken } from "@/helpers/buttonHelper";
 import { Colors } from "@/constants/Colors";
 
-export function Button(props: ButtonProps & TouchableOpacityProps) {
+export function Button(props: ButtonProps & Omit<TouchableOpacityProps, 'style'>) {
 
     const { title, iconLeft, iconRight, disabled } = props;
 
@@ -19,20 +19,23 @@ export function Button(props: ButtonProps & TouchableOpacityProps) {
     const border = StyleSheet.flatten(token.border);
     const text = StyleSheet.flatten(token.text);
 
+    const backgroundColorButton = disabled ? Colors.disabled.background : background.backgroundColor;
+    const textColor = disabled ? Colors.disabled.text : text.color;
+
     return (
         <TouchableOpacity
+            {...props}
             style={[{
                 ...background,
-                backgroundColor: disabled ? Colors.disabled.background : background.backgroundColor,
+                backgroundColor: backgroundColorButton,
                 ...border,
             }, styles.button]}
-            {...props}
         >
             {iconLeft}
             <Text
                 style={[{
                     ...text,
-                    color: disabled ? Colors.disabled.text : text.color,
+                    color: textColor,
                 }, styles.title]}
             >
                 {title}
