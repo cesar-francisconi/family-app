@@ -23,11 +23,13 @@ export function MovieCard(props: MovieCardProps) {
         small: BorderRadius.xs,
     } as const;
 
+    const movieCardBorderRadius = borderRadiusMap[borderRadius];
+
     return (
         <View style={styles.container}>
             <Image
                 style={[styles.image, {
-                    borderRadius: borderRadiusMap[borderRadius],
+                    borderRadius: movieCardBorderRadius,
                 }]}
                 src={imageUrl}
             />
