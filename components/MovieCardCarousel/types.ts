@@ -1,8 +1,9 @@
+import { ButtonProps } from "../Button/types";
 import { MovieCardProps } from "../MovieCard/types";
 
 export type MovieCardCarouselProps = {
     category?: string;
-    buttonTitle?: string;
+    buttonTitle?: ButtonProps['title'];
     movieCards: MovieCardProps[];
-    showMovieCardTitle?: boolean;
+    showMovieCardTitle?: MovieCardProps['showTitle'];
 };
