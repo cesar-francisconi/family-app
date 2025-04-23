@@ -1,6 +1,7 @@
 import {
     Image,
     View,
+    ViewProps,
 } from 'react-native';
 import { ActorCardProps } from './types';
 import { styles } from './styles';
@@ -25,12 +26,17 @@ export function ActorCard(props: ActorCardProps) {
         small: BorderRadius.xs,
     } as const;
 
+    const actorCardStroke = stroke ? 0.5 : 0;
+    const actorCardStrokeColor = stroke ? Colors.outline.main : undefined;
+    const actorCardBorderRadius = borderRadiusMap[borderRadius];
+
     return (
         <View style={[styles.container, {
-            borderWidth: stroke ? 0.5 : 0,
-            borderColor: stroke ? Colors.outline.main : undefined,
-            borderRadius: borderRadiusMap[borderRadius],
-        }]}>
+            borderWidth: actorCardStroke,
+            borderColor: actorCardStrokeColor,
+            borderRadius: actorCardBorderRadius,
+        }]}
+        >
             <Image
                 style={styles.image}
                 src={imageUrl}
