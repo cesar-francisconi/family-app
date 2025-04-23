@@ -30,6 +30,8 @@ export function ListMovieCard(props: ListMovieCardProps) {
         small: BorderRadius.sm,
     } as const;
 
+    const MovieCardBorderRadius = borderRadiusMap[borderRadius];
+
     return (
         <View style={styles.mainContainer}>
             <View
@@ -37,7 +39,7 @@ export function ListMovieCard(props: ListMovieCardProps) {
             >
                 <Image
                     style={[styles.image, {
-                        borderRadius: borderRadiusMap[borderRadius],
+                        borderRadius: MovieCardBorderRadius,
                     }]}
                     src={imageUrl}
                 />
