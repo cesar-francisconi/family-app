@@ -1,15 +1,15 @@
-type DefaultAvatar = {
+export type DefaultAvatar = {
     stroke?: boolean;
     size?: 'large' | 'medium' | 'small';
 };
 
-type AvatarWithImage = DefaultAvatar & {
+export type AvatarWithImage = DefaultAvatar & {
     mode: 'image';
     imageUrl: string;
     initial?: never;
 };
 
-type AvatarNoImage = DefaultAvatar & {
+export type AvatarNoImage = DefaultAvatar & {
     mode: 'initial';
     imageUrl?: never;
     initial: string;
