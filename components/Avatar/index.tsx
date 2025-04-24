@@ -12,10 +12,10 @@ import { Font } from '@/constants/Font';
 export function Avatar(props: AvatarProps) {
 
     const {
-        mode,
-        initial = '',
-        imageUrl = '',
-        stroke = true,
+        mode = 'initial',
+        initial = 'i',
+        imageUrl,
+        stroke = false,
         size = 'large',
     } = props;
 
