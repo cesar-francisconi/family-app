@@ -13,12 +13,12 @@ import { Spacing } from '@/constants/Spacing';
 export function LabelAvatar(props: LabelAvatarProps & Pick<ViewProps, 'style'>) {
 
     const {
-        mode,
-        imageUrl,
-        initial,
+        avatarMode,
+        avatarImageUrl,
+        avatarInitial,
         size = 'large',
-        stroke,
-        label,
+        avatarStroke,
+        label = 'label',
         orientation = 'horizontal',
         style,
     } = props;
@@ -55,17 +55,17 @@ export function LabelAvatar(props: LabelAvatarProps & Pick<ViewProps, 'style'>) 
                 flexDirection: labelAvatarOrientation,
             }, style]}
         >
-            {mode === 'image' ? <Avatar
+            {avatarMode === 'image' ? <Avatar
                 mode={'image'}
-                imageUrl={imageUrl}
-                stroke={stroke}
+                imageUrl={avatarImageUrl}
+                stroke={avatarStroke}
                 size={size}
             />
                 :
                 <Avatar
                     mode={'initial'}
-                    initial={initial}
-                    stroke={stroke}
+                    initial={avatarInitial}
+                    stroke={avatarStroke}
                     size={size}
                 />
             }
