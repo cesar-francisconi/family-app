@@ -4,12 +4,7 @@ import { MovieCardListProps } from './types';
 import { MovieCardProps } from '../MovieCard/types';
 import { Spacing } from '@/constants/Spacing';
 import { MovieCardFlex } from '../MovieCardFlex';
-
-function chunkArray(array: MovieCardProps[], size: number): MovieCardProps[][] {
-    return Array.from({ length: Math.ceil(array.length / size) }, (_, i) =>
-        array.slice(i * size, i * size + size)
-    );
-}
+import { chunkArray } from '@/helpers/chunkArray';
 
 const screenWidth = Dimensions.get('window').width;
 
