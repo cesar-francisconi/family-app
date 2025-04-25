@@ -1,11 +1,12 @@
 import React from "react";
 import { iconMap, IconFontName, IconProps, glyphMap } from "./types";
+import { Colors } from "@/constants/Colors";
 
 export function Icon<K extends IconFontName>({
     name,
     icon,
     size = 'medium',
-    color = "white",
+    color = Colors.surface.on,
 }: IconProps<K>): React.ReactNode {
 
     const IconComponent = iconMap[name] as unknown as React.ComponentType<{
