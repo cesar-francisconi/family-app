@@ -12,7 +12,7 @@ export const iconMap = {
 };
 
 const iconNames = {
-    AntDesign: ['like2', 'dislike2', 'close', 'plus', 'google'],
+    AntDesign: ['like1', 'like2', 'dislike1', 'dislike2', 'close', 'plus', 'google'],
     Entypo: ['chevron-thin-left', 'chevron-thin-right', ''],
     Feather: ['lock', 'eye', 'eye-off', 'mic', 'more-vertical', 'user', 'folder', 'share-2', 'search', 'trash-2', 'cast', 'check-square', 'square'],
     Fontisto: ['clock'],
