@@ -11,7 +11,7 @@ import { Colors } from "@/constants/Colors";
 
 export function Button(props: ButtonProps & Omit<TouchableOpacityProps, 'style'>) {
 
-    const { title, iconLeft, iconRight, disabled } = props;
+    const { title, leftIcon, rightIcon, disabled } = props;
 
     const token = getButtonToken(props);
 
@@ -31,7 +31,8 @@ export function Button(props: ButtonProps & Omit<TouchableOpacityProps, 'style'>
                 ...border,
             }, styles.button]}
         >
-            {iconLeft}
+            {leftIcon}
+
             <Text
                 style={[{
                     ...text,
@@ -40,7 +41,8 @@ export function Button(props: ButtonProps & Omit<TouchableOpacityProps, 'style'>
             >
                 {title}
             </Text>
-            {iconRight}
+
+            {rightIcon}
         </TouchableOpacity>
     );
 }

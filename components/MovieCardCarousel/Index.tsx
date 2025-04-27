@@ -39,7 +39,7 @@ export function MovieCardCarousel(props: MovieCardCarouselProps) {
                     size='small'
                     variant='text'
                     title={buttonTitle}
-                    iconRight={<Icon
+                    rightIcon={<Icon
                         name='Entypo'
                         icon='chevron-thin-right'
                         color={Colors.primary.main}
