@@ -3,7 +3,7 @@ import { GestureResponderEvent } from "react-native";
 export type InputProps = {
     variant: 'filled' | 'outlined';
     state: 'default' | 'focus' | 'filled' | 'error' | 'validated' | 'disabled';
-    borderRadius: 'none' | 'small' | 'medium' | 'large';
+    borderRadius?: 'none' | 'small' | 'medium' | 'large';
     showLabel?: boolean;
     label?: string;
     leftIcon?: JSX.Element;
