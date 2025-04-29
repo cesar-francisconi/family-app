@@ -8,6 +8,7 @@ import { styles } from "./styles";
 import { ButtonProps } from "./types";
 import { getButtonToken } from "@/helpers/getButtonToken";
 import { Colors } from "@/constants/Colors";
+import React from "react";
 
 export function Button(props: ButtonProps & Omit<TouchableOpacityProps, 'style'>) {
 
@@ -31,7 +32,7 @@ export function Button(props: ButtonProps & Omit<TouchableOpacityProps, 'style'>
                 ...border,
             }, styles.button]}
         >
-            {leftIcon}
+            {leftIcon && React.cloneElement(leftIcon, { color: textColor, size: 'small' })}
 
             <Text
                 style={[{
@@ -42,7 +43,7 @@ export function Button(props: ButtonProps & Omit<TouchableOpacityProps, 'style'>
                 {title}
             </Text>
 
-            {rightIcon}
+            {rightIcon && React.cloneElement(rightIcon, { color: textColor, size: 'small' })}
         </TouchableOpacity>
     );
 }
