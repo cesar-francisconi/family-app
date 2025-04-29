@@ -12,14 +12,21 @@ import { LabelCheck } from '../LabelCheck';
 import { Colors } from '@/constants/Colors';
 import React from 'react';
 import { getInputToken } from '@/helpers/getInputToken';
+import { Icon } from '../Icon';
 
 export function Input(props: InputProps & TextInputProps) {
 
     const {
-        showLabel,
+        showLabel = true,
         label = 'Label',
-        leftIcon,
-        rightIcon,
+        leftIcon = <Icon
+            name='Entypo'
+            icon='chevron-thin-right'
+        />,
+        rightIcon = <Icon
+            name='Entypo'
+            icon='chevron-thin-right'
+        />,
         fnLeftIcon,
         fnRightIcon,
         showHelpMessageAndLabelCheck,
@@ -32,6 +39,7 @@ export function Input(props: InputProps & TextInputProps) {
         checkedLabelCheck = false,
         isError,
         errorMessage = 'Error Message',
+        placeholder = 'Placeholder',
     } = props;
 
     const { borderRadius, ...newProps } = props;
@@ -70,6 +78,7 @@ export function Input(props: InputProps & TextInputProps) {
 
                     <TextInput
                         placeholderTextColor={placeholderTextColor}
+                        placeholder={placeholder}
                         style={[styles.input, input]}
                         {...newProps}
                     />
