@@ -6,7 +6,7 @@ import {
 } from "react-native";
 import { styles } from "./styles";
 import { ButtonProps } from "./types";
-import { getButtonToken } from "@/helpers/buttonHelper";
+import { getButtonToken } from "@/helpers/getButtonToken";
 import { Colors } from "@/constants/Colors";
 
 export function Button(props: ButtonProps & Omit<TouchableOpacityProps, 'style'>) {
