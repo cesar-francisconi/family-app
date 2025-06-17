@@ -138,7 +138,7 @@ export default function Details(props: DetailsProps) {
                         buttonTitle='Mais'
                         withButton
                         withTitle={false}
-                        fnButton={() => debounce(() => route.push(`/(more)?movieId=${movieId}`))}
+                        fnButton={() => debounce(() => route.push(`/(details)/(more)?movieId=${movieId}`))}
                     />
 
                     <ActionButtons
