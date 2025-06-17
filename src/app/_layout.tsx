@@ -138,14 +138,6 @@ export default function RootLayoutNav() {
           />
 
           <Stack.Screen
-            name="(more)"
-            options={{
-              presentation: 'transparentModal',
-              animation: 'fade',
-            }}
-          />
-
-          <Stack.Screen
             name="notifications"
             options={{
 
