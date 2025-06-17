@@ -22,6 +22,14 @@ export default function RootLayoutNav() {
             />
 
             <Stack.Screen
+                name="(more)"
+                options={{
+                    presentation: 'transparentModal',
+                    animation: 'fade',
+                }}
+            />
+
+            <Stack.Screen
                 name="(comments)"
                 options={{
                     presentation: 'transparentModal',
