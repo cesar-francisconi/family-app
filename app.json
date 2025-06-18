@@ -37,8 +37,8 @@
         {
           "android": {
             "edgeToEdgeEnabled": true,
-            "compileSdkVersion": 34,
-            "targetSdkVersion": 33,
+            "compileSdkVersion": 35,
+            "targetSdkVersion": 35,
             "buildToolsVersion": "35.0.0"
           },
           "ios": {
