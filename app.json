@@ -21,7 +21,8 @@
         "foregroundImage": "./src/assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.anonymous.familyapp"
+      "package": "com.anonymous.familyapp",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "bundler": "metro",
