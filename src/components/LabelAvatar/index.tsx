@@ -14,11 +14,8 @@ import { AvatarProps } from '../Avatar/types';
 export function LabelAvatar(props: LabelAvatarProps & Pick<ViewProps, 'style'>) {
 
     const {
-        avatarMode,
-        avatarImageUrl,
-        avatarInitial,
+        avatarOptions,
         size = 'large',
-        withAvatarStroke = false,
         label = 'label',
         orientation = 'horizontal',
         style,
@@ -38,19 +35,20 @@ export function LabelAvatar(props: LabelAvatarProps & Pick<ViewProps, 'style'>) 
 
     let avatarProps: AvatarProps;
 
-    if (avatarMode === 'image') {
+    if (avatarOptions.mode === 'image') {
         avatarProps = {
             mode: 'image',
-            imageUrl: avatarImageUrl,
+            imageUrl: avatarOptions.imageUrl,
             size: size,
-            withStroke: withAvatarStroke,
+            withStroke: avatarOptions.withStroke,
         };
     } else {
         avatarProps = {
             mode: 'initial',
-            initial: getInitialsFromUsername(avatarInitial),
+            initial: getInitialsFromUsername(avatarOptions.initial),
             size: size,
-            withStroke: withAvatarStroke,
+            withStroke: avatarOptions.withStroke,
+            background: avatarOptions.background,
         };
     }
 
