@@ -1,13 +1,19 @@
 import {
     View,
 } from 'react-native';
-import { AddCommentWithAvatarGlobalSearchParams, AddCommentWithAvatarProps } from './types';
+import {
+    AddCommentWithAvatarGlobalSearchParams,
+    AddCommentWithAvatarProps,
+} from './types';
 import { styles } from './styles';
 import { AddComment } from '../AddComment';
 import { Avatar } from '../Avatar';
 import { AvatarProps } from '../Avatar/types';
 import { useDebounce } from '@/src/helpers/debounce';
-import { useGlobalSearchParams, useRouter } from 'expo-router';
+import {
+    useGlobalSearchParams,
+    useRouter,
+} from 'expo-router';
 
 export function AddCommentWithAvatar(props: AddCommentWithAvatarProps) {
 
