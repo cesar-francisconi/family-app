@@ -14,7 +14,7 @@ export function ActivityIndicator(props: ActivityIndicatorProps) {
 
     return (
         <View style={styles.container}>
-            <AIndicator color={Colors.link} size={32} />
+            <AIndicator color={Colors.primary.main} size={40} />
         </View>
     );
 }
