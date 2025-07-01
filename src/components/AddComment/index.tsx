@@ -1,7 +1,6 @@
 import {
     Text,
     TouchableOpacity,
-    ViewProps,
 } from 'react-native';
 import { styles } from './styles';
 import { AddCommentProps } from './types';
