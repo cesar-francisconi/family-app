@@ -40,7 +40,7 @@ export function AddCommentWithAvatar(props: AddCommentWithAvatarProps) {
 
             <AddComment
                 {...addCommentOptions}
-                fnAddComment={() => debounce(() => route.push(`/(details)/(comments)/comment?movieId=${movieId}&origin=isAddComment`))}
+                fnAddComment={() => debounce(() => route.push(`/(app)/(details)/(comments)/comment?movieId=${movieId}&origin=isAddComment`))}
             />
         </View>
     );
