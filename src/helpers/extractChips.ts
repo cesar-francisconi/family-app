@@ -1,4 +1,3 @@
-import { MovieGenreType } from "@/movie";
 import { getAllMovies } from "../hook/useMovie";
 
 export type FirstOption = string;
@@ -13,8 +12,10 @@ export type Filters = [
     QuartiaryOption[],
 ];
 
-export function extractChips(): Filters {
-    const movies = getAllMovies();
+export const extractChips = async (): Promise<Filters | null> => {
+    const movies = await getAllMovies();
+
+    if (!movies) return null;
 
     const atores = new Set<FirstOption>();
     const generos = new Set<SecondOption>();
