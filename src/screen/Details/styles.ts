@@ -1,4 +1,3 @@
-import { detailsMovieCardHeight } from "@/src/app/(details)";
 import { headerHeight } from "@/src/components/Header";
 import { Colors } from "@/src/constants/Colors";
 import { Spacing } from "@/src/constants/Spacing";
@@ -22,6 +21,12 @@ export const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderColor: Colors.surface.main,
         zIndex: 999,
+    },
+    linearGradient: {
+        position: 'absolute',
+        width: '100%',
+        zIndex: -1,
+        opacity: 0.6,
     },
     movieMainCard: {
         width: '100%',
