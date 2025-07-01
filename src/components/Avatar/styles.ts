@@ -10,7 +10,6 @@ export const styles = StyleSheet.create({
         borderColor: Colors.outline.main,
         borderRadius: BorderRadius["2xl"],
         overflow: 'hidden',
-        backgroundColor: Colors.inverseSurface.main,
         justifyContent: 'center',
         alignItems: 'center',
     },

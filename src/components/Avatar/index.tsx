@@ -7,6 +7,7 @@ import {
 import { AvatarProps } from './types';
 import { styles } from './styles';
 import { Font } from '@/src/constants/Font';
+import { Colors } from '@/src/constants/Colors';
 
 export function Avatar(props: AvatarProps) {
 
@@ -15,6 +16,7 @@ export function Avatar(props: AvatarProps) {
         initial = 'i',
         imageUrl,
         withStroke = false,
+        background,
         size = 'large',
     } = props;
 
@@ -41,6 +43,7 @@ export function Avatar(props: AvatarProps) {
                 width,
                 height,
                 borderWidth,
+                backgroundColor: background ?? Colors.surface.main,
             }]}>
             {mode === 'initial' ? <Text
                 style={[styles.initial, {
