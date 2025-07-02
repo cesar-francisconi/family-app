@@ -1,21 +1,21 @@
 export interface ToggleItemStatusProps {
   id: string;
-  checkFn: (id: string) => boolean;
+  checkFn: (id: string) => Promise<boolean>;
   addFn: (id: string) => void;
   removeFn: (id: string) => void;
 }
 
-export const toggleItemStatus = ({
+export const toggleItemStatus = async ({
   id,
   checkFn,
   addFn,
   removeFn,
-}: ToggleItemStatusProps): void => {
-  const exists = checkFn(id);
+}: ToggleItemStatusProps) => {
+  const exists = await checkFn(id);
 
   if (exists) {
-    removeFn(id);
+    await removeFn(id);
   } else {
-    addFn(id);
+    await addFn(id);
   };
 };
