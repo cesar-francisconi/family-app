@@ -1,4 +1,4 @@
-import { detailsMovieCardHeight } from "@/src/app/(details)";
+import { detailsMovieCardHeight } from "@/src/app/(app)/(details)";
 import { headerHeight } from "@/src/components/Header";
 import { BorderRadius } from "@/src/constants/BorderRadius";
 import { Colors } from "@/src/constants/Colors";
