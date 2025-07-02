@@ -39,10 +39,11 @@ export function MovieListItemGroup(props: MovieListItemGroupProps) {
                 renderItem={({ item, index }) => {
 
                     const withBorderBottom = index !== data.length - 1;
+                    
                     return (
                         <TouchableOpacity
                             activeOpacity={0.7}
-                            onPress={() => route.push(`/(details)?movieId=${item.id}`)}
+                            onPress={() => route.push(`/(app)/(details)?movieId=${item.id}`)}
                         >
                             <MovieListItem
                                 {...item}
