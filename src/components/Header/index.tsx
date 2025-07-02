@@ -11,7 +11,6 @@ import { Colors } from '@/src/constants/Colors';
 import { HeaderLeft } from '../HeaderLeft';
 import { HeaderRight } from '../HeaderRight';
 import { Icon } from '../Icon';
-import { getActorById } from '@/src/helpers/getActorById';
 import { getHeaderOptions } from '@/src/helpers/getHeaderOptions';
 import {
     HeaderGlobalSearchParams,
@@ -29,11 +28,9 @@ export function Header(props: HeaderProps) {
     const router = useRouter();
     const rawParams = useGlobalSearchParams<HeaderGlobalSearchParams>();
 
-    const actor = rawParams?.actorId ? getActorById(rawParams.actorId) : null;
-
     const params = {
         ...rawParams,
-        actorName: actor?.name ?? rawParams.actorName,
+        actorName: rawParams.actorName,
     };
 
     const {
