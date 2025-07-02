@@ -18,10 +18,10 @@ import {
     useUnauthorizedUserActionsSheet,
 } from '@/src/hook/useUnauthorizedUserActionsSheet';
 import { Easing } from 'react-native-reanimated';
-import { useBackHandlerForReplySheet } from '@/src/helpers/useBackHandlerForReplySheet';
-import { useBottomSheetBackdrop } from '@/src/helpers/renderBackdrop';
-import { useHandleSheetChange } from '@/src/helpers/useHandleSheetChange';
-import { useExpandBottomSheetOnOpen } from '@/src/helpers/useExpandBottomSheetOnOpen';
+import { useBackHandlerForReplySheet } from '@/src/hook/useBackHandlerForReplySheet';
+import { useHandleSheetChange } from '@/src/hook/useHandleSheetChange';
+import { useExpandBottomSheetOnOpen } from '@/src/hook/useExpandBottomSheetOnOpen';
+import { useBottomSheetBackdrop } from '../Backdrop';
 
 export const UnauthorizedUserActionsSheet = (props: UnauthorizedUserActionsSheetProps) => {
 
