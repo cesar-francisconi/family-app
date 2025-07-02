@@ -19,15 +19,14 @@ import {
     useCommentReplySheet,
 } from '@/src/hook/useCommentReplySheet';
 import { useGlobalSearchParams } from 'expo-router';
-import { useUser } from '@/src/hook/useUser';
 import { usePathName } from '@/src/hook/usePathname';
-import { submitCommentOrAnswer } from '@/src/helpers/submitUserComment';
-import { useBackHandlerForReplySheet } from '@/src/helpers/useBackHandlerForReplySheet';
-import { useBottomSheetBackdrop } from '@/src/helpers/renderBackdrop';
-import { useHandleSheetChange } from '@/src/helpers/useHandleSheetChange';
+import { submitCommentOrAnswer } from '@/src/helpers/submitCommentOrAnswer';
+import { useBackHandlerForReplySheet } from '@/src/hook/useBackHandlerForReplySheet';
+import { useHandleSheetChange } from '@/src/hook/useHandleSheetChange';
 import { Colors } from '@/src/constants/Colors';
 import { getButtonDisabled } from '@/src/helpers/getButtonDisabled';
-import { useExpandCommentReplyFieldBottomSheetOnOpen } from '@/src/helpers/useExpandCommentReplyFieldBottomSheetOnOpen';
+import { useExpandCommentReplyFieldBottomSheetOnOpen } from '@/src/hook/useExpandCommentReplyFieldBottomSheetOnOpen';
+import { useBottomSheetBackdrop } from '../Backdrop';
 
 export function CommentReplyFieldSheet(_: CommentReplyFieldSheetProps) {
 
@@ -41,10 +40,6 @@ export function CommentReplyFieldSheet(_: CommentReplyFieldSheetProps) {
     const commentReplySheetOptions = useCommentReplySheet((state) => state.options);
 
     const pathname = usePathName();
-
-    const username = useUser((state) => state.username);
-    const avatar = useUser((state) => state.avatar);
-    const userId = useUser((state) => state.id);
 
     useBackHandlerForReplySheet({
         isOpen: commentReplySheetOptions.isOpen,
@@ -114,9 +109,6 @@ export function CommentReplyFieldSheet(_: CommentReplyFieldSheetProps) {
                             movieId,
                             inputValue: inputValueTrim,
                             pathname,
-                            username,
-                            avatar,
-                            userId,
                             inputRef,
                             commentReplySheetOptions,
                             bottomSheetRef,
