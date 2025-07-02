@@ -66,7 +66,7 @@ export function MovieCardList(props: MovieCardListProps) {
                                 <MovieCardFlex
                                     key={movie.id}
                                     {...movie}
-                                    onPress={() => router.push(`/(details)?movieId=${movie.id}`)}
+                                    onPress={() => router.push(`/(app)/(details)?movieId=${movie.id}`)}
                                     style={{ width: cardWidth, marginRight: gap }}
                                     borderRadius={movieCardFlexBorderRadius}
                                     withTitle={movieCardFlexWithTitle}
