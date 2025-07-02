@@ -1,6 +1,9 @@
 import { parseMessage } from "@/src/helpers/parseMessage";
 import { getAnswerUsernamesByIds } from "@/src/hook/useMovie";
-import React from "react";
+import React, {
+    useEffect,
+    useState,
+} from "react";
 import { Text } from "react-native";
 import { ColoredMessageProps } from "./types";
 import { styles } from "./styles";
@@ -12,7 +15,17 @@ export function ColoredMessage(props: ColoredMessageProps) {
         message
     } = props;
 
-    const answerUsernames = getAnswerUsernamesByIds();
+    const [answerUsernames, setAnswerUsernames] = useState<string[] | null>();
+
+    useEffect(() => {
+        (async () => {
+            const answerUsernames = await getAnswerUsernamesByIds();
+
+            setAnswerUsernames(answerUsernames);
+        })();
+    }, []);
+
+    if (!answerUsernames) return;
 
     const segments = parseMessage(message, answerUsernames);
 
