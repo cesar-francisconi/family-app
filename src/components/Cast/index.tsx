@@ -41,7 +41,7 @@ export function Cast(props: CastProps) {
                     return (
                         <ActorCard
                             {...item}
-                            fnActorCardPress={() => route.push(`/actorDetails?actorId=${item.id}`)}
+                            fnActorCardPress={() => route.push(`/actorDetails?actorId=${item.id}&actorName=${item.name}`)}
                             {...actorCardOptions}
                             {...actorNameOptions}
                         />
