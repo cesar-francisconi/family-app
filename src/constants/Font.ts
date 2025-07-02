@@ -1,4 +1,7 @@
-import { StyleProp, TextStyle } from "react-native";
+import {
+    StyleProp,
+    TextStyle,
+} from "react-native";
 
 type FontSize =
     | 'extraLarge'
