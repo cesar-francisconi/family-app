@@ -17,11 +17,12 @@ export interface CastMember {
 export interface CommentAnswer {
     id: string;
     username: string;
+    background: string | null;
     userId: string,
     time: number; // em segundos
-    avatar: string;
+    avatar: string | null;
     likes: string[];
-    deslikes: string[];
+    dislikes: string[];
     answer: string;
     isEdit: boolean;
 }
@@ -29,12 +30,13 @@ export interface CommentAnswer {
 export interface Comment {
     id: string;
     username: string;
+    background: string | null;
     userId: string,
     time: number; // em segundos
-    avatar: string;
+    avatar: string | null;
     comment: string;
     likes: string[];
-    deslikes: string[];
+    dislikes: string[];
     answers: CommentAnswer[];
     isEdit: boolean;
 }
@@ -101,6 +103,7 @@ export const MOVIES: Movie[] = [
                 avatar: 'https://mdbcdn.b-cdn.net/img/new/avatars/2.webp',
                 isEdit: false,
                 comment: 'Esse filme é uma obra-prima da ficção científica!',
+                background: null,
                 likes: [
                     '5fa9dbce-00c4-49ff-867b-9dnsbnse5ff2',
                     '8e6c6f91-2c58-41c0-93f1-12a8d9d831c7',
@@ -114,7 +117,7 @@ export const MOVIES: Movie[] = [
                     '0b48d9c1-bc4d-4c5a-8823-97a4c5f9e8c7',
                     'b9f6a0b7-7a6f-4ec3-8495-e9b4b14cc410'
                 ],
-                deslikes: [
+                dislikes: [
                     'd72a9a1f-3c9f-4a5f-8e7a-1d6458dce2a1',
                     '9c34f822-5a8b-4b91-8312-02c41f2c49d4',
                     '01e75c0d-4e66-49b2-8998-2c4aa3c00fba',
@@ -145,8 +148,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'O Nolan nunca decepciona. Genial!',
+                        background: null,
                         isEdit: false,
                     },
                     {
@@ -167,8 +171,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'A parte do tempo passando mais devagar em outro planeta é insana!',
+                        background: null,
                         isEdit: false,
                     },
                     {
@@ -189,8 +194,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'A trilha sonora arrepia até hoje!',
+                        background: null,
                         isEdit: false,
                     }
                 ],
@@ -203,6 +209,7 @@ export const MOVIES: Movie[] = [
                 isEdit: false,
                 avatar: 'https://plus.unsplash.com/premium_photo-1689708721750-8a0e6dc14cee?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8bWFuJTIwYXZhdGFyfGVufDB8fDB8fHww',
                 comment: 'O final me deixou com muitas dúvidas. Alguém entendeu?',
+                background: null,
                 likes: [
                     '5fa9dbce-00c4-49ff-867b-9dnsbnse5ff2',
                     '8e6c6f91-2c58-41c0-93f1-12a8d9d831c7',
@@ -216,7 +223,7 @@ export const MOVIES: Movie[] = [
                     '0b48d9c1-bc4d-4c5a-8823-97a4c5f9e8c7',
                     'b9f6a0b7-7a6f-4ec3-8495-e9b4b14cc410'
                 ],
-                deslikes: [
+                dislikes: [
                     'd72a9a1f-3c9f-4a5f-8e7a-1d6458dce2a1',
                     '9c34f822-5a8b-4b91-8312-02c41f2c49d4',
                     '01e75c0d-4e66-49b2-8998-2c4aa3c00fba',
@@ -248,8 +255,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'Aquela parte do tesseract representa o tempo como dimensão física.',
+                        background: null,
                     },
                     {
                         id: '2f82cb33-4c21-4b2f-92de-ea01341ec6c6',
@@ -269,9 +277,10 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         isEdit: false,
                         answer: 'É tudo sobre o poder do amor e da gravidade. Meio abstrato, mas bonito.',
+                        background: null,
                     }
                 ],
             }
@@ -321,6 +330,7 @@ export const MOVIES: Movie[] = [
                 isEdit: false,
                 avatar: 'https://img.freepik.com/free-photo/portrait-hapy-young-smart-man-glasses-white-wall_231208-12206.jpg',
                 comment: 'Um clássico absoluto. Incrível do começo ao fim.',
+                background: null,
                 likes: [
                     '5fa9dbce-00c4-49ff-867b-9dnsbnse5ff2',
                     '8e6c6f91-2c58-41c0-93f1-12a8d9d831c7',
@@ -334,7 +344,7 @@ export const MOVIES: Movie[] = [
                     '0b48d9c1-bc4d-4c5a-8823-97a4c5f9e8c7',
                     'b9f6a0b7-7a6f-4ec3-8495-e9b4b14cc410'
                 ],
-                deslikes: [
+                dislikes: [
                     'd72a9a1f-3c9f-4a5f-8e7a-1d6458dce2a1',
                     '9c34f822-5a8b-4b91-8312-02c41f2c49d4',
                     '01e75c0d-4e66-49b2-8998-2c4aa3c00fba',
@@ -366,8 +376,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'A atuação do Marlon Brando é lendária.',
+                        background: null,
                     },
                     {
                         id: 'cb450634-b8f3-4073-a167-38ff76e3f1aa',
@@ -388,8 +399,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'Nunca farão outro filme como esse!',
+                        background: null,
                     },
                     {
                         id: '5ee90f44-e90f-4d10-becf-c94d3d928ddb',
@@ -410,8 +422,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'Me lembra muito a série "Família Soprano".',
+                        background: null,
                     }
                 ],
             },
@@ -423,6 +436,7 @@ export const MOVIES: Movie[] = [
                 isEdit: false,
                 avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YXZhdGFyfGVufDB8fDB8fHww',
                 comment: 'Achei meio lento, mas a história é poderosa.',
+                background: null,
                 likes: [
                     '5fa9dbce-00c4-49ff-867b-9dnsbnse5ff2',
                     '8e6c6f91-2c58-41c0-93f1-12a8d9d831c7',
@@ -436,7 +450,7 @@ export const MOVIES: Movie[] = [
                     '0b48d9c1-bc4d-4c5a-8823-97a4c5f9e8c7',
                     'b9f6a0b7-7a6f-4ec3-8495-e9b4b14cc410'
                 ],
-                deslikes: [
+                dislikes: [
                     'd72a9a1f-3c9f-4a5f-8e7a-1d6458dce2a1',
                     '9c34f822-5a8b-4b91-8312-02c41f2c49d4',
                     '01e75c0d-4e66-49b2-8998-2c4aa3c00fba',
@@ -468,8 +482,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'É o estilo da época. Mais contemplativo.',
+                        background: null,
                     },
                     {
                         id: 'e58b4823-6a46-4e10-a48f-0c6316c8e32f',
@@ -490,8 +505,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'Depois da primeira hora, tudo faz sentido.',
+                        background: null,
                     }
                 ],
             }
@@ -541,6 +557,7 @@ export const MOVIES: Movie[] = [
                 isEdit: false,
                 avatar: 'https://plus.unsplash.com/premium_photo-1689565611422-b2156cc65e47?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8bWFuJTIwYXZhdGFyfGVufDB8fDB8fHww',
                 comment: 'Uma das histórias mais inspiradoras que já vi. Emocionante do início ao fim.',
+                background: null,
                 likes: [
                     '5fa9dbce-00c4-49ff-867b-9dnsbnse5ff2',
                     '8e6c6f91-2c58-41c0-93f1-12a8d9d831c7',
@@ -554,7 +571,7 @@ export const MOVIES: Movie[] = [
                     '0b48d9c1-bc4d-4c5a-8823-97a4c5f9e8c7',
                     'b9f6a0b7-7a6f-4ec3-8495-e9b4b14cc410'
                 ],
-                deslikes: [
+                dislikes: [
                     'd72a9a1f-3c9f-4a5f-8e7a-1d6458dce2a1',
                     '9c34f822-5a8b-4b91-8312-02c41f2c49d4',
                     '01e75c0d-4e66-49b2-8998-2c4aa3c00fba',
@@ -586,8 +603,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'Esse filme é pura esperança. Atuações incríveis!',
+                        background: null,
                     },
                     {
                         id: '7842b95d-c37b-4044-bb5a-0eb4f15abafd',
@@ -608,8 +626,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'A narração do Morgan Freeman é simplesmente perfeita.',
+                        background: null,
                     }
                 ],
             },
@@ -621,6 +640,7 @@ export const MOVIES: Movie[] = [
                 isEdit: false,
                 avatar: 'https://images.givelively.org/nonprofits/929da3d4-5164-4705-ab4d-1a0fc58a98c0/campaigns/5865ae66-9f15-4b36-b53b-eb70fcbea9a4/fundraisers/7a3d091d-f4f5-4663-94f2-3c9db5f5f755/processed_1ef2f48db49844a3a402b0f70ddcdf8785ecce8d4d88dbe879d887c46f30a65a_logo.png',
                 comment: 'A trilha sonora e os detalhes da fuga são geniais.',
+                background: null,
                 likes: [
                     '5fa9dbce-00c4-49ff-867b-9dnsbnse5ff2',
                     '8e6c6f91-2c58-41c0-93f1-12a8d9d831c7',
@@ -634,7 +654,7 @@ export const MOVIES: Movie[] = [
                     '0b48d9c1-bc4d-4c5a-8823-97a4c5f9e8c7',
                     'b9f6a0b7-7a6f-4ec3-8495-e9b4b14cc410'
                 ],
-                deslikes: [
+                dislikes: [
                     'd72a9a1f-3c9f-4a5f-8e7a-1d6458dce2a1',
                     '9c34f822-5a8b-4b91-8312-02c41f2c49d4',
                     '01e75c0d-4e66-49b2-8998-2c4aa3c00fba',
@@ -666,8 +686,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'Você percebeu como ele usou o cartaz da Rita Hayworth? Brilhante!',
+                        background: null,
                     }
                 ],
             }
@@ -717,6 +738,7 @@ export const MOVIES: Movie[] = [
                 isEdit: false,
                 avatar: 'https://i.pinimg.com/736x/3c/b7/f2/3cb7f2e2f6dc5df7014a22f4aeeaf64c.jpg',
                 comment: 'A atuação do Heath Ledger é simplesmente lendária!',
+                background: null,
                 likes: [
                     '5fa9dbce-00c4-49ff-867b-9dnsbnse5ff2',
                     '8e6c6f91-2c58-41c0-93f1-12a8d9d831c7',
@@ -730,7 +752,7 @@ export const MOVIES: Movie[] = [
                     '0b48d9c1-bc4d-4c5a-8823-97a4c5f9e8c7',
                     'b9f6a0b7-7a6f-4ec3-8495-e9b4b14cc410'
                 ],
-                deslikes: [
+                dislikes: [
                     'd72a9a1f-3c9f-4a5f-8e7a-1d6458dce2a1',
                     '9c34f822-5a8b-4b91-8312-02c41f2c49d4',
                     '01e75c0d-4e66-49b2-8998-2c4aa3c00fba',
@@ -762,8 +784,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'Ele redefiniu o Coringa para sempre.',
+                        background: null,
                     },
                     {
                         id: '6b90f1be-78cb-4e3d-a950-928a4df7a2bc',
@@ -784,8 +807,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'A cena do lápis é insana!',
+                        background: null,
                     }
                 ],
             },
@@ -797,6 +821,7 @@ export const MOVIES: Movie[] = [
                 isEdit: false,
                 avatar: 'https://user-api-prod.s3.amazonaws.com/users/1ed4d0fb-d05a-40cb-af06-553fcc2ec393/resized-300x300.jpeg',
                 comment: 'Filme perfeito do início ao fim. Nolan sabe o que faz!',
+                background: null,
                 likes: [
                     '5fa9dbce-00c4-49ff-867b-9dnsbnse5ff2',
                     '8e6c6f91-2c58-41c0-93f1-12a8d9d831c7',
@@ -810,7 +835,7 @@ export const MOVIES: Movie[] = [
                     '0b48d9c1-bc4d-4c5a-8823-97a4c5f9e8c7',
                     'b9f6a0b7-7a6f-4ec3-8495-e9b4b14cc410'
                 ],
-                deslikes: [
+                dislikes: [
                     'd72a9a1f-3c9f-4a5f-8e7a-1d6458dce2a1',
                     '9c34f822-5a8b-4b91-8312-02c41f2c49d4',
                     '01e75c0d-4e66-49b2-8998-2c4aa3c00fba',
@@ -842,8 +867,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'Fotografia, roteiro e trilha sonora impecáveis.',
+                        background: null,
                     }
                 ],
             }
@@ -893,6 +919,7 @@ export const MOVIES: Movie[] = [
                 isEdit: false,
                 avatar: 'https://lh3.googleusercontent.com/a-/AOh14GipxnZsst7kPmkj3PbCTWcZtYiioITJjpfiv-5i8A4',
                 comment: 'A mistura de comédia com temas militares é hilária! Adorei o tom absurdo do filme.',
+                background: null,
                 likes: [
                     '5fa9dbce-00c4-49ff-867b-9dnsbnse5ff2',
                     '8e6c6f91-2c58-41c0-93f1-12a8d9d831c7',
@@ -906,7 +933,7 @@ export const MOVIES: Movie[] = [
                     '0b48d9c1-bc4d-4c5a-8823-97a4c5f9e8c7',
                     'b9f6a0b7-7a6f-4ec3-8495-e9b4b14cc410'
                 ],
-                deslikes: [
+                dislikes: [
                     'd72a9a1f-3c9f-4a5f-8e7a-1d6458dce2a1',
                     '9c34f822-5a8b-4b91-8312-02c41f2c49d4',
                     '01e75c0d-4e66-49b2-8998-2c4aa3c00fba',
@@ -938,8 +965,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'O George Clooney está sensacional, ele tem o timing perfeito para comédia.',
+                        background: null,
                     },
                     {
                         id: '4d5dcbb2-fc69-45a0-a002-e24cdd5de38e',
@@ -960,8 +988,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'Os temas militares e os experimentos são tão bizarros que tornam o filme ainda mais interessante.',
+                        background: null,
                     }
                 ],
             },
@@ -973,6 +1002,7 @@ export const MOVIES: Movie[] = [
                 isEdit: false,
                 avatar: 'https://d1iyvy95qprisd.cloudfront.net/avatars-md/831a928a-1aef-47ac-9531-1591aaf11e19.webp',
                 comment: 'Um filme que mistura ficção com um fundo de crítica à guerra e ao absurdo de certos treinamentos militares.',
+                background: null,
                 likes: [
                     '5fa9dbce-00c4-49ff-867b-9dnsbnse5ff2',
                     '8e6c6f91-2c58-41c0-93f1-12a8d9d831c7',
@@ -986,7 +1016,7 @@ export const MOVIES: Movie[] = [
                     '0b48d9c1-bc4d-4c5a-8823-97a4c5f9e8c7',
                     'b9f6a0b7-7a6f-4ec3-8495-e9b4b14cc410'
                 ],
-                deslikes: [
+                dislikes: [
                     'd72a9a1f-3c9f-4a5f-8e7a-1d6458dce2a1',
                     '9c34f822-5a8b-4b91-8312-02c41f2c49d4',
                     '01e75c0d-4e66-49b2-8998-2c4aa3c00fba',
@@ -1018,8 +1048,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'É uma sátira interessante sobre os limites do que pode ser chamado de "treinamento militar".',
+                        background: null,
                     }
                 ],
             }
@@ -1079,6 +1110,7 @@ export const MOVIES: Movie[] = [
                 isEdit: false,
                 avatar: 'https://untitledui.com/images/avatars/lori-bryson',
                 comment: 'Uma obra-prima. O impacto emocional desse filme é indescritível. Uma história de coragem e humanidade.',
+                background: null,
                 likes: [
                     '5fa9dbce-00c4-49ff-867b-9dnsbnse5ff2',
                     '8e6c6f91-2c58-41c0-93f1-12a8d9d831c7',
@@ -1092,7 +1124,7 @@ export const MOVIES: Movie[] = [
                     '0b48d9c1-bc4d-4c5a-8823-97a4c5f9e8c7',
                     'b9f6a0b7-7a6f-4ec3-8495-e9b4b14cc410'
                 ],
-                deslikes: [
+                dislikes: [
                     'd72a9a1f-3c9f-4a5f-8e7a-1d6458dce2a1',
                     '9c34f822-5a8b-4b91-8312-02c41f2c49d4',
                     '01e75c0d-4e66-49b2-8998-2c4aa3c00fba',
@@ -1124,8 +1156,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'Este filme nos lembra da importância de nunca esquecer o passado.',
+                        background: null,
                     },
                     {
                         id: '69a3ef78-2012-4ec6-a765-ec2822e8ad7d',
@@ -1146,8 +1179,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'O desempenho do Liam Neeson é algo realmente tocante e profundo.',
+                        background: null,
                     }
                 ],
             },
@@ -1159,6 +1193,7 @@ export const MOVIES: Movie[] = [
                 isEdit: false,
                 avatar: 'https://preview.redd.it/26f-feel-very-self-conscious-without-makeup-on-v0-e0dt79n1r4rc1.jpg?width=1080&crop=smart&auto=webp&s=7e4ae2077ef38bbce59d96ebe214dd3cd66753f9',
                 comment: 'A cinematografia e a forma como Spielberg tratou esse tema são impecáveis. Um filme difícil, mas essencial.',
+                background: null,
                 likes: [
                     '5fa9dbce-00c4-49ff-867b-9dnsbnse5ff2',
                     '8e6c6f91-2c58-41c0-93f1-12a8d9d831c7',
@@ -1172,7 +1207,7 @@ export const MOVIES: Movie[] = [
                     '0b48d9c1-bc4d-4c5a-8823-97a4c5f9e8c7',
                     'b9f6a0b7-7a6f-4ec3-8495-e9b4b14cc410'
                 ],
-                deslikes: [
+                dislikes: [
                     'd72a9a1f-3c9f-4a5f-8e7a-1d6458dce2a1',
                     '9c34f822-5a8b-4b91-8312-02c41f2c49d4',
                     '01e75c0d-4e66-49b2-8998-2c4aa3c00fba',
@@ -1204,8 +1239,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'O uso do preto e branco no filme dá uma sensação ainda mais sombria à história.',
+                        background: null,
                     }
                 ],
             }
@@ -1265,6 +1301,7 @@ export const MOVIES: Movie[] = [
                 isEdit: false,
                 avatar: 'https://plus.unsplash.com/premium_photo-1671656349218-5218444643d8?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YXZhdGFyfGVufDB8fDB8fHww',
                 comment: 'O final da trilogia é épico! A luta contra as forças de Sauron é incrível e o fechamento da história de Frodo é emocionante.',
+                background: null,
                 likes: [
                     '5fa9dbce-00c4-49ff-867b-9dnsbnse5ff2',
                     '8e6c6f91-2c58-41c0-93f1-12a8d9d831c7',
@@ -1278,7 +1315,7 @@ export const MOVIES: Movie[] = [
                     '0b48d9c1-bc4d-4c5a-8823-97a4c5f9e8c7',
                     'b9f6a0b7-7a6f-4ec3-8495-e9b4b14cc410'
                 ],
-                deslikes: [
+                dislikes: [
                     'd72a9a1f-3c9f-4a5f-8e7a-1d6458dce2a1',
                     '9c34f822-5a8b-4b91-8312-02c41f2c49d4',
                     '01e75c0d-4e66-49b2-8998-2c4aa3c00fba',
@@ -1310,8 +1347,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'A cena da destruição do Anel é uma das mais intensas do cinema!',
+                        background: null,
                     },
                     {
                         id: 'cd35f027-6ad2-4b4a-bad0-2335271c12e3',
@@ -1332,8 +1370,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'O retorno de Aragorn como rei foi muito emocionante. O momento em que ele assume seu lugar é épico!',
+                        background: null,
                     }
                 ],
             },
@@ -1345,6 +1384,7 @@ export const MOVIES: Movie[] = [
                 isEdit: false,
                 avatar: 'https://i.pinimg.com/736x/1b/4c/cc/1b4ccc568176463c312d14e54b603355.jpg',
                 comment: 'O Senhor dos Anéis é uma das melhores trilogias de todos os tempos, e "O Retorno do Rei" fecha a história de forma impecável.',
+                background: null,
                 likes: [
                     '5fa9dbce-00c4-49ff-867b-9dnsbnse5ff2',
                     '8e6c6f91-2c58-41c0-93f1-12a8d9d831c7',
@@ -1358,7 +1398,7 @@ export const MOVIES: Movie[] = [
                     '0b48d9c1-bc4d-4c5a-8823-97a4c5f9e8c7',
                     'b9f6a0b7-7a6f-4ec3-8495-e9b4b14cc410'
                 ],
-                deslikes: [
+                dislikes: [
                     'd72a9a1f-3c9f-4a5f-8e7a-1d6458dce2a1',
                     '9c34f822-5a8b-4b91-8312-02c41f2c49d4',
                     '01e75c0d-4e66-49b2-8998-2c4aa3c00fba',
@@ -1390,8 +1430,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'A batalha final é de tirar o fôlego. A direção de Peter Jackson é primorosa.',
+                        background: null,
                     }
                 ],
             }
@@ -1451,6 +1492,7 @@ export const MOVIES: Movie[] = [
                 isEdit: false,
                 avatar: 'https://i.pinimg.com/564x/42/59/3b/42593bff8809ab7ede744039b08f07c0.jpg',
                 comment: 'Pulp Fiction é um marco no cinema. A maneira como a história é contada e os diálogos são brilhantes. Uma obra-prima!',
+                background: null,
                 likes: [
                     '5fa9dbce-00c4-49ff-867b-9dnsbnse5ff2',
                     '8e6c6f91-2c58-41c0-93f1-12a8d9d831c7',
@@ -1464,7 +1506,7 @@ export const MOVIES: Movie[] = [
                     '0b48d9c1-bc4d-4c5a-8823-97a4c5f9e8c7',
                     'b9f6a0b7-7a6f-4ec3-8495-e9b4b14cc410'
                 ],
-                deslikes: [
+                dislikes: [
                     'd72a9a1f-3c9f-4a5f-8e7a-1d6458dce2a1',
                     '9c34f822-5a8b-4b91-8312-02c41f2c49d4',
                     '01e75c0d-4e66-49b2-8998-2c4aa3c00fba',
@@ -1496,8 +1538,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'Aquele famoso diálogo sobre o "royale with cheese" ainda é uma das melhores cenas do filme!',
+                        background: null,
                     },
                     {
                         id: 'fab49712-e441-4e4f-bec1-b06e1e4498ef',
@@ -1518,8 +1561,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'O final não linear faz a história ainda mais interessante. Tarantino realmente fez um filme único.',
+                        background: null,
                     }
                 ],
             },
@@ -1531,6 +1575,7 @@ export const MOVIES: Movie[] = [
                 isEdit: false,
                 avatar: 'https://i.pinimg.com/474x/51/2e/3f/512e3f0682596d218c8b5a7149664e27.jpg',
                 comment: 'A performance de Samuel L. Jackson é simplesmente lendária! Ele conseguiu dar uma profundidade incrível ao personagem Jules.',
+                background: null,
                 likes: [
                     '5fa9dbce-00c4-49ff-867b-9dnsbnse5ff2',
                     '8e6c6f91-2c58-41c0-93f1-12a8d9d831c7',
@@ -1544,7 +1589,7 @@ export const MOVIES: Movie[] = [
                     '0b48d9c1-bc4d-4c5a-8823-97a4c5f9e8c7',
                     'b9f6a0b7-7a6f-4ec3-8495-e9b4b14cc410'
                 ],
-                deslikes: [
+                dislikes: [
                     'd72a9a1f-3c9f-4a5f-8e7a-1d6458dce2a1',
                     '9c34f822-5a8b-4b91-8312-02c41f2c49d4',
                     '01e75c0d-4e66-49b2-8998-2c4aa3c00fba',
@@ -1576,8 +1621,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'Com certeza! Ele e Travolta formam uma dupla inesquecível no filme.',
+                        background: null,
                     }
                 ],
             }
@@ -1637,6 +1683,7 @@ export const MOVIES: Movie[] = [
                 isEdit: false,
                 avatar: 'https://sholaemmanuel.com/wp-content/uploads/2024/06/photo-1570295999919-56ceb5ecca61.jpg',
                 comment: 'Clube da Luta é um filme sobre a luta contra o sistema e a busca por identidade. O final é uma reviravolta chocante!',
+                background: null,
                 likes: [
                     '5fa9dbce-00c4-49ff-867b-9dnsbnse5ff2',
                     '8e6c6f91-2c58-41c0-93f1-12a8d9d831c7',
@@ -1650,7 +1697,7 @@ export const MOVIES: Movie[] = [
                     '0b48d9c1-bc4d-4c5a-8823-97a4c5f9e8c7',
                     'b9f6a0b7-7a6f-4ec3-8495-e9b4b14cc410'
                 ],
-                deslikes: [
+                dislikes: [
                     'd72a9a1f-3c9f-4a5f-8e7a-1d6458dce2a1',
                     '9c34f822-5a8b-4b91-8312-02c41f2c49d4',
                     '01e75c0d-4e66-49b2-8998-2c4aa3c00fba',
@@ -1682,8 +1729,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'Eu fiquei de boca aberta quando descobri a verdade sobre Tyler! Genial!',
+                        background: null,
                     },
                     {
                         id: '8bfbf1f2-f531-42a5-8dce-46b78a0e7b74',
@@ -1704,8 +1752,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'Esse filme faz você questionar muita coisa sobre a sociedade e a busca pelo consumismo.',
+                        background: null,
                     }
                 ],
             },
@@ -1717,6 +1766,7 @@ export const MOVIES: Movie[] = [
                 isEdit: false,
                 avatar: 'https://imagedelivery.net/TkcHhODAR5Y7jFoICvSX0Q/60822940-f906-425e-2644-d3f3f27b2b00/q=100',
                 comment: 'Brad Pitt e Edward Norton têm uma química incrível, e o filme é uma crítica feroz ao consumismo e à alienação da sociedade moderna.',
+                background: null,
                 likes: [
                     '5fa9dbce-00c4-49ff-867b-9dnsbnse5ff2',
                     '8e6c6f91-2c58-41c0-93f1-12a8d9d831c7',
@@ -1730,7 +1780,7 @@ export const MOVIES: Movie[] = [
                     '0b48d9c1-bc4d-4c5a-8823-97a4c5f9e8c7',
                     'b9f6a0b7-7a6f-4ec3-8495-e9b4b14cc410'
                 ],
-                deslikes: [
+                dislikes: [
                     'd72a9a1f-3c9f-4a5f-8e7a-1d6458dce2a1',
                     '9c34f822-5a8b-4b91-8312-02c41f2c49d4',
                     '01e75c0d-4e66-49b2-8998-2c4aa3c00fba',
@@ -1762,8 +1812,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'A direção de David Fincher é impecável. Ele realmente conseguiu capturar a essência do filme.',
+                        background: null,
                     }
                 ],
             }
@@ -1823,6 +1874,7 @@ export const MOVIES: Movie[] = [
                 isEdit: false,
                 avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSy-QwEaOBvyeT9d5bu85egYqIyAfOAhnRpy-qHeCgP041ro_hNH6RA6mktRxEHRM4CDGI&usqp=CAU',
                 comment: 'Forrest Gump é uma história de vida, amor e superação. Tom Hanks entregou uma das suas melhores performances. Um filme emocionante!',
+                background: null,
                 likes: [
                     '5fa9dbce-00c4-49ff-867b-9dnsbnse5ff2',
                     '8e6c6f91-2c58-41c0-93f1-12a8d9d831c7',
@@ -1836,7 +1888,7 @@ export const MOVIES: Movie[] = [
                     '0b48d9c1-bc4d-4c5a-8823-97a4c5f9e8c7',
                     'b9f6a0b7-7a6f-4ec3-8495-e9b4b14cc410'
                 ],
-                deslikes: [
+                dislikes: [
                     'd72a9a1f-3c9f-4a5f-8e7a-1d6458dce2a1',
                     '9c34f822-5a8b-4b91-8312-02c41f2c49d4',
                     '01e75c0d-4e66-49b2-8998-2c4aa3c00fba',
@@ -1868,8 +1920,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'A cena em que ele corre pela nação é uma das mais icônicas do cinema.',
+                        background: null,
                     },
                     {
                         id: 'bbd53855-cd3e-4553-b10e-d2a427b986be',
@@ -1890,8 +1943,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'A relação dele com a Jenny é tão profunda. Eles são almas gêmeas, mesmo com todos os obstáculos.',
+                        background: null,
                     }
                 ],
             },
@@ -1903,6 +1957,7 @@ export const MOVIES: Movie[] = [
                 isEdit: false,
                 avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0HWq0kyACp0iGg7An6pfyjsRtVdma0AzWH8kQFXgqL9cx9X0I_CHM3KMW_PFXnRwxReY&usqp=CAU',
                 comment: 'Esse filme me fez rir e chorar. A forma como Forrest atravessa a história dos EUA de maneira tão pura e simples é única.',
+                background: null,
                 likes: [
                     '5fa9dbce-00c4-49ff-867b-9dnsbnse5ff2',
                     '8e6c6f91-2c58-41c0-93f1-12a8d9d831c7',
@@ -1916,7 +1971,7 @@ export const MOVIES: Movie[] = [
                     '0b48d9c1-bc4d-4c5a-8823-97a4c5f9e8c7',
                     'b9f6a0b7-7a6f-4ec3-8495-e9b4b14cc410'
                 ],
-                deslikes: [
+                dislikes: [
                     'd72a9a1f-3c9f-4a5f-8e7a-1d6458dce2a1',
                     '9c34f822-5a8b-4b91-8312-02c41f2c49d4',
                     '01e75c0d-4e66-49b2-8998-2c4aa3c00fba',
@@ -1948,8 +2003,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'Sim, e a mensagem de "vida é como uma caixa de chocolates" é uma das mais lindas de todas!',
+                        background: null,
                     }
                 ],
             }
@@ -2009,6 +2065,7 @@ export const MOVIES: Movie[] = [
                 isEdit: false,
                 avatar: 'https://plus.unsplash.com/premium_photo-1670884441012-c5cf195c062a?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8YXZhdGFyfGVufDB8fDB8fHww',
                 comment: 'A Origem é um dos filmes mais inteligentes e visualmente incríveis da década. A história é única e a ideia dos sonhos dentro de sonhos é fascinante.',
+                background: null,
                 likes: [
                     '5fa9dbce-00c4-49ff-867b-9dnsbnse5ff2',
                     '8e6c6f91-2c58-41c0-93f1-12a8d9d831c7',
@@ -2022,7 +2079,7 @@ export const MOVIES: Movie[] = [
                     '0b48d9c1-bc4d-4c5a-8823-97a4c5f9e8c7',
                     'b9f6a0b7-7a6f-4ec3-8495-e9b4b14cc410'
                 ],
-                deslikes: [
+                dislikes: [
                     'd72a9a1f-3c9f-4a5f-8e7a-1d6458dce2a1',
                     '9c34f822-5a8b-4b91-8312-02c41f2c49d4',
                     '01e75c0d-4e66-49b2-8998-2c4aa3c00fba',
@@ -2054,8 +2111,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'Com certeza! O final foi incrível, deixando todos com a mente em dúvida sobre o que era real.',
+                        background: null,
                     },
                     {
                         id: 'a0373de9-3e07-49b5-b39c-c8e6d4986747',
@@ -2076,8 +2134,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'Sim! A cena da cidade se dobrando é uma das mais memoráveis do cinema moderno.',
+                        background: null,
                     }
                 ],
             },
@@ -2089,6 +2148,7 @@ export const MOVIES: Movie[] = [
                 isEdit: false,
                 avatar: 'https://untitledui.com/images/avatars/aliah-lane',
                 comment: 'O conceito de tempo e sonhos no filme é brilhante. A atuação de Leonardo DiCaprio é maravilhosa, especialmente na parte emocional com relação à sua esposa.',
+                background: null,
                 likes: [
                     '5fa9dbce-00c4-49ff-867b-9dnsbnse5ff2',
                     '8e6c6f91-2c58-41c0-93f1-12a8d9d831c7',
@@ -2102,7 +2162,7 @@ export const MOVIES: Movie[] = [
                     '0b48d9c1-bc4d-4c5a-8823-97a4c5f9e8c7',
                     'b9f6a0b7-7a6f-4ec3-8495-e9b4b14cc410'
                 ],
-                deslikes: [
+                dislikes: [
                     'd72a9a1f-3c9f-4a5f-8e7a-1d6458dce2a1',
                     '9c34f822-5a8b-4b91-8312-02c41f2c49d4',
                     '01e75c0d-4e66-49b2-8998-2c4aa3c00fba',
@@ -2134,8 +2194,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'Sem dúvida! Ele transmite um sofrimento real pelo que aconteceu no passado. Essa profundidade na trama faz toda a diferença.',
+                        background: null,
                     }
                 ],
             }
@@ -2205,6 +2266,7 @@ export const MOVIES: Movie[] = [
                 isEdit: false,
                 avatar: 'https://i.pinimg.com/564x/76/a1/30/76a13094a26970a13f9210c2a6058acd.jpg',
                 comment: 'O Império Contra-Ataca é um dos melhores filmes da história do cinema. O enredo, as revelações e a tensão são incríveis!',
+                background: null,
                 likes: [
                     '5fa9dbce-00c4-49ff-867b-9dnsbnse5ff2',
                     '8e6c6f91-2c58-41c0-93f1-12a8d9d831c7',
@@ -2218,7 +2280,7 @@ export const MOVIES: Movie[] = [
                     '0b48d9c1-bc4d-4c5a-8823-97a4c5f9e8c7',
                     'b9f6a0b7-7a6f-4ec3-8495-e9b4b14cc410'
                 ],
-                deslikes: [
+                dislikes: [
                     'd72a9a1f-3c9f-4a5f-8e7a-1d6458dce2a1',
                     '9c34f822-5a8b-4b91-8312-02c41f2c49d4',
                     '01e75c0d-4e66-49b2-8998-2c4aa3c00fba',
@@ -2250,8 +2312,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'Com certeza! A revelação de Darth Vader como pai de Luke foi um dos maiores momentos do cinema.',
+                        background: null,
                     },
                     {
                         id: '83c8f182-04a3-4913-98a5-273efc81c99b',
@@ -2272,8 +2335,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'A batalha no planeta gelado Hoth é épica! As cenas de ação são impressionantes.',
+                        background: null,
                     }
                 ],
             },
@@ -2285,6 +2349,7 @@ export const MOVIES: Movie[] = [
                 isEdit: false,
                 avatar: 'https://st5.depositphotos.com/62628780/66383/i/450/depositphotos_663839944-stock-photo-closeup-face-natural-beauty-woman.jpg',
                 comment: 'Esse filme é um marco na cultura pop. Darth Vader é o vilão mais icônico de todos os tempos.',
+                background: null,
                 likes: [
                     '5fa9dbce-00c4-49ff-867b-9dnsbnse5ff2',
                     '8e6c6f91-2c58-41c0-93f1-12a8d9d831c7',
@@ -2298,7 +2363,7 @@ export const MOVIES: Movie[] = [
                     '0b48d9c1-bc4d-4c5a-8823-97a4c5f9e8c7',
                     'b9f6a0b7-7a6f-4ec3-8495-e9b4b14cc410'
                 ],
-                deslikes: [
+                dislikes: [
                     'd72a9a1f-3c9f-4a5f-8e7a-1d6458dce2a1',
                     '9c34f822-5a8b-4b91-8312-02c41f2c49d4',
                     '01e75c0d-4e66-49b2-8998-2c4aa3c00fba',
@@ -2330,8 +2395,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'Sim! A presença de Vader em cena é inconfundível. E a música tema é sensacional!',
+                        background: null,
                     }
                 ],
             }
@@ -2401,6 +2467,7 @@ export const MOVIES: Movie[] = [
                 isEdit: false,
                 avatar: 'https://dz2cdn1.dzone.com/storage/user-avatar/534373-thumb.jpg',
                 comment: 'Matrix é um filme revolucionário. A mistura de filosofia, ação e efeitos especiais ainda é incrível até hoje!',
+                background: null,
                 likes: [
                     '5fa9dbce-00c4-49ff-867b-9dnsbnse5ff2',
                     '8e6c6f91-2c58-41c0-93f1-12a8d9d831c7',
@@ -2414,7 +2481,7 @@ export const MOVIES: Movie[] = [
                     '0b48d9c1-bc4d-4c5a-8823-97a4c5f9e8c7',
                     'b9f6a0b7-7a6f-4ec3-8495-e9b4b14cc410'
                 ],
-                deslikes: [
+                dislikes: [
                     'd72a9a1f-3c9f-4a5f-8e7a-1d6458dce2a1',
                     '9c34f822-5a8b-4b91-8312-02c41f2c49d4',
                     '01e75c0d-4e66-49b2-8998-2c4aa3c00fba',
@@ -2446,8 +2513,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'Com certeza! A cena do "desvio de bala" é até hoje uma das mais icônicas da história do cinema.',
+                        background: null,
                     },
                     {
                         id: 'a143f0c1-d9d1-4eec-91b3-8b9a7ff11044',
@@ -2468,8 +2536,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'E a filosofia por trás do filme é fascinante. A questão do "controle da realidade" ainda é muito relevante.',
+                        background: null,
                     }
                 ],
             },
@@ -2481,6 +2550,7 @@ export const MOVIES: Movie[] = [
                 isEdit: false,
                 avatar: 'https://media.istockphoto.com/id/1209510541/photo/self-portrait-picture-of-a-man-on-the-top-of-the-mountain.jpg?s=612x612&w=0&k=20&c=_GJvsoo5dOK8479Ld5no6u2vuMguChLHvw6o3YdVFhg=',
                 comment: 'Uma obra-prima! Matrix não é apenas um filme de ação, é uma reflexão profunda sobre a realidade, liberdade e o poder da mente.',
+                background: null,
                 likes: [
                     '5fa9dbce-00c4-49ff-867b-9dnsbnse5ff2',
                     '8e6c6f91-2c58-41c0-93f1-12a8d9d831c7',
@@ -2494,7 +2564,7 @@ export const MOVIES: Movie[] = [
                     '0b48d9c1-bc4d-4c5a-8823-97a4c5f9e8c7',
                     'b9f6a0b7-7a6f-4ec3-8495-e9b4b14cc410'
                 ],
-                deslikes: [
+                dislikes: [
                     'd72a9a1f-3c9f-4a5f-8e7a-1d6458dce2a1',
                     '9c34f822-5a8b-4b91-8312-02c41f2c49d4',
                     '01e75c0d-4e66-49b2-8998-2c4aa3c00fba',
@@ -2526,8 +2596,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'Sem dúvida. A questão de saber o que é real é uma das perguntas mais intrigantes da filosofia moderna.',
+                        background: null,
                     }
                 ],
             }
@@ -2597,6 +2668,7 @@ export const MOVIES: Movie[] = [
                 isEdit: false,
                 avatar: 'https://static.vecteezy.com/system/resources/thumbnails/028/677/403/small_2x/selfie-smiling-couple-mountains-generate-ai-photo.jpg',
                 comment: 'Os Bons Companheiros é uma obra-prima do cinema de máfia. A direção de Scorsese é impecável e o elenco entrega performances excepcionais.',
+                background: null,
                 likes: [
                     '5fa9dbce-00c4-49ff-867b-9dnsbnse5ff2',
                     '8e6c6f91-2c58-41c0-93f1-12a8d9d831c7',
@@ -2610,7 +2682,7 @@ export const MOVIES: Movie[] = [
                     '0b48d9c1-bc4d-4c5a-8823-97a4c5f9e8c7',
                     'b9f6a0b7-7a6f-4ec3-8495-e9b4b14cc410'
                 ],
-                deslikes: [
+                dislikes: [
                     'd72a9a1f-3c9f-4a5f-8e7a-1d6458dce2a1',
                     '9c34f822-5a8b-4b91-8312-02c41f2c49d4',
                     '01e75c0d-4e66-49b2-8998-2c4aa3c00fba',
@@ -2642,8 +2714,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'A forma como Scorsese retrata o mundo do crime de maneira realista é um dos pontos altos do filme.',
+                        background: null,
                     },
                     {
                         id: '0eb902b5-9d4c-4726-8940-d0b0204c38df',
@@ -2664,8 +2737,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'Joe Pesci como Tommy é simplesmente inesquecível. Sua atuação é de outro nível!',
+                        background: null,
                     }
                 ],
             },
@@ -2677,6 +2751,7 @@ export const MOVIES: Movie[] = [
                 isEdit: false,
                 avatar: 'https://img.freepik.com/premium-photo/young-woman-with-natural-makeup-looking-camera_201836-2454.jpg',
                 comment: 'Esse filme é um dos melhores sobre a máfia. A dinâmica entre os personagens e a tensão crescente é impressionante.',
+                background: null,
                 likes: [
                     '5fa9dbce-00c4-49ff-867b-9dnsbnse5ff2',
                     '8e6c6f91-2c58-41c0-93f1-12a8d9d831c7',
@@ -2690,7 +2765,7 @@ export const MOVIES: Movie[] = [
                     '0b48d9c1-bc4d-4c5a-8823-97a4c5f9e8c7',
                     'b9f6a0b7-7a6f-4ec3-8495-e9b4b14cc410'
                 ],
-                deslikes: [
+                dislikes: [
                     'd72a9a1f-3c9f-4a5f-8e7a-1d6458dce2a1',
                     '9c34f822-5a8b-4b91-8312-02c41f2c49d4',
                     '01e75c0d-4e66-49b2-8998-2c4aa3c00fba',
@@ -2722,8 +2797,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'Sem dúvida, a forma como a história é contada, com a narração de Henry, faz o filme ser ainda mais imersivo.',
+                        background: null,
                     }
                 ],
             }
@@ -2793,6 +2869,7 @@ export const MOVIES: Movie[] = [
                 isEdit: false,
                 avatar: 'https://preview.redd.it/27f-i-feel-very-insecure-without-makeup-how-can-i-look-v0-yb0f66jkrska1.jpg?width=1080&crop=smart&auto=webp&s=5593207eefda2332a215b943426dadf7747c9beb',
                 comment: 'Um Estranho no Ninho é um dos maiores filmes de todos os tempos. A atuação de Jack Nicholson é fenomenal, e o tema do filme ainda é muito relevante.',
+                background: null,
                 likes: [
                     '5fa9dbce-00c4-49ff-867b-9dnsbnse5ff2',
                     '8e6c6f91-2c58-41c0-93f1-12a8d9d831c7',
@@ -2806,7 +2883,7 @@ export const MOVIES: Movie[] = [
                     '0b48d9c1-bc4d-4c5a-8823-97a4c5f9e8c7',
                     'b9f6a0b7-7a6f-4ec3-8495-e9b4b14cc410'
                 ],
-                deslikes: [
+                dislikes: [
                     'd72a9a1f-3c9f-4a5f-8e7a-1d6458dce2a1',
                     '9c34f822-5a8b-4b91-8312-02c41f2c49d4',
                     '01e75c0d-4e66-49b2-8998-2c4aa3c00fba',
@@ -2838,8 +2915,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'A atuação de Nicholson é uma das melhores da história do cinema. Ele dá vida ao personagem de uma forma única!',
+                        background: null,
                     },
                     {
                         id: '84705d90-ec95-42bb-9bfa-7df11840f988',
@@ -2860,8 +2938,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'O filme traz uma reflexão importante sobre o tratamento de pessoas com distúrbios mentais e a repressão institucional.',
+                        background: null,
                     }
                 ],
             },
@@ -2873,6 +2952,7 @@ export const MOVIES: Movie[] = [
                 isEdit: false,
                 avatar: 'https://pbs.twimg.com/media/FoyzEWSXwAEZca_.jpg:large',
                 comment: 'Esse filme é muito mais do que apenas um drama psiquiátrico. É uma poderosa alegoria sobre a luta pela liberdade e a resistência ao controle social.',
+                background: null,
                 likes: [
                     '5fa9dbce-00c4-49ff-867b-9dnsbnse5ff2',
                     '8e6c6f91-2c58-41c0-93f1-12a8d9d831c7',
@@ -2886,7 +2966,7 @@ export const MOVIES: Movie[] = [
                     '0b48d9c1-bc4d-4c5a-8823-97a4c5f9e8c7',
                     'b9f6a0b7-7a6f-4ec3-8495-e9b4b14cc410'
                 ],
-                deslikes: [
+                dislikes: [
                     'd72a9a1f-3c9f-4a5f-8e7a-1d6458dce2a1',
                     '9c34f822-5a8b-4b91-8312-02c41f2c49d4',
                     '01e75c0d-4e66-49b2-8998-2c4aa3c00fba',
@@ -2918,8 +2998,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'Com certeza. O contraste entre McMurphy e a Enfermeira Ratched é o coração do filme, representando a luta pela liberdade contra o autoritarismo.',
+                        background: null,
                     }
                 ],
             }
@@ -2989,6 +3070,7 @@ export const MOVIES: Movie[] = [
                 isEdit: false,
                 avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmVoEGWBJw-MgKXrtbmRUVByy9v3JNfRTRWNAH2YCPbJ6OzQ_CbreZeyyWFTrf8x04VD4&usqp=CAU',
                 comment: 'Esse filme é intenso do começo ao fim. Atuações poderosas e uma história que te deixa preso até o último minuto.',
+                background: null,
                 likes: [
                     '5fa9dbce-00c4-49ff-867b-9dnsbnse5ff2',
                     '8e6c6f91-2c58-41c0-93f1-12a8d9d831c7',
@@ -3002,7 +3084,7 @@ export const MOVIES: Movie[] = [
                     '0b48d9c1-bc4d-4c5a-8823-97a4c5f9e8c7',
                     'b9f6a0b7-7a6f-4ec3-8495-e9b4b14cc410'
                 ],
-                deslikes: [
+                dislikes: [
                     'd72a9a1f-3c9f-4a5f-8e7a-1d6458dce2a1',
                     '9c34f822-5a8b-4b91-8312-02c41f2c49d4',
                     '01e75c0d-4e66-49b2-8998-2c4aa3c00fba',
@@ -3034,8 +3116,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'O Villeneuve sabe como criar tensão psicológica. Obra-prima do suspense moderno.',
+                        background: null,
                     }
                 ],
             },
@@ -3047,6 +3130,7 @@ export const MOVIES: Movie[] = [
                 isEdit: false,
                 avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGU3MLWSW8WzGjv02ypEfjfoFGYOJ59kHIFpeCevX-Oo3tZKKTOrDuWiLX-LjBMCmjsgg&usqp=CAU',
                 comment: 'O final me fez repensar tudo. Será que o personagem do Paul Dano era só uma vítima mesmo?',
+                background: null,
                 likes: [
                     '5fa9dbce-00c4-49ff-867b-9dnsbnse5ff2',
                     '8e6c6f91-2c58-41c0-93f1-12a8d9d831c7',
@@ -3060,7 +3144,7 @@ export const MOVIES: Movie[] = [
                     '0b48d9c1-bc4d-4c5a-8823-97a4c5f9e8c7',
                     'b9f6a0b7-7a6f-4ec3-8495-e9b4b14cc410'
                 ],
-                deslikes: [
+                dislikes: [
                     'd72a9a1f-3c9f-4a5f-8e7a-1d6458dce2a1',
                     '9c34f822-5a8b-4b91-8312-02c41f2c49d4',
                     '01e75c0d-4e66-49b2-8998-2c4aa3c00fba',
@@ -3092,8 +3176,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'Sim, tudo indica que ele foi manipulado também. O verdadeiro vilão estava escondido o tempo todo.',
+                        background: null,
                     }
                 ],
             }
@@ -3153,6 +3238,7 @@ export const MOVIES: Movie[] = [
                 isEdit: false,
                 avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwEvwQ8_2VK5AoSKSx9dGgk9n_3jN9QkbQXKj2XvwzKkWfYTEXalOGbWtvrLTbhw9qLVw&usqp=CAU',
                 comment: 'Hopkins entrega uma das atuações mais assustadoras e brilhantes do cinema. Inesquecível!',
+                background: null,
                 likes: [
                     '5fa9dbce-00c4-49ff-867b-9dnsbnse5ff2',
                     '8e6c6f91-2c58-41c0-93f1-12a8d9d831c7',
@@ -3166,7 +3252,7 @@ export const MOVIES: Movie[] = [
                     '0b48d9c1-bc4d-4c5a-8823-97a4c5f9e8c7',
                     'b9f6a0b7-7a6f-4ec3-8495-e9b4b14cc410'
                 ],
-                deslikes: [
+                dislikes: [
                     'd72a9a1f-3c9f-4a5f-8e7a-1d6458dce2a1',
                     '9c34f822-5a8b-4b91-8312-02c41f2c49d4',
                     '01e75c0d-4e66-49b2-8998-2c4aa3c00fba',
@@ -3198,8 +3284,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'E pensar que ele aparece por menos de 20 minutos e ainda ganhou o Oscar. Um monstro (no bom sentido)!',
+                        background: null,
                     }
                 ],
             },
@@ -3211,6 +3298,7 @@ export const MOVIES: Movie[] = [
                 isEdit: false,
                 avatar: 'https://i.redd.it/u9ivfyjj8ifb1.jpg',
                 comment: 'O suspense e a tensão são constantes. A relação entre Clarice e Lecter é fascinante.',
+                background: null,
                 likes: [
                     '5fa9dbce-00c4-49ff-867b-9dnsbnse5ff2',
                     '8e6c6f91-2c58-41c0-93f1-12a8d9d831c7',
@@ -3224,7 +3312,7 @@ export const MOVIES: Movie[] = [
                     '0b48d9c1-bc4d-4c5a-8823-97a4c5f9e8c7',
                     'b9f6a0b7-7a6f-4ec3-8495-e9b4b14cc410'
                 ],
-                deslikes: [
+                dislikes: [
                     'd72a9a1f-3c9f-4a5f-8e7a-1d6458dce2a1',
                     '9c34f822-5a8b-4b91-8312-02c41f2c49d4',
                     '01e75c0d-4e66-49b2-8998-2c4aa3c00fba',
@@ -3256,8 +3344,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'Uma dança de manipulação psicológica. O jogo de poder entre os dois é impecável.',
+                        background: null,
                     }
                 ],
             }
@@ -3317,6 +3406,7 @@ export const MOVIES: Movie[] = [
                 isEdit: false,
                 avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLAi-EePMQWseu8z-vwTfPT_eoUs8LGjSaLbKNOZrTZFeu45TJqIOxgNL7q_JEtNzVjls&usqp=CAU',
                 comment: 'Obra-prima do cinema nacional. Crua, intensa e necessária!',
+                background: null,
                 likes: [
                     '5fa9dbce-00c4-49ff-867b-9dnsbnse5ff2',
                     '8e6c6f91-2c58-41c0-93f1-12a8d9d831c7',
@@ -3330,7 +3420,7 @@ export const MOVIES: Movie[] = [
                     '0b48d9c1-bc4d-4c5a-8823-97a4c5f9e8c7',
                     'b9f6a0b7-7a6f-4ec3-8495-e9b4b14cc410'
                 ],
-                deslikes: [
+                dislikes: [
                     'd72a9a1f-3c9f-4a5f-8e7a-1d6458dce2a1',
                     '9c34f822-5a8b-4b91-8312-02c41f2c49d4',
                     '01e75c0d-4e66-49b2-8998-2c4aa3c00fba',
@@ -3362,8 +3452,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'Mostra uma realidade que muita gente prefere ignorar. Forte e impactante.',
+                        background: null,
                     }
                 ],
             },
@@ -3375,6 +3466,7 @@ export const MOVIES: Movie[] = [
                 isEdit: false,
                 avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJELnidfL3qwv8-uHIkn9-DjHmFKwnxRjzXRSLx70eYOrWsxQ8YtARaYm75GpD97fCz9A&usqp=CAU',
                 comment: 'A narrativa do Buscapé é genial, prende do começo ao fim.',
+                background: null,
                 likes: [
                     '5fa9dbce-00c4-49ff-867b-9dnsbnse5ff2',
                     '8e6c6f91-2c58-41c0-93f1-12a8d9d831c7',
@@ -3388,7 +3480,7 @@ export const MOVIES: Movie[] = [
                     '0b48d9c1-bc4d-4c5a-8823-97a4c5f9e8c7',
                     'b9f6a0b7-7a6f-4ec3-8495-e9b4b14cc410'
                 ],
-                deslikes: [
+                dislikes: [
                     'd72a9a1f-3c9f-4a5f-8e7a-1d6458dce2a1',
                     '9c34f822-5a8b-4b91-8312-02c41f2c49d4',
                     '01e75c0d-4e66-49b2-8998-2c4aa3c00fba',
@@ -3420,8 +3512,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'Narrativa envolvente e direção ousada. Um marco!',
+                        background: null,
                     }
                 ],
             }
@@ -3481,6 +3574,7 @@ export const MOVIES: Movie[] = [
                 isEdit: false,
                 avatar: 'https://www.debugbear.com/public/landing/michael.jpg',
                 comment: 'Esse filme é uma lição de amor, esperança e sacrifício.',
+                background: null,
                 likes: [
                     '5fa9dbce-00c4-49ff-867b-9dnsbnse5ff2',
                     '8e6c6f91-2c58-41c0-93f1-12a8d9d831c7',
@@ -3494,7 +3588,7 @@ export const MOVIES: Movie[] = [
                     '0b48d9c1-bc4d-4c5a-8823-97a4c5f9e8c7',
                     'b9f6a0b7-7a6f-4ec3-8495-e9b4b14cc410'
                 ],
-                deslikes: [
+                dislikes: [
                     'd72a9a1f-3c9f-4a5f-8e7a-1d6458dce2a1',
                     '9c34f822-5a8b-4b91-8312-02c41f2c49d4',
                     '01e75c0d-4e66-49b2-8998-2c4aa3c00fba',
@@ -3526,8 +3620,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'Chorei do início ao fim. Um clássico eterno!',
+                        background: null,
                     }
                 ],
             },
@@ -3539,6 +3634,7 @@ export const MOVIES: Movie[] = [
                 isEdit: false,
                 avatar: 'https://plus.unsplash.com/premium_photo-1664541336896-b3d5f7dec9a3?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
                 comment: 'Misturar comédia com uma tragédia dessas foi genial e ousado.',
+                background: null,
                 likes: [
                     '5fa9dbce-00c4-49ff-867b-9dnsbnse5ff2',
                     '8e6c6f91-2c58-41c0-93f1-12a8d9d831c7',
@@ -3552,7 +3648,7 @@ export const MOVIES: Movie[] = [
                     '0b48d9c1-bc4d-4c5a-8823-97a4c5f9e8c7',
                     'b9f6a0b7-7a6f-4ec3-8495-e9b4b14cc410'
                 ],
-                deslikes: [
+                dislikes: [
                     'd72a9a1f-3c9f-4a5f-8e7a-1d6458dce2a1',
                     '9c34f822-5a8b-4b91-8312-02c41f2c49d4',
                     '01e75c0d-4e66-49b2-8998-2c4aa3c00fba',
@@ -3584,8 +3680,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'O equilíbrio entre leveza e dor é o que faz esse filme único.',
+                        background: null,
                     }
                 ],
             }
@@ -3645,6 +3742,7 @@ export const MOVIES: Movie[] = [
                 isEdit: false,
                 avatar: 'https://i.pinimg.com/736x/44/6e/d9/446ed9b7545661e1204a903aa48ae804.jpg',
                 comment: 'A cena do desembarque na Normandia é uma das mais intensas do cinema!',
+                background: null,
                 likes: [
                     '5fa9dbce-00c4-49ff-867b-9dnsbnse5ff2',
                     '8e6c6f91-2c58-41c0-93f1-12a8d9d831c7',
@@ -3658,7 +3756,7 @@ export const MOVIES: Movie[] = [
                     '0b48d9c1-bc4d-4c5a-8823-97a4c5f9e8c7',
                     'b9f6a0b7-7a6f-4ec3-8495-e9b4b14cc410'
                 ],
-                deslikes: [
+                dislikes: [
                     'd72a9a1f-3c9f-4a5f-8e7a-1d6458dce2a1',
                     '9c34f822-5a8b-4b91-8312-02c41f2c49d4',
                     '01e75c0d-4e66-49b2-8998-2c4aa3c00fba',
@@ -3690,8 +3788,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'É tão realista que parece um documentário.',
+                        background: null,
                     },
                     {
                         id: '5b43bb71-799f-4c08-a66f-4e415ff11f82',
@@ -3712,8 +3811,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'Spielberg foi genial nessa direção.',
+                        background: null,
                     }
                 ],
             },
@@ -3725,6 +3825,7 @@ export const MOVIES: Movie[] = [
                 isEdit: false,
                 avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXQgY7_8xBRM1ejM7B1fnUdWmYAA6i7m5ytWiKqjSGuVZDNBG4BGgFNaKlzbKmptNu4Yc&usqp=CAU',
                 comment: 'Um dos filmes mais emocionantes e intensos que já vi.',
+                background: null,
                 likes: [
                     '5fa9dbce-00c4-49ff-867b-9dnsbnse5ff2',
                     '8e6c6f91-2c58-41c0-93f1-12a8d9d831c7',
@@ -3738,7 +3839,7 @@ export const MOVIES: Movie[] = [
                     '0b48d9c1-bc4d-4c5a-8823-97a4c5f9e8c7',
                     'b9f6a0b7-7a6f-4ec3-8495-e9b4b14cc410'
                 ],
-                deslikes: [
+                dislikes: [
                     'd72a9a1f-3c9f-4a5f-8e7a-1d6458dce2a1',
                     '9c34f822-5a8b-4b91-8312-02c41f2c49d4',
                     '01e75c0d-4e66-49b2-8998-2c4aa3c00fba',
@@ -3770,8 +3871,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'O final é de cortar o coração. "Faça por merecer".',
+                        background: null,
                     }
                 ],
             }
@@ -3851,6 +3953,7 @@ export const MOVIES: Movie[] = [
                 isEdit: false,
                 avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaWjfaWZgLC6j9SifvOKM5xIEWnM9r5MCp2g&s',
                 comment: 'Um dos filmes mais revolucionários em termos de efeitos visuais! A história também é muito envolvente.',
+                background: null,
                 likes: [
                     '5fa9dbce-00c4-49ff-867b-9dnsbnse5ff2',
                     '8e6c6f91-2c58-41c0-93f1-12a8d9d831c7',
@@ -3864,7 +3967,7 @@ export const MOVIES: Movie[] = [
                     '0b48d9c1-bc4d-4c5a-8823-97a4c5f9e8c7',
                     'b9f6a0b7-7a6f-4ec3-8495-e9b4b14cc410'
                 ],
-                deslikes: [
+                dislikes: [
                     'd72a9a1f-3c9f-4a5f-8e7a-1d6458dce2a1',
                     '9c34f822-5a8b-4b91-8312-02c41f2c49d4',
                     '01e75c0d-4e66-49b2-8998-2c4aa3c00fba',
@@ -3896,8 +3999,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'Os efeitos em 3D são incríveis, especialmente na cena da floresta!',
+                        background: null,
                     }
                 ],
             },
@@ -3909,6 +4013,7 @@ export const MOVIES: Movie[] = [
                 isEdit: false,
                 avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5nriOtpyCgtMGg8iLJJGVjEOf78RzoLIugGaipexC2LVm5D6iSLPnc-b5BgY1QdgWQrA&usqp=CAU',
                 comment: 'A mensagem ambiental do filme é poderosa e necessária, além de ser visualmente deslumbrante.',
+                background: null,
                 likes: [
                     '5fa9dbce-00c4-49ff-867b-9dnsbnse5ff2',
                     '8e6c6f91-2c58-41c0-93f1-12a8d9d831c7',
@@ -3922,7 +4027,7 @@ export const MOVIES: Movie[] = [
                     '0b48d9c1-bc4d-4c5a-8823-97a4c5f9e8c7',
                     'b9f6a0b7-7a6f-4ec3-8495-e9b4b14cc410'
                 ],
-                deslikes: [
+                dislikes: [
                     'd72a9a1f-3c9f-4a5f-8e7a-1d6458dce2a1',
                     '9c34f822-5a8b-4b91-8312-02c41f2c49d4',
                     '01e75c0d-4e66-49b2-8998-2c4aa3c00fba',
@@ -3954,8 +4059,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'É uma crítica forte à exploração irresponsável dos recursos naturais.',
+                        background: null,
                     }
                 ],
             }
@@ -4045,6 +4151,7 @@ export const MOVIES: Movie[] = [
                 isEdit: false,
                 avatar: 'https://untitledui.com/images/avatars/anaiah-whitten',
                 comment: 'Parasita é uma obra-prima que mistura gêneros de forma magistral.',
+                background: null,
                 likes: [
                     '5fa9dbce-00c4-49ff-867b-9dnsbnse5ff2',
                     '8e6c6f91-2c58-41c0-93f1-12a8d9d831c7',
@@ -4058,7 +4165,7 @@ export const MOVIES: Movie[] = [
                     '0b48d9c1-bc4d-4c5a-8823-97a4c5f9e8c7',
                     'b9f6a0b7-7a6f-4ec3-8495-e9b4b14cc410'
                 ],
-                deslikes: [
+                dislikes: [
                     'd72a9a1f-3c9f-4a5f-8e7a-1d6458dce2a1',
                     '9c34f822-5a8b-4b91-8312-02c41f2c49d4',
                     '01e75c0d-4e66-49b2-8998-2c4aa3c00fba',
@@ -4090,8 +4197,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'Concordo! A crítica social é profunda e impactante.',
+                        background: null,
                     }
                 ],
             },
@@ -4103,6 +4211,7 @@ export const MOVIES: Movie[] = [
                 isEdit: false,
                 avatar: 'https://untitledui.com/images/avatars/ava-wright',
                 comment: 'Mereceu cada Oscar que ganhou. Filme inesquecível!',
+                background: null,
                 likes: [
                     '5fa9dbce-00c4-49ff-867b-9dnsbnse5ff2',
                     '8e6c6f91-2c58-41c0-93f1-12a8d9d831c7',
@@ -4116,7 +4225,7 @@ export const MOVIES: Movie[] = [
                     '0b48d9c1-bc4d-4c5a-8823-97a4c5f9e8c7',
                     'b9f6a0b7-7a6f-4ec3-8495-e9b4b14cc410'
                 ],
-                deslikes: [
+                dislikes: [
                     'd72a9a1f-3c9f-4a5f-8e7a-1d6458dce2a1',
                     '9c34f822-5a8b-4b91-8312-02c41f2c49d4',
                     '01e75c0d-4e66-49b2-8998-2c4aa3c00fba',
@@ -4148,8 +4257,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'Primeiro filme em língua não inglesa a ganhar Melhor Filme. Histórico!',
+                        background: null,
                     }
                 ],
             }
@@ -4229,6 +4339,7 @@ export const MOVIES: Movie[] = [
                 isEdit: false,
                 avatar: 'https://untitledui.com/images/avatars/katherine-moss',
                 comment: 'Um dos melhores filmes sobre rivalidade e obsessão. Nolan é um mestre!',
+                background: null,
                 likes: [
                     '5fa9dbce-00c4-49ff-867b-9dnsbnse5ff2',
                     '8e6c6f91-2c58-41c0-93f1-12a8d9d831c7',
@@ -4242,7 +4353,7 @@ export const MOVIES: Movie[] = [
                     '0b48d9c1-bc4d-4c5a-8823-97a4c5f9e8c7',
                     'b9f6a0b7-7a6f-4ec3-8495-e9b4b14cc410'
                 ],
-                deslikes: [
+                dislikes: [
                     'd72a9a1f-3c9f-4a5f-8e7a-1d6458dce2a1',
                     '9c34f822-5a8b-4b91-8312-02c41f2c49d4',
                     '01e75c0d-4e66-49b2-8998-2c4aa3c00fba',
@@ -4274,8 +4385,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'O final me deixou sem palavras. Que reviravolta!',
+                        background: null,
                     }
                 ],
             },
@@ -4287,6 +4399,7 @@ export const MOVIES: Movie[] = [
                 isEdit: false,
                 avatar: 'https://i.pinimg.com/564x/da/cc/37/dacc3724f1113d0ba101b492d1864106.jpg',
                 comment: 'A atuação de Hugh Jackman e Christian Bale é simplesmente impecável.',
+                background: null,
                 likes: [
                     '5fa9dbce-00c4-49ff-867b-9dnsbnse5ff2',
                     '8e6c6f91-2c58-41c0-93f1-12a8d9d831c7',
@@ -4300,7 +4413,7 @@ export const MOVIES: Movie[] = [
                     '0b48d9c1-bc4d-4c5a-8823-97a4c5f9e8c7',
                     'b9f6a0b7-7a6f-4ec3-8495-e9b4b14cc410'
                 ],
-                deslikes: [
+                dislikes: [
                     'd72a9a1f-3c9f-4a5f-8e7a-1d6458dce2a1',
                     '9c34f822-5a8b-4b91-8312-02c41f2c49d4',
                     '01e75c0d-4e66-49b2-8998-2c4aa3c00fba',
@@ -4332,8 +4445,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'E o David Bowie como Tesla? Inesperado e brilhante!',
+                        background: null,
                     }
                 ],
             }
@@ -4413,6 +4527,7 @@ export const MOVIES: Movie[] = [
                 isEdit: false,
                 avatar: 'https://i.pinimg.com/originals/14/84/5a/14845a5b6b7b874d4a3dd16cc46a7fad.jpg',
                 comment: 'Uma obra-prima épica! A atuação de Russell Crowe é simplesmente magistral.',
+                background: null,
                 likes: [
                     '5fa9dbce-00c4-49ff-867b-9dnsbnse5ff2',
                     '8e6c6f91-2c58-41c0-93f1-12a8d9d831c7',
@@ -4426,7 +4541,7 @@ export const MOVIES: Movie[] = [
                     '0b48d9c1-bc4d-4c5a-8823-97a4c5f9e8c7',
                     'b9f6a0b7-7a6f-4ec3-8495-e9b4b14cc410'
                 ],
-                deslikes: [
+                dislikes: [
                     'd72a9a1f-3c9f-4a5f-8e7a-1d6458dce2a1',
                     '9c34f822-5a8b-4b91-8312-02c41f2c49d4',
                     '01e75c0d-4e66-49b2-8998-2c4aa3c00fba',
@@ -4458,8 +4573,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'Concordo! E a recriação da Roma antiga é impressionante.',
+                        background: null,
                     }
                 ],
             },
@@ -4471,6 +4587,7 @@ export const MOVIES: Movie[] = [
                 isEdit: false,
                 avatar: 'https://i.pinimg.com/736x/00/1c/2a/001c2aad3512fef74db65619502e1c86.jpg',
                 comment: 'A trilha sonora e as cenas de batalha são de tirar o fôlego!',
+                background: null,
                 likes: [
                     '5fa9dbce-00c4-49ff-867b-9dnsbnse5ff2',
                     '8e6c6f91-2c58-41c0-93f1-12a8d9d831c7',
@@ -4484,7 +4601,7 @@ export const MOVIES: Movie[] = [
                     '0b48d9c1-bc4d-4c5a-8823-97a4c5f9e8c7',
                     'b9f6a0b7-7a6f-4ec3-8495-e9b4b14cc410'
                 ],
-                deslikes: [
+                dislikes: [
                     'd72a9a1f-3c9f-4a5f-8e7a-1d6458dce2a1',
                     '9c34f822-5a8b-4b91-8312-02c41f2c49d4',
                     '01e75c0d-4e66-49b2-8998-2c4aa3c00fba',
@@ -4516,8 +4633,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'Hans Zimmer se superou nessa trilha!',
+                        background: null,
                     }
                 ],
             }
@@ -4567,6 +4685,7 @@ export const MOVIES: Movie[] = [
                 isEdit: false,
                 avatar: 'https://t3.ftcdn.net/jpg/02/99/04/20/360_F_299042079_vGBD7wIlSeNl7vOevWHiL93G4koMM967.jpg',
                 comment: 'Uma atuação poderosa de McConaughey, mereceu o Oscar!',
+                background: null,
                 likes: [
                     '5fa9dbce-00c4-49ff-867b-9dnsbnse5ff2',
                     '8e6c6f91-2c58-41c0-93f1-12a8d9d831c7',
@@ -4580,7 +4699,7 @@ export const MOVIES: Movie[] = [
                     '0b48d9c1-bc4d-4c5a-8823-97a4c5f9e8c7',
                     'b9f6a0b7-7a6f-4ec3-8495-e9b4b14cc410'
                 ],
-                deslikes: [
+                dislikes: [
                     'd72a9a1f-3c9f-4a5f-8e7a-1d6458dce2a1',
                     '9c34f822-5a8b-4b91-8312-02c41f2c49d4',
                     '01e75c0d-4e66-49b2-8998-2c4aa3c00fba',
@@ -4612,8 +4731,9 @@ export const MOVIES: Movie[] = [
                             '9ae4dfd5-7ba7-4c66-9312-303c36c93362',
                             '2f53b6ee-734b-46b3-b0f5-379a46f2044b'
                         ],
-                        deslikes: [],
+                        dislikes: [],
                         answer: 'E o Jared Leto também arrebentou! Que dupla!',
+                        background: null,
                     }
                 ],
             },
@@ -4625,6 +4745,7 @@ export const MOVIES: Movie[] = [
                 isEdit: false,
                 avatar: 'https://neweralive.na/wp-content/uploads/2024/06/lloyd-sikeba.jpg',
                 comment: 'Filme forte e necessário. Me fez pensar muito.',
+                background: null,
                 likes: [
                     '5fa9dbce-00c4-49ff-867b-9dnsbnse5ff2',
                     '8e6c6f91-2c58-41c0-93f1-12a8d9d831c7',
@@ -4638,7 +4759,7 @@ export const MOVIES: Movie[] = [
                     '0b48d9c1-bc4d-4c5a-8823-97a4c5f9e8c7',
                     'b9f6a0b7-7a6f-4ec3-8495-e9b4b14cc410'
                 ],
-                deslikes: [
+                dislikes: [
                     'd72a9a1f-3c9f-4a5f-8e7a-1d6458dce2a1',
                     '9c34f822-5a8b-4b91-8312-02c41f2c49d4',
                     '01e75c0d-4e66-49b2-8998-2c4aa3c00fba',
