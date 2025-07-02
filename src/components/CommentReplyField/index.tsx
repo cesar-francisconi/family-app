@@ -11,9 +11,13 @@ import { Avatar } from '../Avatar';
 import {
     CommentReplyFieldProps,
 } from './types';
-import { useUser } from '@/src/hook/useUser';
+import {
+    getLoggedInUserBackground,
+    getLoggedInUserUsername,
+} from '@/src/hook/useUser';
 import { Button } from '../Button';
 import { Icon } from '../Icon';
+import { getInitialsFromUsername } from '@/src/helpers/getInitialsFromUsername';
 
 export const CommentReplyField = forwardRef<TextInput, CommentReplyFieldProps>((props, ref) => {
 
@@ -25,17 +29,21 @@ export const CommentReplyField = forwardRef<TextInput, CommentReplyFieldProps>((
 
     const [onFocus, setOnFocus] = useState(false);
 
-    const loggedInUserAvatar = useUser((state) => state.avatar);
+    const username = getLoggedInUserUsername();
+    const background = getLoggedInUserBackground();
 
     const borderWidth = onFocus ? 1 : 0;
+
+    if (!username) return;
 
     return (
         <View
             style={styles.container}
         >
             <Avatar
-                mode='image'
-                imageUrl={loggedInUserAvatar}
+                mode='initial'
+                initial={getInitialsFromUsername(username)}
+                background={background}
                 size='small'
             />
 
