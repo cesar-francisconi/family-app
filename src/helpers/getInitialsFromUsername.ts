@@ -16,5 +16,5 @@ export function getInitialsFromUsername(username: string): string {
     }
 
     // Retorna as duas primeiras letras
-    return cleanName.slice(0, 2).toUpperCase();
+    return cleanName.slice(0, 1).toUpperCase();
 }
