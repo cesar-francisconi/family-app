@@ -4,7 +4,13 @@ import {
 import { MovieCardCarouselGroupProps } from './types';
 import { styles } from './styles';
 import { MovieCardCarousel } from '../MovieCardCarousel/Index';
-import { getMoviesForMovieCardCarouselGroup } from '@/src/helpers/getMoviesForMovieCardCarouselGroup';
+import {
+    useEffect,
+    useState,
+} from 'react';
+import { Movie } from '@/movie';
+import { ActivityIndicator } from '../ActivityIndicator';
+import { getMoviesForMovieCardCarouselGroup } from '@/src/hook/useMovie';
 
 export function MovieCardCarouselGroup(props: MovieCardCarouselGroupProps) {
 
@@ -12,7 +18,21 @@ export function MovieCardCarouselGroup(props: MovieCardCarouselGroupProps) {
 
     } = props;
 
-    const movies = getMoviesForMovieCardCarouselGroup(['Todos', 'Drama', 'Ação']);
+    const [movies, setMovies] = useState<{
+        id: string;
+        category: string;
+        movies: Movie[];
+    }[] | null>(null);
+
+    useEffect(() => {
+        (async () => {
+            const movies = await getMoviesForMovieCardCarouselGroup(['Todos', 'Ficção Científica', 'Crime']);
+
+            setMovies(movies);
+        })();
+    }, []);
+
+    if (!movies) return <ActivityIndicator />
 
     return (
         <View style={styles.container}>
@@ -21,8 +41,6 @@ export function MovieCardCarouselGroup(props: MovieCardCarouselGroupProps) {
                     <MovieCardCarousel
                         key={index}
                         {...item}
-                        buttonTitle='Ver mais'
-                        withMovieCardTitle
                     />
                 );
             })}
