@@ -15,12 +15,8 @@ import {
   StyleSheet,
 } from 'react-native';
 import { Colors } from '@/src/constants/Colors';
-import { Header } from '@/src/components/Header';
 import * as SystemUI from 'expo-system-ui';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { AuthorizedUserActionsSheet } from '../components/AuthorizedUserActionsSheet';
-import { CommentReplyFieldSheet } from '../components/CommentReplyFieldSheet';
-import { UnauthorizedUserActionsSheet } from '../components/UnauthorizedUserActionsSheet';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -49,115 +45,26 @@ export default function RootLayoutNav() {
 
   if (!loaded && !error) {
     return null;
-  }
+  };
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }} >
       <SafeAreaView
         style={styles.container}
       >
-        <Header />
-
         <Stack
           screenOptions={{
             headerShown: false,
-            animation: 'ios_from_right',
+            animation: 'none',
             contentStyle: {
               backgroundColor: 'transparent',
-            }
+            },
           }}
         >
-          <Stack.Screen
-            name="index"
-            options={{
+          <Stack.Screen name="(app)" />
 
-            }}
-          />
-
-          <Stack.Screen
-            name="signUp"
-            options={{
-
-            }}
-          />
-
-          <Stack.Screen
-            name="(details)"
-            options={{
-
-            }}
-          />
-
-          <Stack.Screen
-            name="actorDetails"
-            options={{
-
-            }}
-          />
-
-          <Stack.Screen
-            name="search"
-            options={{
-
-            }}
-          />
-
-          <Stack.Screen
-            name="explorer"
-            options={{
-
-            }}
-          />
-
-          <Stack.Screen
-            name="account"
-            options={{
-
-            }}
-          />
-
-          <Stack.Screen
-            name="myList"
-            options={{
-
-            }}
-          />
-
-          <Stack.Screen
-            name="moviesYouLiked"
-            options={{
-
-            }}
-          />
-
-          <Stack.Screen
-            name="passwordChange"
-            options={{
-
-            }}
-          />
-
-          <Stack.Screen
-            name="notifications"
-            options={{
-
-            }}
-          />
-
-          <Stack.Screen name="(tabs)" />
+          <Stack.Screen name="(auth)" />
         </Stack >
-
-        <AuthorizedUserActionsSheet
-          replyTitle='Responder'
-          editTitle='Editar'
-          deleteTitle='Deletar'
-        />
-
-        <UnauthorizedUserActionsSheet
-          replyTitle='Responder'
-        />
-
-        <CommentReplyFieldSheet />
 
         <StatusBar barStyle={'light-content'} backgroundColor={Colors.surface.main} />
       </SafeAreaView>
