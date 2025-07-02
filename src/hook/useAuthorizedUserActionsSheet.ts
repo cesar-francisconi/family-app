@@ -74,7 +74,7 @@ export const handleAuthorizedReply = ({
 
     switch (origin) {
         case 'isComment':
-            route.push(`/(details)/(comments)/answers?commentId=${replyTo}&origin=isCommentAuthorizedUserActionsSheetReply`);
+            route.push(`/(app)/(details)/(comments)/answers?commentId=${replyTo}&origin=isCommentAuthorizedUserActionsSheetReply`);
             break;
         case 'isSelectedParentComment':
             setCommentReplySheet({
