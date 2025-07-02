@@ -5,8 +5,6 @@ import {
 import { HeaderRightProps } from './types';
 import React from 'react';
 import { styles } from './styles';
-import { Spacing } from '@/src/constants/Spacing';
-import { BorderRadius } from '@/src/constants/BorderRadius';
 import { IconProps } from '../Icon/types';
 
 export function HeaderRight(props: HeaderRightProps) {
