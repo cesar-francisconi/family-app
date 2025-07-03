@@ -54,22 +54,6 @@ export function MovieCardCarousel(props: MovieCardCarouselProps) {
                 <Text style={styles.title}>
                     {category} {actor && <Text>{actor.name}</Text>}
                 </Text>
-
-                {/*  <Button
-                    type="primary"
-                    size="medium"
-                    variant="text"
-                    title={buttonTitle}
-                    rightIcon={
-                        <Icon
-                            name="Entypo"
-                            icon="chevron-thin-right"
-                            color={Colors.primary.main}
-                            size="extraSmall"
-                        />
-                    }
-                    onPress={() => debounce(handleSeeMorePress)}
-                /> */}
             </View>
 
             <FlatList
