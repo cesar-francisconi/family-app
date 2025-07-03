@@ -39,6 +39,7 @@ export function Comment(props: UserCommentProps) {
         answersText = 'answers',
         withAnswersText = true,
         isEdit = false,
+        dislikes,
     } = props;
 
     const loggedInUserId = getLoggedInUserId();
@@ -85,7 +86,8 @@ export function Comment(props: UserCommentProps) {
                     <ReactionGroup
                         userId={userId}
                         commentId={id}
-                        likeCount={likes.length}
+                        likes={likes}
+                        dislikes={dislikes}
                         withLikeCount
                     />
                 </View>
