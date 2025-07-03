@@ -23,7 +23,7 @@ export function MovieCardCarousel(props: MovieCardCarouselProps) {
         actorId,
         buttonTitle = 'See more',
         movies,
-        withMovieCardTitle = false,
+        movieCardOptions = { withTitle: true },
     } = props;
 
     const { debounce } = useDebounce(1000);
@@ -65,7 +65,7 @@ export function MovieCardCarousel(props: MovieCardCarouselProps) {
                 renderItem={({ item, index }) => {
 
                     const lastMaxVisibleMovies = index === maxVisibleMovies - 1;
-                    const withMore = movies.length > 8 && lastMaxVisibleMovies;
+                    const withMore = movies.length >= maxVisibleMovies && lastMaxVisibleMovies;
 
                     return (
                         <TouchableOpacity activeOpacity={0.7} onPress={() => debounce(() => {
@@ -75,7 +75,7 @@ export function MovieCardCarousel(props: MovieCardCarouselProps) {
                                 handleMoviePress(item.id);
                             };
                         })}>
-                            <MovieCard {...item} withTitle={withMovieCardTitle} withMore={withMore} />
+                            <MovieCard {...item} withTitle={movieCardOptions.withTitle} withMore={withMore} />
                         </TouchableOpacity>
                     );
                 }}
