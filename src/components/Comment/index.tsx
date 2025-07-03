@@ -33,6 +33,7 @@ export function Comment(props: UserCommentProps) {
         time,
         avatar,
         comment,
+        background,
         likes,
         answers,
         answersText = 'answers',
@@ -48,7 +49,7 @@ export function Comment(props: UserCommentProps) {
     const getAvatarProps = (): AvatarProps => (
         avatar
             ? { mode: 'image', imageUrl: avatar, size: 'small' }
-            : { mode: 'initial', initial: getInitialsFromUsername(username), size: 'small' }
+            : { mode: 'initial', initial: getInitialsFromUsername(username), size: 'small', background }
     );
 
     const handleAnswersPress = () => {
