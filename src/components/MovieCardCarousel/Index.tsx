@@ -4,24 +4,23 @@ import {
     TouchableOpacity,
     View,
 } from 'react-native';
-import { useRouter } from 'expo-router';
-import { MovieCardCarouselProps } from './types';
+import {
+    useGlobalSearchParams,
+    useRouter,
+} from 'expo-router';
+import {
+    MovieCardCarouselGlobalSearchParams,
+    MovieCardCarouselProps,
+} from './types';
 import { styles } from './styles';
 import { MovieCard } from '../MovieCard';
-import { Button } from '../Button';
-import { Icon } from '../Icon';
-import { Colors } from '@/src/constants/Colors';
-import { getActorById } from '@/src/helpers/getActorById';
 import { setCurrentMovieId } from '@/src/hook/useMovie';
 import { useDebounce } from '@/src/helpers/debounce';
-import { useRef } from 'react';
 
 export function MovieCardCarousel(props: MovieCardCarouselProps) {
 
     const {
         category,
-        actorId,
-        buttonTitle = 'See more',
         movies,
         movieCardOptions = { withTitle: true },
     } = props;
@@ -30,13 +29,14 @@ export function MovieCardCarousel(props: MovieCardCarouselProps) {
 
     const router = useRouter();
 
-    const actor = actorId ? getActorById(actorId)! : undefined;
+    const rawParams = useGlobalSearchParams<MovieCardCarouselGlobalSearchParams>();
+
     const genre = movies[0]?.genre[0];
     const maxVisibleMovies = 8;
 
     const handleSeeMorePress = () => {
-        if (actor) {
-            router.push(`/explorer?category=${category}&genre=${genre}&actorId=${actor.id}`);
+        if (rawParams.actorId) {
+            router.push(`/explorer?category=${category}&genre=${genre}&actorId=${rawParams.actorId}`);
         } else {
             router.push(`/explorer?category=${category}&genre=${genre}`);
         };
@@ -52,7 +52,7 @@ export function MovieCardCarousel(props: MovieCardCarouselProps) {
         <View style={styles.mainContainer}>
             <View style={styles.headerContainer}>
                 <Text style={styles.title}>
-                    {category} {actor && <Text>{actor.name}</Text>}
+                    {category} {rawParams.actorName && <Text>{rawParams.actorName}</Text>}
                 </Text>
             </View>
 
