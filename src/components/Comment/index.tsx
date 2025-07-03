@@ -55,7 +55,7 @@ export function Comment(props: UserCommentProps) {
         setCurrentUserId(userId);
         setCurrentCommentId(id);
 
-        router.push(`/(details)/(comments)/answers?commentId=${id}`);
+        router.push(`/(app)/(details)/(comments)/answers?commentId=${id}`);
     };
 
     const showAnswers = withAnswersText && answers.length > 0;
