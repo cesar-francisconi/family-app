@@ -1,7 +1,8 @@
 export type ReactionGroupProps = {
     commentId?: string;
     userId: string;
-    likeCount?: number;
+    likes: string[];
+    dislikes: string[];
     withLikeCount?: boolean;
     username?: string;
     answerId?: string;
