@@ -21,8 +21,8 @@ import { formatToK } from '@/src/helpers/formatTok';
 import { getInitialsFromUsername } from '@/src/helpers/getInitialsFromUsername';
 import { AvatarProps } from '../Avatar/types';
 import { usePathName } from '@/src/hook/usePathname';
-import { useUser } from '@/src/hook/useUser';
 import { openCommentActionsSheet } from '@/src/helpers/openCommentActionsSheet';
+import { getLoggedInUserId } from '@/src/hook/useUser';
 
 export function Comment(props: UserCommentProps) {
 
@@ -40,7 +40,7 @@ export function Comment(props: UserCommentProps) {
         isEdit = false,
     } = props;
 
-    const loggedInUserId = useUser((state) => state.id);
+    const loggedInUserId = getLoggedInUserId();
     const pathname = usePathName();
     const router = useRouter();
     const { debounce } = useDebounce(1000);
@@ -59,6 +59,8 @@ export function Comment(props: UserCommentProps) {
     };
 
     const showAnswers = withAnswersText && answers.length > 0;
+
+    if (!loggedInUserId) return;
 
     return (
         <View style={styles.commentContainer}>
