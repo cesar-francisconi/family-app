@@ -78,7 +78,7 @@ export function ReactionGroup(props: ReactionGroupProps) {
         const isAnswer = pathname === '/answers';
 
         if (isComment) {
-            route.push(`/(details)/(comments)/answers?commentId=${commentId}&origin=isCommentCommentAction`)
+            route.push(`/(app)/(details)/(comments)/answers?commentId=${commentId}&origin=isCommentCommentAction`)
 
             commentId && setCurrentCommentId(commentId);
         } else if (isSelectedParentComment) {
