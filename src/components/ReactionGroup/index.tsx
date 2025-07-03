@@ -25,7 +25,6 @@ import {
 } from 'expo-router';
 import { setCommentReplySheet } from '@/src/hook/useCommentReplySheet';
 import { usePathName } from '@/src/hook/usePathname';
-import { useUser } from '@/src/hook/useUser';
 import LottieView from 'lottie-react-native';
 import {
     useEffect,
@@ -37,12 +36,12 @@ export function ReactionGroup(props: ReactionGroupProps) {
     const {
         commentId,
         answerId,
-        likeCount,
+        likes,
+        dislikes,
         withLikeCount = false,
         username,
     } = props;
 
-    const loggedInUserId = useUser((state) => state.id);
     const { debounce } = useDebounce(1000);
     const pathname = usePathName();
     const route = useRouter();
@@ -51,25 +50,25 @@ export function ReactionGroup(props: ReactionGroupProps) {
     const animationDislikeRef = useRef<LottieView>(null);
 
     const isLiked = commentId
-        ? hasLoggedInUserLikedComment(loggedInUserId, commentId)
+        ? hasLoggedInUserLikedComment(likes)
         : answerId
-            ? hasLoggedInUserLikedAnswer(loggedInUserId, answerId)
+            ? hasLoggedInUserLikedAnswer(likes)
             : false;
 
     const isDisliked = commentId
-        ? hasLoggedInUserDislikedComment(loggedInUserId, commentId)
+        ? hasLoggedInUserDislikedComment(dislikes)
         : answerId
-            ? hasLoggedInUserDislikedAnswer(loggedInUserId, answerId)
+            ? hasLoggedInUserDislikedAnswer(dislikes)
             : false;
 
     const toggleLike = () => {
-        if (commentId) toggleCommentLikeForUser(loggedInUserId, commentId);
-        else if (answerId) toggleAnswerLikeForUser(loggedInUserId, answerId);
+        if (commentId) toggleCommentLikeForUser(commentId);
+        else if (answerId) toggleAnswerLikeForUser(answerId);
     };
 
     const toggleDislike = () => {
-        if (commentId) toggleCommentDislikeForUser(loggedInUserId, commentId);
-        else if (answerId) toggleAnswerDislikeForUser(loggedInUserId, answerId);
+        if (commentId) toggleCommentDislikeForUser(commentId);
+        else if (answerId) toggleAnswerDislikeForUser(answerId);
     };
 
     const onCommentPress = () => {
@@ -132,8 +131,8 @@ export function ReactionGroup(props: ReactionGroupProps) {
                         source={require('../../assets/like.json')}
                     />
                 </Pressable>
-                {withLikeCount && likeCount ? (
-                    <Text style={styles.likeQuantity}>{formatToK(likeCount)}</Text>
+                {withLikeCount && likes ? (
+                    <Text style={styles.likeQuantity}>{formatToK(likes.length)}</Text>
                 ) : null}
             </View>
 
