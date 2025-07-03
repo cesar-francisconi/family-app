@@ -20,6 +20,7 @@ export function Answer(props: AnswerProps) {
     const {
         id,
         username,
+        background,
         userId,
         time,
         avatar,
@@ -34,7 +35,9 @@ export function Answer(props: AnswerProps) {
     const getAvatarProps = (): AvatarProps =>
         avatar
             ? { mode: 'image', imageUrl: avatar, size: 'small' }
-            : { mode: 'initial', initial: getInitialsFromUsername(username), size: 'small' };
+            : { mode: 'initial', initial: getInitialsFromUsername(username), size: 'small', background };
+
+    if (!loggedInUserId) return;
 
     return (
         <View style={styles.commentContainer}>
