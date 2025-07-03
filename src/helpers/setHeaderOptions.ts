@@ -17,8 +17,8 @@ interface HeaderOptions {
 
 export type RouteKey =
     | 'signIn' | 'signUp' | 'home' | 'categories' | 'me' | 'search'
-    | 'explorer' | 'details' | 'more' | 'actorDetails'
-    | 'moviesYouLiked' | 'myList' | 'account' | 'passwordChange';
+    | 'explorer' | 'details' | 'actorDetails'
+    | 'moviesYouLiked' | 'myList' | 'account' | 'passwordChange' | 'deleteUser' | 'emailChange';
 
 export type SetHeaderOptionsProps = {
     [key in RouteKey]: HeaderOptions;
@@ -27,25 +27,26 @@ export type SetHeaderOptionsProps = {
 
 export function setHeaderOptions(props: SetHeaderOptionsProps) {
     const segments = useSegments();
-    const stack = segments[0];
-    const tab = segments[1];
+    const stack = segments[1];
+    const tab = segments[2];
 
     const routeMap: { [key: string]: RouteKey } = {
-        undefined: 'signIn',
+        signIn: 'signIn',
         signUp: 'signUp',
         search: 'search',
         explorer: 'explorer',
         '(details)': 'details',
-        '(more)': 'more',
         actorDetails: 'actorDetails',
         moviesYouLiked: 'moviesYouLiked',
         myList: 'myList',
         account: 'account',
         passwordChange: 'passwordChange',
+        deleteUser: 'deleteUser',
+        emailChange: 'emailChange',
     };
 
     const tabMap: { [key: string]: RouteKey } = {
-        undefined: 'home',
+        home: 'home',
         categories: 'categories',
         me: 'me',
     };
@@ -54,8 +55,10 @@ export function setHeaderOptions(props: SetHeaderOptionsProps) {
 
     if (stack === '(tabs)') {
         routeKey = tab !== undefined ? tabMap[tab] ?? 'home' : 'home';
+    } else if (stack && stack in routeMap) {
+        routeKey = routeMap[stack];
     } else {
-        routeKey = routeMap[stack] ?? 'signIn';
+        routeKey = 'signIn';
     }
 
     return props[routeKey];
