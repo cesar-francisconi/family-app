@@ -27,6 +27,7 @@ export function Answer(props: AnswerProps) {
         answer,
         likes,
         isEdit,
+        dislikes,
     } = props;
 
     const loggedInUserId = getLoggedInUserId();
@@ -58,7 +59,8 @@ export function Answer(props: AnswerProps) {
 
                     <ReactionGroup
                         userId={userId}
-                        likeCount={likes.length}
+                        likes={likes}
+                        dislikes={dislikes}
                         answerId={id}
                         withLikeCount
                         username={username}
