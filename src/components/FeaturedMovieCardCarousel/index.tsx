@@ -1,6 +1,5 @@
 import {
     FlatList,
-    FlatListProps,
     View,
 } from 'react-native';
 import { styles } from './styles';
