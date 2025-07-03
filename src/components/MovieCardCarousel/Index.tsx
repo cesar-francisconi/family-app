@@ -45,7 +45,7 @@ export function MovieCardCarousel(props: MovieCardCarouselProps) {
     const handleMoviePress = (movieId: string) => {
         setCurrentMovieId(movieId);
 
-        router.push(`/(details)?movieId=${movieId}`);
+        router.push(`/(app)/(details)?movieId=${movieId}`);
     };
 
     return (
