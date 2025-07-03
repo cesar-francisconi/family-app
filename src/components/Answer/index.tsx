@@ -11,10 +11,10 @@ import { Icon } from '../Icon';
 import { formatTimeAgo } from '@/src/helpers/formatTimeAgo';
 import { getInitialsFromUsername } from '@/src/helpers/getInitialsFromUsername';
 import { useDebounce } from '@/src/helpers/debounce';
-import { useUser } from '@/src/hook/useUser';
 import { AnswerProps } from './types';
 import { AvatarProps } from '../Avatar/types';
 import { openAnswerActionsSheet } from '@/src/helpers/openAnswerActionsSheet';
+import { getLoggedInUserId } from '@/src/hook/useUser';
 
 export function Answer(props: AnswerProps) {
     const {
@@ -28,7 +28,7 @@ export function Answer(props: AnswerProps) {
         isEdit,
     } = props;
 
-    const loggedInUserId = useUser((state) => state.id);
+    const loggedInUserId = getLoggedInUserId();
     const { debounce } = useDebounce(1000);
 
     const getAvatarProps = (): AvatarProps =>
