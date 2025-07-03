@@ -1,7 +1,6 @@
 import {
     Dimensions,
     Image,
-    View,
 } from 'react-native';
 import { styles } from './styles';
 import { FeaturedMovieCardProps } from './types';
