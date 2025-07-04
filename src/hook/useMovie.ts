@@ -1,6 +1,23 @@
-import { Comment, CommentAnswer, Movie, MovieGenreType, MOVIES } from '@/movie';
+import {
+    CategoryParam,
+    Comment,
+    CommentAnswer,
+    Movie,
+    MovieGenreType,
+} from '@/movie';
 import { create } from 'zustand'
 import uuid from 'react-native-uuid';
+import {
+    collection,
+    query,
+    getDocs,
+    getFirestore,
+    doc,
+    getDoc,
+    updateDoc,
+    onSnapshot,
+} from '@react-native-firebase/firestore';
+import { getAuth } from '@react-native-firebase/auth';
 
 type CurrentMovieId = Movie['id'] | null;
 type CurrentCommentId = Comment['id'] | null;
@@ -8,47 +25,300 @@ type CurrentAnswerId = CommentAnswer['id'] | null;
 type CurrentUserId = Comment['userId'] | null;
 
 interface InitialState {
-    movies: Movie[];
     currentMovieId: CurrentMovieId;
     currentCommentId: CurrentCommentId;
     currentAnswerId: CurrentAnswerId;
     currentUserId: CurrentUserId;
+    filteredData: Movie[] | null;
 };
 
 const initialState: InitialState = {
-    movies: MOVIES,
     currentMovieId: '',
     currentCommentId: '',
     currentAnswerId: '',
     currentUserId: '',
+    filteredData: [],
 };
 
 export const useMovies = create(() => initialState);
 
-export const getAllMovies = () => [...useMovies.getState().movies];
+export const getAllMovies = async () => {
+    const db = getFirestore();
 
-export const getMoviesByGenre = (genre: MovieGenreType) => {
-    const movies = getAllMovies();
+    const q = query(collection(db, 'movies'));
+
+    const querySnapshot = await getDocs(q);
+
+    if (querySnapshot.empty) return null;
+
+    return querySnapshot.docs.map((movie) => {
+        return {
+            id: movie.id,
+            ...movie.data()
+        } as Movie;
+    });
+};
+
+export const sortByPopularity = async (): Promise<Movie[] | null> => {
+    const movies = await getAllMovies();
+
+    if (!movies) return null;
+
+    return [...movies].sort((a, b) => b.like - a.like);
+};
+
+export const getMoviesForMovieCardCarouselGroup = async (categories: CategoryParam[]) => {
+    const movies = await getAllMovies();
+
+    if (!movies) return null;
+
+    const uniqueCategories = new Set(categories);
+
+    if (uniqueCategories.size !== categories.length) {
+        throw new Error('Categorias duplicadas não são permitidas.');
+    }
+
+    const results = await Promise.all(
+        [...uniqueCategories].map(async (category, index) => {
+            if (category === 'Todos') {
+                return {
+                    id: `0${index + 1}`,
+                    category,
+                    movies,
+                };
+            }
+
+            const moviesByGenre = await getMoviesByGenre(category.toLowerCase());
+
+            if (!moviesByGenre) return null;
+
+            return {
+                id: `0${index + 1}`,
+                category,
+                movies: moviesByGenre,
+            };
+        })
+    );
+
+    const hasNull = results.some((group) => group === null);
+
+    return hasNull ? null : results as { id: string; category: string; movies: Movie[] }[];
+};
+
+export const getMoviesByCategory = async (
+    category: CategoryParam,
+    genre: MovieGenreType,
+    actorId: string,
+) => {
+    const movies = await getAllMovies();
+
+    if (!movies) return null;
+
+    if (category === 'Todos') {
+        return movies;
+    }
+
+    if (category === 'Filmes com' && actorId) {
+        return await getActorMoviesById(actorId);
+    }
+
+    if (genre) {
+        return await getMoviesByGenre(genre);
+    }
+
+    return [];
+};
+
+export const getMostRecentMovies = async (limit = 4): Promise<Movie[] | null> => {
+    const movies = await getAllMovies();
+
+    if (!movies) return null;
+
+    return movies
+        .slice()
+        .sort((a, b) => new Date(b.addedAt).getTime() - new Date(a.addedAt).getTime())
+        .slice(0, limit);
+};
+
+export const getCommentsById = (
+    movieId: Movie['id'],
+    onCommentsUpdate: (comments: Comment[] | null) => void
+) => {
+    const db = getFirestore();
+    const movieRef = doc(db, 'movies', movieId);
+
+    const unsubscribe = onSnapshot(movieRef, (docSnap) => {
+        if (!docSnap.exists()) {
+            onCommentsUpdate(null);
+            return;
+        }
+
+        const data = docSnap.data() as Movie;
+        onCommentsUpdate(data.comments ?? null);
+    });
+
+    return unsubscribe;
+};
+
+export const getCommentById = (
+    commentId: Comment['id'],
+    onCommentsUpdate: (comment: Comment | null) => void,
+) => {
+    const currentMovieId = getCurrentMovieId() as string;
+    const db = getFirestore();
+    const movieRef = doc(db, 'movies', currentMovieId);
+
+    const unsubscribe = onSnapshot(movieRef, (docSnap) => {
+        if (!docSnap.exists()) {
+            onCommentsUpdate(null);
+            return;
+        }
+
+        const data = docSnap.data() as Movie;
+
+        const comment = data.comments.filter((comment) => commentId === comment.id)[0];
+
+        onCommentsUpdate(comment ?? null);
+    });
+
+    return unsubscribe;
+};
+
+export const getActorMoviesById = async (actorId: string) => {
+    const movies = await getAllMovies();
+
+    if (!movies) return null;
+
+    const actorMovies = movies.filter((movie) => movie.cast.some((actor) => actorId === actor.id));
+
+    return actorMovies;
+};
+
+export const getActorById = async (actorId: string) => {
+    const movies = await getAllMovies();
+
+    if (!movies) return null;
+
+    for (const movie of movies) {
+        const actor = movie.cast.find((actor) => actor.id === actorId);
+
+        if (actor) {
+            return actor;
+        }
+    };
+
+    return null;
+};
+
+export const filterMoviesBySearchTerm = async (searchTerm: string): Promise<Movie[] | null> => {
+    const term = searchTerm.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+        .trim().toLowerCase();
+
+    const movies = await getAllMovies();
+
+    if (!movies) return null;
+
+    const data = movies.filter(movie => {
+        // título
+        const titleMatch = movie.title.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+            .toLowerCase().includes(term);
+
+        // gêneros
+        const genreMatch = movie.genre.some(g => g.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+            .toLowerCase().includes(term));
+
+        // nomes dos atores
+        const castMatch = movie.cast.some(actor =>
+            actor.name.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+                .toLowerCase().includes(term)
+        );
+
+        // retorna true se houver pelo menos uma correspondência
+        return titleMatch || genreMatch || castMatch;
+    });
+
+    return data;
+};
+
+interface FilterMoviesState {
+    actor: string;
+    genre: string;
+    year: string;
+    order: 'Popularidade' | 'Mais recentes';
+};
+
+export const filterMovies = async ({ actor, genre, year, order }: FilterMoviesState) => {
+    const movies = await getAllMovies();
+
+    if (!movies) return;
+
+    let filtered = movies;
+
+    if (actor !== 'Tudo') {
+        filtered = filtered.filter((movie) =>
+            movie.cast.some((act) => act.name === actor)
+        );
+    }
+
+    if (genre !== 'Tudo') {
+        filtered = filtered.filter((movie) =>
+            movie.genre.includes(genre)
+        );
+    }
+
+    if (year !== 'Tudo') {
+        filtered = filtered.filter((movie) =>
+            movie.date.startsWith(year)
+        );
+    }
+
+    if (order === 'Popularidade') {
+        filtered = filtered.sort((a, b) => b.like - a.like);
+    } else if (order === 'Mais recentes') {
+        filtered = filtered.sort(
+            (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+        );
+    }
+
+    useMovies.setState({ filteredData: filtered });
+};
+
+
+export const getMoviesByGenre = async (genre: MovieGenreType): Promise<Movie[] | null> => {
+    const movies = await getAllMovies();
+
+    if (!movies) return null;
 
     const filteredMovies = movies.filter((movie) => genre === movie.genre[0]);
 
     return filteredMovies;
 }
 
-export const getMovieById = (id: string) => {
-    const movies = [...useMovies.getState().movies];
+export const getMovieById = async (id: string) => {
+    const db = getFirestore();
 
-    const getMovieById = movies.filter((movie) => id === movie.id)[0];
+    const qm = doc(db, 'movies', id);
 
-    return getMovieById;
+    const querySnapshot = await getDoc(qm);
+
+    if (!querySnapshot.exists()) return null;
+
+    const movie: Movie = {
+        id: querySnapshot.id,
+        ...querySnapshot.data(),
+    } as Movie;
+
+    return movie;
 }
 
-export function getAnswerUsernamesByIds() {
-    const movies = [...useMovies.getState().movies];
-    const selectedMovieId = useMovies.getState().currentMovieId;
-    const selectedCommentId = useMovies.getState().currentCommentId;
+export const getAnswerUsernamesByIds = async () => {
+    const movies = await getAllMovies();
+    const selectedMovieId = getCurrentMovieId();
+    const selectedCommentId = getCurrentCommentId();
 
-    const movie = movies.find(m => m.id === selectedMovieId);
+    if (!movies) return null;
+
+    const movie = movies.find((movie) => movie.id === selectedMovieId);
     if (!movie) return [];
 
     const comment = movie.comments.find(c => c.id === selectedCommentId);
@@ -58,375 +328,484 @@ export function getAnswerUsernamesByIds() {
         answer.username.startsWith('@') ? answer.username.replace('@', '') : answer.username
     ).filter(answer => !answer.includes(comment.username));
 
-    // Remove duplicados com Set
     const uniqueUsernames = [...new Set(rawUsernames)];
 
     return uniqueUsernames;
 };
 
-export const toggleCommentLikeForUser = (loggedInUserId: string, commentId: string) =>
-    useMovies.setState(({ movies, currentMovieId }) => ({
-        movies: movies.map((movie) => {
-            if (movie.id !== currentMovieId) return movie;
+export const toggleCommentLikeForUser = async (
+    commentId: string
+) => {
+    const auth = getAuth();
+    const user = auth.currentUser;
 
-            return {
-                ...movie,
-                comments: movie.comments.map((comment) => {
-                    if (comment.id !== commentId) return comment;
+    if (!(user && user.uid)) return;
 
-                    const hasLiked = comment.likes.includes(loggedInUserId);
-                    const hasDesliked = comment.deslikes.includes(loggedInUserId);
+    const uid = user.uid;
+    const currentMovieId = getCurrentMovieId();
 
-                    return {
-                        ...comment,
-                        likes: hasLiked
-                            ? comment.likes.filter((id) => id !== loggedInUserId)
-                            : [...comment.likes, loggedInUserId],
-                        deslikes: hasDesliked
-                            ? comment.deslikes.filter((id) => id !== loggedInUserId)
-                            : comment.deslikes,
-                    };
-                }),
-            };
-        }),
-    }));
+    const db = getFirestore();
+    const movieRef = doc(db, 'movies', currentMovieId as string);
+    const movieSnap = await getDoc(movieRef);
 
-export const toggleAnswerLikeForUser = (loggedInUserId: string, answerId: string) =>
-    useMovies.setState(({ movies, currentMovieId, currentCommentId }) => ({
-        movies: movies.map((movie) => {
-            if (movie.id !== currentMovieId) return movie;
+    const data = movieSnap.data();
 
-            return {
-                ...movie,
-                comments: movie.comments.map((comment) => {
-                    if (comment.id !== currentCommentId) return comment;
+    if (!data) {
+        console.error(`Filme com ID ${currentMovieId} não encontrado.`);
+        return;
+    };
 
-                    return {
-                        ...comment,
-                        answers: comment.answers.map((answer) => {
-                            if (answer.id !== answerId) return answer;
+    const movie = {
+        id: movieSnap.id,
+        ...data,
+    } as Movie;
 
-                            const hasLiked = answer.likes.includes(loggedInUserId);
-                            const hasDesliked = answer.deslikes.includes(loggedInUserId);
+    const updatedComments = movie.comments.map((comment) => {
+        if (comment.id !== commentId) return comment;
 
-                            return {
-                                ...answer,
-                                likes: hasLiked
-                                    ? answer.likes.filter((id) => id !== loggedInUserId)
-                                    : [...answer.likes, loggedInUserId],
-                                deslikes: hasDesliked
-                                    ? answer.deslikes.filter((id) => id !== loggedInUserId)
-                                    : answer.deslikes,
-                            };
-                        }),
-                    };
-                }),
-            };
-        }),
-    }));
+        const hasLiked = comment.likes.includes(uid);
+        const hasDesliked = comment.dislikes.includes(uid);
 
-export const toggleCommentDislikeForUser = (loggedInUserId: string, commentId: string) =>
-    useMovies.setState(({ movies, currentMovieId }) => ({
-        movies: movies.map((movie) => {
-            if (movie.id !== currentMovieId) return movie;
-
-            return {
-                ...movie,
-                comments: movie.comments.map((comment) => {
-                    if (comment.id !== commentId) return comment;
-
-                    const hasDisliked = comment.deslikes.includes(loggedInUserId);
-                    const hasLiked = comment.likes.includes(loggedInUserId);
-
-                    return {
-                        ...comment,
-                        deslikes: hasDisliked
-                            ? comment.deslikes.filter((id) => id !== loggedInUserId)
-                            : [...comment.deslikes, loggedInUserId],
-                        likes: hasLiked
-                            ? comment.likes.filter((id) => id !== loggedInUserId)
-                            : comment.likes,
-                    };
-                }),
-            };
-        }),
-    }));
-
-export const toggleAnswerDislikeForUser = (loggedInUserId: string, answerId: string) =>
-    useMovies.setState(({ movies, currentMovieId, currentCommentId }) => ({
-        movies: movies.map((movie) => {
-            if (movie.id !== currentMovieId) return movie;
-
-            return {
-                ...movie,
-                comments: movie.comments.map((comment) => {
-                    if (comment.id !== currentCommentId) return comment;
-
-                    return {
-                        ...comment,
-                        answers: comment.answers.map((answer) => {
-                            if (answer.id !== answerId) return answer;
-
-                            const hasDisliked = answer.deslikes.includes(loggedInUserId);
-                            const hasLiked = answer.likes.includes(loggedInUserId);
-
-                            return {
-                                ...answer,
-                                deslikes: hasDisliked
-                                    ? answer.deslikes.filter((id) => id !== loggedInUserId)
-                                    : [...answer.deslikes, loggedInUserId],
-                                likes: hasLiked
-                                    ? answer.likes.filter((id) => id !== loggedInUserId)
-                                    : answer.likes,
-                            };
-                        }),
-                    };
-                }),
-            };
-        }),
-    }));
-
-export const hasLoggedInUserLikedComment = (loggedInUserId: string, commentId: string): boolean => {
-    const movie = getAllMovies().find((m) => m.id === getCurrentMovieId());
-    if (!movie) return false;
-
-    const comment = movie.comments.find((c) => c.id === commentId);
-    if (!comment) return false;
-
-    return comment.likes.includes(loggedInUserId);
-};
-
-export const hasLoggedInUserLikedAnswer = (userId: string, answerId: string): boolean => {
-    const { movies, currentMovieId, currentCommentId } = useMovies.getState();
-
-    const movie = movies.find((m) => m.id === currentMovieId);
-    if (!movie) return false;
-
-    const comment = movie.comments.find((c) => c.id === currentCommentId);
-    if (!comment) return false;
-
-    const answer = comment.answers.find((a) => a.id === answerId);
-    if (!answer) return false;
-
-    return answer.likes.includes(userId);
-};
-
-export const hasLoggedInUserDislikedComment = (userId: string, commentId: string) => {
-    const { movies, currentMovieId } = useMovies.getState();
-
-    const movie = movies.find((m) => m.id === currentMovieId);
-    if (!movie) return false;
-
-    const comment = movie.comments.find((c) => c.id === commentId);
-    if (!comment) return false;
-
-    return comment.deslikes.includes(userId);
-};
-
-export const hasLoggedInUserDislikedAnswer = (userId: string, answerId: string) => {
-    const { movies, currentMovieId, currentCommentId } = useMovies.getState();
-
-    const movie = movies.find((m) => m.id === currentMovieId);
-    if (!movie) return false;
-
-    const comment = movie.comments.find((c) => c.id === currentCommentId);
-    if (!comment) return false;
-
-    const answer = comment.answers.find((a) => a.id === answerId);
-    if (!answer) return false;
-
-    return answer.deslikes.includes(userId);
-};
-
-export const changeCommentById = (newComment: string) => useMovies.setState((state) => {
-
-    const currentMovieId = state.currentMovieId;
-    const currentCommentId = state.currentCommentId;
-
-    const newMovies = state.movies.map((movie) => {
-        if (currentMovieId === movie.id) {
-            return {
-                ...movie, comments: movie.comments.map((comment) => {
-                    if (currentCommentId === comment.id) {
-                        return {
-                            ...comment, isEdit: true, comment: newComment,
-                        };
-                    };
-
-                    return comment;
-                }),
-            };
+        return {
+            ...comment,
+            likes: hasLiked
+                ? comment.likes.filter((id) => id !== uid)
+                : [...comment.likes, uid],
+            dislikes: hasDesliked
+                ? comment.dislikes.filter((id) => id !== uid)
+                : comment.dislikes,
         };
-
-        return movie;
     });
 
-    return {
-        movies: newMovies,
+    await updateDoc(movieRef, {
+        comments: updatedComments,
+    });
+};
+
+export const toggleAnswerLikeForUser = async (
+    answerId: string,
+) => {
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    if (!(user && user.uid)) return;
+
+    const uid = user.uid;
+    const currentMovieId = getCurrentMovieId();
+    const currentCommentId = getCurrentCommentId();
+
+    const db = getFirestore();
+    const movieRef = doc(db, 'movies', currentMovieId as string);
+    const movieSnap = await getDoc(movieRef);
+
+    const data = movieSnap.data();
+
+    if (!data) {
+        console.error(`Filme com ID ${currentMovieId} não encontrado.`);
+        return;
     };
-});
 
-export const changeAnswerById = (newAnswer: string) => useMovies.setState((state) => {
+    const movie = {
+        id: movieSnap.id,
+        ...data,
+    } as Movie;
 
-    const currentMovieId = state.currentMovieId;
-    const currentCommentId = state.currentCommentId;
-    const currentAnswerId = state.currentAnswerId;
+    const updatedComments = movie.comments.map((comment) => {
+        if (comment.id !== currentCommentId) return comment;
 
-    const newMovies = state.movies.map((movie) => {
-        if (currentMovieId === movie.id) {
-            return {
-                ...movie, comments: movie.comments.map((comment) => {
-                    if (currentCommentId === comment.id) {
-                        const answers = comment.answers.map((answer) => {
-                            if (currentAnswerId === answer.id) {
-                                return {
-                                    ...answer, isEdit: true, answer: newAnswer,
-                                };
-                            };
+        return {
+            ...comment,
+            answers: comment.answers.map((answer) => {
+                if (answer.id !== answerId) return answer;
 
-                            return answer;
-                        });
+                const hasLiked = answer.likes.includes(uid);
+                const hasDesliked = answer.dislikes.includes(uid);
 
-                        return {
-                            ...comment, answers: answers,
-                        }
-                    };
-
-                    return comment;
-                }),
-            };
+                return {
+                    ...answer,
+                    likes: hasLiked
+                        ? answer.likes.filter((id) => id !== uid)
+                        : [...answer.likes, uid],
+                    dislikes: hasDesliked
+                        ? answer.dislikes.filter((id) => id !== uid)
+                        : answer.dislikes,
+                };
+            }),
         };
-
-        return movie;
     });
 
-    return {
-        movies: newMovies,
-    };
-});
+    await updateDoc(movieRef, {
+        comments: updatedComments,
+    });
+};
 
-export const setComment = (movieId: string, user: { username: string; message: string; avatar: string; userId: string }) => useMovies.setState((state) => {
+export const toggleCommentDislikeForUser = async (
+    commentId: string,
+) => {
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    if (!(user && user.uid)) return;
+
+    const uid = user.uid;
+    const currentMovieId = getCurrentMovieId();
+
+    const db = getFirestore();
+    const movieRef = doc(db, 'movies', currentMovieId as string);
+    const movieSnap = await getDoc(movieRef);
+
+    const data = movieSnap.data();
+
+    if (!data) {
+        console.error(`Filme com ID ${currentMovieId} não encontrado.`);
+        return;
+    };
+
+    const movie = {
+        id: movieSnap.id,
+        ...data,
+    } as Movie;
+
+    const updatedComments = movie.comments.map((comment) => {
+        if (comment.id !== commentId) return comment; // 
+
+        const hasDesliked = comment.dislikes.includes(uid);
+        const hasLiked = comment.likes.includes(uid);
+
+        return {
+            ...comment,
+            dislikes: hasDesliked
+                ? comment.dislikes.filter((id) => id !== uid)
+                : [...comment.dislikes, uid],
+            likes: hasLiked
+                ? comment.likes.filter((id) => id !== uid)
+                : comment.likes,
+        };
+    });
+
+    await updateDoc(movieRef, {
+        comments: updatedComments,
+    });
+};
+
+export const toggleAnswerDislikeForUser = async (
+    answerId: string,
+) => {
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    if (!(user && user.uid)) return;
+
+    const uid = user.uid;
+    const currentMovieId = getCurrentMovieId();
+    const currentCommentId = getCurrentCommentId();
+
+    const db = getFirestore();
+    const movieRef = doc(db, 'movies', currentMovieId as string);
+    const movieSnap = await getDoc(movieRef);
+
+    const data = movieSnap.data();
+
+    if (!data) {
+        console.error(`Filme com ID ${currentMovieId} não encontrado.`);
+        return;
+    };
+
+    const movie = {
+        id: movieSnap.id,
+        ...data,
+    } as Movie;
+
+    const updatedComments = movie.comments.map((comment) => {
+        if (comment.id !== currentCommentId) return comment;
+
+        return {
+            ...comment,
+            answers: comment.answers.map((answer) => {
+                if (answer.id !== answerId) return answer;
+
+                const hasDesliked = answer.dislikes.includes(uid);
+                const hasLiked = answer.likes.includes(uid);
+
+                return {
+                    ...answer,
+                    dislikes: hasDesliked
+                        ? answer.dislikes.filter((id) => id !== uid)
+                        : [...answer.dislikes, uid],
+                    likes: hasLiked
+                        ? answer.likes.filter((id) => id !== uid)
+                        : answer.likes,
+                };
+            }),
+        };
+    });
+
+    await updateDoc(movieRef, {
+        comments: updatedComments,
+    });
+};
+
+export const hasLoggedInUserLikedComment = (likes: string[]): boolean => {
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    if (!(user && user.uid)) return false;
+
+    const uid = user.uid;
+
+    return likes.includes(uid);
+};
+
+export const hasLoggedInUserLikedAnswer = (likes: string[]): boolean => {
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    if (!(user && user.uid)) return false;
+
+    const uid = user.uid;
+
+    return likes.includes(uid);
+};
+
+export const hasLoggedInUserDislikedComment = (dislikes: string[]) => {
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    if (!(user && user.uid)) return false;
+
+    const uid = user.uid;
+
+    return dislikes.includes(uid);
+};
+
+export const hasLoggedInUserDislikedAnswer = (dislikes: string[]) => {
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    if (!(user && user.uid)) return false;
+
+    const uid = user.uid;
+
+    return dislikes.includes(uid);
+};
+
+export const changeCommentById = async (
+    newComment: string,
+) => {
+    const currentMovieId = getCurrentMovieId();
+    const currentCommentId = getCurrentCommentId();
+
+    const db = getFirestore();
+    const movieRef = doc(db, 'movies', currentMovieId as string);
+    const movieSnap = await getDoc(movieRef);
+
+    const data = movieSnap.data();
+
+    if (!data) {
+        console.error(`Filme com ID ${currentMovieId} não encontrado.`);
+        return;
+    };
+
+    const comments = (data.comments || []) as Comment[];
+
+    const updatedComments = comments.map((comment) => {
+        if (comment.id !== currentCommentId) return comment;
+
+        return {
+            ...comment,
+            isEdit: true,
+            comment: newComment,
+        };
+    });
+
+    await updateDoc(movieRef, {
+        comments: updatedComments,
+    });
+};
+
+export const changeAnswerById = async (
+    newAnswer: string,
+) => {
+    const currentMovieId = getCurrentMovieId();
+    const currentCommentId = getCurrentCommentId();
+    const currentAnswerId = getCurrentAnswerId();
+
+    const db = getFirestore();
+    const movieRef = doc(db, 'movies', currentMovieId as string);
+    const movieSnap = await getDoc(movieRef);
+
+    const data = movieSnap.data();
+
+    if (!data) {
+        console.error(`Filme com ID ${currentMovieId} não encontrado.`);
+        return;
+    };
+
+    const comments = (data.comments || []) as Comment[];
+
+    const updatedComments = comments.map((comment) => {
+        if (comment.id !== currentCommentId) return comment;
+
+        return {
+            ...comment,
+            answers: comment.answers.map((answer) => {
+                if (answer.id !== currentAnswerId) return answer;
+
+                return {
+                    ...answer,
+                    isEdit: true,
+                    answer: newAnswer,
+                };
+            }),
+        };
+    });
+
+    await updateDoc(movieRef, {
+        comments: updatedComments,
+    });
+};
+
+export const setComment = async (
+    movieId: string,
+    user: Pick<Comment, 'username' | 'userId' | 'avatar' | 'comment' | 'background'>,
+) => {
     const comment = {
         id: uuid.v4(),
         username: user.username,
         userId: user.userId,
         time: Date.now(),
         avatar: user.avatar,
-        comment: user.message,
+        background: user.background,
+        comment: user.comment,
         likes: [],
-        deslikes: [],
+        dislikes: [],
         answers: [],
         isEdit: false,
     };
 
+    const db = getFirestore();
+    const movieRef = doc(db, 'movies', movieId as string);
+    const movieSnap = await getDoc(movieRef);
 
-    const newMovies = [...state.movies.map((movie) => {
-        if (movieId === movie.id) {
-            return {
-                ...movie, comments: [
-                    comment,
-                    ...movie.comments,
-                ],
-            };
-        };
+    const data = movieSnap.data();
 
-        return movie;
-    })];
+    if (!data) {
+        console.error(`Filme com ID ${movieId} não encontrado.`);
+        return;
+    }
 
-    return {
-        movies: newMovies,
-    };
-});
+    const existingComments = (data.comments || []) as Comment[];
 
-export const setAnswer = (movieId: string, user: { username: string; answer: string; avatar: string; userId: string }) => useMovies.setState((state) => {
+    const updatedComments = [comment, ...existingComments];
+
+    await updateDoc(movieRef, {
+        comments: updatedComments,
+    });
+};
+
+export const setAnswer = async (
+    movieId: string,
+    user: Pick<CommentAnswer, 'username' | 'userId' | 'avatar' | 'answer' | 'background'>,
+) => {
     const answer = {
         id: uuid.v4(),
         username: user.username,
         userId: user.userId,
         time: Date.now(),
+        background: user.background,
         avatar: user.avatar,
         answer: user.answer,
         likes: [],
-        deslikes: [],
+        dislikes: [],
         isEdit: false,
     };
 
-    const newMovies = [...state.movies.map((movie) => {
-        if (movieId === movie.id) {
-            const comments = movie.comments.map((comment) => {
-                if (state.currentCommentId === comment.id) {
-                    return {
-                        ...comment, answers: [
-                            ...comment.answers,
-                            answer,
-                        ]
-                    }
-                }
+    const currentCommentId = getCurrentCommentId();
+    const db = getFirestore();
+    const movieRef = doc(db, 'movies', movieId as string);
+    const movieSnap = await getDoc(movieRef);
 
-                return comment;
-            });
+    const data = movieSnap.data();
 
-            return {
-                ...movie, comments: comments,
-            };
-        };
-
-        return movie;
-    })];
-
-    return {
-        movies: newMovies,
+    if (!data) {
+        console.error(`Filme com ID ${movieId} não encontrado.`);
+        return;
     };
-});
 
-export const removeCommentById = () => useMovies.setState((state) => {
-    const selectedMovieId = state.currentMovieId;
-    const selectedCommentId = state.currentCommentId;
+    const comments = (data.comments || []) as Comment[];
 
-    const newMovies = state.movies.map((movie) => {
-        if (selectedMovieId === movie.id) {
-            return {
-                ...movie, comments: movie.comments.filter((comment) => selectedCommentId !== comment.id),
-            };
+    const updatedComments = comments.map((comment) => {
+        if (comment.id !== currentCommentId) return comment;
+
+        return {
+            ...comment,
+            answers: [
+                ...(comment.answers || []),
+                answer,
+            ],
         };
-
-        return movie;
     });
 
-    return {
-        movies: newMovies,
+    await updateDoc(movieRef, {
+        comments: updatedComments,
+    });
+};
+
+export const removeCommentById = async () => {
+    const currentMovieId = getCurrentMovieId();
+    const currentCommentId = getCurrentCommentId();
+
+    const db = getFirestore();
+    const movieRef = doc(db, 'movies', currentMovieId as string);
+    const movieSnap = await getDoc(movieRef);
+
+    const data = movieSnap.data();
+
+    if (!data) {
+        console.error(`Filme com ID ${currentMovieId} não encontrado.`);
+        return;
     };
-});
 
-export const removeAnswerById = () => useMovies.setState((state) => {
-    const selectedMovieId = state.currentMovieId;
-    const selectedCommentId = state.currentCommentId;
-    const selectedAnswerId = state.currentAnswerId;
+    const comments = (data.comments || []) as Comment[];
 
-    const newMovies = state.movies.map((movie) => {
-        if (selectedMovieId === movie.id) {
-            return {
-                ...movie, comments: movie.comments.map((comment) => {
-                    if (selectedCommentId === comment.id) {
-                        const answers = comment.answers.filter((answer) => selectedAnswerId !== answer.id);
+    const updatedComments = comments.filter((comment) => comment.id !== currentCommentId);
 
-                        return {
-                            ...comment, answers: answers,
-                        }
-                    };
+    await updateDoc(movieRef, {
+        comments: updatedComments,
+    });
+};
 
-                    return comment;
-                }),
-            };
+export const removeAnswerById = async () => {
+    const currentMovieId = getCurrentMovieId();
+    const currentCommentId = getCurrentCommentId();
+    const currentAnswerId = getCurrentAnswerId();
+
+    const db = getFirestore();
+    const movieRef = doc(db, 'movies', currentMovieId as string);
+    const movieSnap = await getDoc(movieRef);
+
+    const data = movieSnap.data();
+
+    if (!data) {
+        console.error(`Filme com ID ${currentMovieId} não encontrado.`);
+        return;
+    };
+
+    const comments = (data.comments || []) as Comment[];
+
+    const updatedComments = comments.map((comment) => {
+        if (comment.id !== currentCommentId) return comment;
+
+        return {
+            ...comment,
+            answers: comment.answers.filter((answer) => answer.id !== currentAnswerId),
         };
-
-        return movie;
     });
 
-    return {
-        movies: newMovies,
-    };
-});
+    await updateDoc(movieRef, {
+        comments: updatedComments,
+    });
+};
 
 export const setCurrentMovieId = (id: CurrentMovieId) => useMovies.setState(() => {
     return {
@@ -457,6 +836,4 @@ export const getCurrentMovieId = () => useMovies.getState().currentMovieId;
 export const getCurrentCommentId = () => useMovies.getState().currentCommentId;
 
 export const getCurrentAnswerId = () => useMovies.getState().currentAnswerId;
-
-export const getCurrentUserId = () => useMovies.getState().currentUserId;
 
