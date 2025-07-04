@@ -1,113 +1,354 @@
 import { create } from 'zustand'
 import { getAllMovies } from './useMovie';
+import {
+    doc,
+    getDoc,
+    getFirestore,
+    onSnapshot,
+    updateDoc,
+} from '@react-native-firebase/firestore';
+import { getAuth } from '@react-native-firebase/auth';
 
-const initialState: {
+export interface User {
     id: string;
     username: string;
-    avatar: string;
+    avatar: string | null;
     searchHistory: string[];
+    background: string;
     myList: string[];
     myLikedMovies: string[];
-} = {
-    id: 'ffkfeffefe-fefefefeee-ggegegeg-gegege',
-    username: '@cesarbranquelo',
-    avatar: 'https://scontent.frao3-1.fna.fbcdn.net/v/t1.6435-9/93158956_105020071174869_1995309121296924672_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeEqrtnwRufPN2GRyZ1RusDZAixBVhpHFasCLEFWGkcVq9AIdXt3dklrbF3MrzppgoEDItbZkrGadFvzZVUm9Mu3&_nc_ohc=-96wTmjvIbcQ7kNvwEQidbc&_nc_oc=Adkpe0AE5LzaYNyOGzxykFGv2l-0AXHXSGHAZNZ0ewnFit4Y64nfN3J8r3irRxkM-GY&_nc_zt=23&_nc_ht=scontent.frao3-1.fna&_nc_gid=vUdntbNVa4s3ti85CS1vPQ&oh=00_AfI7C5u55qPGh5MsnYtAZclUhavwb4goafq8RPESKKe68A&oe=684E11A8',
-    searchHistory: ['matrix', 'hobbit', 'cesar pizza', 'brodowski', 'carla', 'beatriz', 'senhor dos anéis'],
+};
+
+const initialState: User = {
+    id: '',
+    username: '',
+    avatar: '',
+    searchHistory: [],
+    background: '',
     myList: [],
     myLikedMovies: [],
 };
 
 export const useUser = create(() => initialState);
 
-export const getUser = () => useUser.getState();
+export const getLoggedInUserId = () => useUser.getState().id;
 
-export const addToMyList = (id: string) => useUser.setState((state) => {
-    return {
-        ...state,
-        myList: [...state.myList, id]
+export const setLoggedInUser = async () => {
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    if (user && user.uid) {
+        const uid = user.uid;
+
+        const db = getFirestore();
+        const userRef = doc(db, 'users', uid);
+        const userSnap = await getDoc(userRef);
+
+        const data = userSnap.data() as User;
+
+        if (!data) {
+            console.error(`Usuário com ID ${uid} não encontrado.`);
+            return null;
+        }
+
+        useUser.setState({
+            ...data,
+            id: uid,
+        });
     };
-});
-
-export const removeFromMyList = (id: string) => useUser.setState((state) => {
-    const myList = getMyList();
-
-    const newMyList = myList.filter((movieId) => movieId !== id);
-
-    return {
-        ...state,
-        myList: newMyList,
-    };
-});
-
-export const getMyList = () => useUser.getState().myList;
-
-export const getMyListMovies = () => {
-    const myList = getMyList();
-
-    const movies = getAllMovies();
-
-    const myListMovies = movies.filter((movie) => {
-        return myList.some((id) => id === movie.id);
-    });
-
-    return myListMovies;
 };
 
-export const isMovieInMyList = (id: string) => {
-    const result = getMyList().some((movieId) => id === movieId);
+export const getLoggedInUserBackground = () => useUser.getState().background;
 
-    return result;
+export const getLoggedInUserUsername = () => useUser.getState().username;
+
+export const getLoggedInUserAvatar = () => useUser.getState().avatar;
+
+export const getLoggedInUser = () => useUser.getState();
+
+export const addToMyList = async (movieId: string) => {
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    if (user && user.uid) {
+        const uid = user.uid;
+
+        const db = getFirestore();
+        const userRef = doc(db, 'users', uid);
+        const userSnap = await getDoc(userRef);
+
+        const data = userSnap.data();
+
+        if (!data) {
+            console.error(`Usuário com ID ${uid} não encontrado.`);
+            return;
+        }
+
+        const existingMyList = (data.myList || []) as string[];
+
+        const updatedMyList = [movieId, ...existingMyList];
+
+        await updateDoc(userRef, {
+            myList: updatedMyList,
+        });
+    }
 };
 
-export const addToLikedMovies = (id: string) => useUser.setState((state) => {
-    return {
-        ...state,
-        myLikedMovies: [...state.myLikedMovies, id],
+export const removeFromMyList = async (MOVIEID: string) => {
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    if (user && user.uid) {
+        const uid = user.uid;
+
+        const db = getFirestore();
+        const userRef = doc(db, 'users', uid);
+        const userSnap = await getDoc(userRef);
+
+        const data = userSnap.data();
+
+        if (!data) {
+            console.error(`Usuário com ID ${uid} não encontrado.`);
+            return;
+        }
+
+        const existingMyList = (data.myList || []) as string[];
+
+        const updatedMyList = existingMyList.filter((movieId) => movieId !== MOVIEID);
+
+        await updateDoc(userRef, {
+            myList: updatedMyList,
+        });
     };
-});
+};
 
-export const removeFromLikedMovies = (id: string) => useUser.setState((state) => {
-    const myLikedMoviesList = getMyLikedMoviesList();
+export const getMyList = async () => {
+    const auth = getAuth();
+    const user = auth.currentUser;
 
-    const newMyLikedMoviesList = myLikedMoviesList.filter((movieId) => movieId !== id);
+    if (!(user && user.uid)) return null;
 
-    return {
-        ...state,
-        myLikedMovies: newMyLikedMoviesList,
+    const uid = user.uid;
+
+    const db = getFirestore();
+    const userRef = doc(db, 'users', uid as string);
+    const userSnap = await getDoc(userRef);
+
+    const data = userSnap.data() as User;
+
+    if (!data) {
+        console.error(`User com ID ${uid} não encontrado.`);
+        return null;
+    }
+
+    const myList = data.myList;
+
+    const movies = await getAllMovies();
+
+    if (!movies) return null;
+
+    const myLikedMovies = myList
+        .map((id) => movies.find((movie) => movie.id === id))
+        .filter((movie): movie is NonNullable<typeof movie> => movie !== undefined);
+
+    return myLikedMovies;
+};
+
+export const isMovieInMyList = async (movieId: string) => {
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    if (user && user.uid) {
+        const uid = user.uid;
+
+        const db = getFirestore();
+        const userRef = doc(db, 'users', uid);
+        const userSnap = await getDoc(userRef);
+
+        const data = userSnap.data();
+        if (!data) {
+            console.error(`Usuário com ID ${uid} não encontrado.`);
+            return false;
+        }
+
+        const existingMyList = (data.myList || []) as string[];
+
+        return existingMyList.includes(movieId);
+    }
+
+    return false;
+};
+
+export const addToLikedMovies = async (movieId: string) => {
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    if (user && user.uid) {
+        const uid = user.uid;
+
+        const db = getFirestore();
+        const userRef = doc(db, 'users', uid);
+        const userSnap = await getDoc(userRef);
+
+        const data = userSnap.data();
+
+        if (!data) {
+            console.error(`Usuário com ID ${uid} não encontrado.`);
+            return;
+        }
+
+        const existingMyLikedMovies = (data.myLikedMovies || []) as string[];
+
+        const updatedMyLikedMovies = [movieId, ...existingMyLikedMovies];
+
+        await updateDoc(userRef, {
+            myLikedMovies: updatedMyLikedMovies,
+        });
+    }
+};
+
+export const removeFromLikedMovies = async (MOVIEID: string) => {
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    if (user && user.uid) {
+        const uid = user.uid;
+
+        const db = getFirestore();
+        const userRef = doc(db, 'users', uid);
+        const userSnap = await getDoc(userRef);
+
+        const data = userSnap.data();
+
+        if (!data) {
+            console.error(`Usuário com ID ${uid} não encontrado.`);
+            return;
+        }
+
+        const existingMyLikedMovies = (data.myLikedMovies || []) as string[];
+
+        const updatedMyLikedMovies = existingMyLikedMovies.filter((movieId) => movieId !== MOVIEID);
+
+        await updateDoc(userRef, {
+            myLikedMovies: updatedMyLikedMovies,
+        });
     };
-});
+};
 
-export const getMyLikedMoviesList = () => useUser.getState().myLikedMovies;
+export const getMoviesYouLiked = async () => {
+    const auth = getAuth();
+    const user = auth.currentUser;
 
-export const getMyLikedMoviesListMovies = () => {
-    const myLikedMoviesList = getMyLikedMoviesList();
+    if (!(user && user.uid)) return null;
 
-    const movies = getAllMovies();
+    const uid = user.uid;
 
-    const myLikedMoviesListMovies = movies.filter((movie) => {
-        return myLikedMoviesList.some((id) => id === movie.id);
-    });
+    const db = getFirestore();
+    const userRef = doc(db, 'users', uid as string);
+    const userSnap = await getDoc(userRef);
+
+    const data = userSnap.data() as User;
+
+    if (!data) {
+        console.error(`User com ID ${uid} não encontrado.`);
+        return null;
+    }
+
+    const myLikedMovies = data.myLikedMovies;
+
+    const movies = await getAllMovies();
+
+    if (!movies) return null;
+
+    const myLikedMoviesListMovies = myLikedMovies
+        .map((id) => movies.find((movie) => movie.id === id))
+        .filter((movie): movie is NonNullable<typeof movie> => movie !== undefined);
 
     return myLikedMoviesListMovies;
 };
 
-export const isMovieLiked = (id: string) => {
-    const result = getMyLikedMoviesList().some((movieId) => id === movieId);
+export const isMovieLiked = async (movieId: string) => {
+    const auth = getAuth();
+    const user = auth.currentUser;
 
-    return result;
+    if (user && user.uid) {
+        const uid = user.uid;
+
+        const db = getFirestore();
+        const userRef = doc(db, 'users', uid);
+        const userSnap = await getDoc(userRef);
+
+        const data = userSnap.data();
+
+        if (!data) {
+            console.error(`Usuário com ID ${uid} não encontrado.`);
+            return false;
+        }
+
+        const existingMyLikedMovies = (data.myLikedMovies || []) as string[];
+
+        return existingMyLikedMovies.includes(movieId);
+    }
+
+    return false;
 };
 
-export const setSearchHistory = (search: string) =>
-    useUser.setState((state) => {
-        // Remove o termo, se já existir
-        const filteredHistory = state.searchHistory.filter(
-            (item) => item !== search
-        );
+export const setUserSearchHistory = async (search: string) => {
+    const auth = getAuth();
+    const user = auth.currentUser;
 
-        // Coloca o termo no início e limita a 8 itens
-        const updatedHistory = [search, ...filteredHistory].slice(0, 8);
+    if (!(user && user.uid)) return;
 
-        return {
-            searchHistory: updatedHistory,
-        };
+    const uid = user.uid;
+    const db = getFirestore();
+    const userRef = doc(db, 'users', uid as string);
+    const userSnap = await getDoc(userRef);
+
+    const data = userSnap.data();
+
+    if (!data) {
+        console.error(`User com ID ${uid} não encontrado.`);
+        return;
+    };
+
+    const userData = {
+        id: userSnap.id,
+        ...data,
+    } as User;
+
+    const filteredHistory = userData.searchHistory.filter(
+        (item) => item !== search
+    );
+
+    const updatedHistory = [search, ...filteredHistory].slice(0, 8);
+
+    await updateDoc(userRef, {
+        searchHistory: updatedHistory,
     });
+};
+
+export const getUserSearchHistory = (
+    onCommentsUpdate: (comments: User['searchHistory'] | null) => void
+) => {
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    if (!(user && user.uid)) return;
+
+    const uid = user.uid;
+    const db = getFirestore();
+    const userRef = doc(db, 'users', uid);
+
+    const unsubscribe = onSnapshot(userRef, (docSnap) => {
+        if (!docSnap.exists()) {
+            onCommentsUpdate(null);
+            return;
+        }
+
+        const data = docSnap.data() as User;
+
+        onCommentsUpdate(data.searchHistory ?? null);
+    });
+
+    return unsubscribe;
+};
