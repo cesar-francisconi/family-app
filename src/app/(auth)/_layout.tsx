@@ -38,6 +38,13 @@ export default function RootLayoutNav() {
 
           }}
         />
+
+        <Stack.Screen
+          name="resetPassword"
+          options={{
+
+          }}
+        />
       </Stack >
     </SafeAreaView>
   );
