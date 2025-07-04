@@ -133,23 +133,12 @@ export default function PasswordChange(props: PasswordChangeProps) {
                 }
             />
 
-            <VerticalButtonGroup
-                firstButton={
-                    <Button
-                        onPress={handleChangePassword}
-                        title='Alterar'
-                        type='primary'
-                        variant='filled'
-                    />
-                }
-                secondButton={
-                    <Button
-                        onPress={handleClear}
-                        title='Limpar'
-                        type='primary'
-                        variant='outlined'
-                    />
-                }
+            <Button
+                onPress={handleChangePassword}
+                title='Alterar'
+                type='primary'
+                variant='filled'
+                borderRadius='medium'
             />
         </SafeAreaView>
     );
