@@ -71,10 +71,8 @@ export default function PasswordChange(props: PasswordChangeProps) {
                         state='filled'
                         value={currentPassword}
                         onChangeText={setCurrentPassword}
-                        withHelpMessageAndLabelCheck
                         withLabelCheck={false}
                         helpMessageColor={Colors.primary.main}
-                        helpMessage='Esqueceu sua senha?'
                         leftIcon={
                             <Icon
                                 name='Feather'
