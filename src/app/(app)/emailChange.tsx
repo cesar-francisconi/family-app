@@ -120,23 +120,12 @@ export default function EmailChange(props: EmailChangeProps) {
                 }
             />
 
-            <VerticalButtonGroup
-                firstButton={
-                    <Button
-                        onPress={handleChangeEmail}
-                        title='Alterar'
-                        type='primary'
-                        variant='filled'
-                    />
-                }
-                secondButton={
-                    <Button
-                        onPress={handleCancel}
-                        title='Limpar'
-                        type='primary'
-                        variant='outlined'
-                    />
-                }
+            <Button
+                onPress={handleChangeEmail}
+                title='Alterar'
+                type='primary'
+                variant='filled'
+                borderRadius='medium'
             />
         </SafeAreaView>
     );
