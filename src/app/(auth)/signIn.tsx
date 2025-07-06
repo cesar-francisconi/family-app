@@ -1,3 +1,4 @@
+import { ActivityIndicator } from '@/src/components/ActivityIndicator';
 import { AuthSuggestion } from '@/src/components/AuthSuggestion';
 import { Button } from '@/src/components/Button';
 import { Icon } from '@/src/components/Icon';
@@ -38,8 +39,11 @@ export default function SignIn(props: SignInProps) {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSignIn = async () => {
+    setIsLoading(true);
+
     const auth = getAuth();
 
     try {
@@ -88,6 +92,8 @@ export default function SignIn(props: SignInProps) {
     } catch (error: any) {
       console.log('Erro ao fazer login:', error.code, error.message);
     }
+
+    setIsLoading(false);
   };
 
   return (
@@ -161,6 +167,7 @@ export default function SignIn(props: SignInProps) {
             variant='filled'
             size='medium'
             title='Entrar'
+            isLoading={isLoading}
             borderRadius='medium'
           />
         </View>
