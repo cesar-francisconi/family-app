@@ -10,6 +10,7 @@ import { getButtonToken } from "@/src/helpers/getButtonToken";
 import { Colors } from "@/src/constants/Colors";
 import React from "react";
 import { IconProps } from "../Icon/types";
+import { ActivityIndicator } from "../ActivityIndicator";
 
 export function Button(props: ButtonProps & Omit<TouchableOpacityProps, 'style'>) {
 
@@ -19,6 +20,7 @@ export function Button(props: ButtonProps & Omit<TouchableOpacityProps, 'style'>
         rightIcon,
         disabled,
         size = 'medium',
+        isLoading = false,
     } = props;
 
     const token = getButtonToken(props);
@@ -47,14 +49,17 @@ export function Button(props: ButtonProps & Omit<TouchableOpacityProps, 'style'>
                 size: Size,
             } as IconProps)}
 
-            {title && <Text
+            {title && !isLoading ? <Text
                 style={[{
                     ...text,
                     color,
                 }, styles.title]}
             >
                 {title}
-            </Text>}
+            </Text> : <ActivityIndicator
+                COLOR="second"
+                SIZE="small"
+            />}
 
             {rightIcon && React.cloneElement(rightIcon, {
                 color,

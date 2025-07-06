@@ -6,6 +6,7 @@ type CommonButtonProps = {
   size?: 'medium' | 'small';
   borderRadius?: 'large' | 'medium' | 'small' | 'none';
   title?: string;
+  isLoading?: boolean;
 };
 
 type ButtonLeftIcon = CommonButtonProps & {
