@@ -2,7 +2,6 @@ import { Button } from '@/src/components/Button';
 import { Icon } from '@/src/components/Icon';
 import { Input } from '@/src/components/Input';
 import { InputThreeGroup } from '@/src/components/InputThreeGroup';
-import { VerticalButtonGroup } from '@/src/components/VerticalButtonGroup/Index';
 import {
     EmailAuthProvider,
     getAuth,
@@ -120,23 +119,12 @@ export default function EmailChange(props: EmailChangeProps) {
                 }
             />
 
-            <VerticalButtonGroup
-                firstButton={
-                    <Button
-                        onPress={handleChangeEmail}
-                        title='Alterar'
-                        type='primary'
-                        variant='filled'
-                    />
-                }
-                secondButton={
-                    <Button
-                        onPress={handleCancel}
-                        title='Limpar'
-                        type='primary'
-                        variant='outlined'
-                    />
-                }
+            <Button
+                onPress={handleChangeEmail}
+                title='Alterar'
+                type='primary'
+                variant='filled'
+                borderRadius='medium'
             />
         </SafeAreaView>
     );
