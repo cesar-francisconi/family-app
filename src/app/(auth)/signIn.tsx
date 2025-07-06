@@ -137,7 +137,6 @@ export default function SignIn(props: SignInProps) {
                   route.push('/(auth)/resetPassword');
                 }}
                 helpMessageColor={Colors.primary.main}
-                labelCheckLabel='Lembrar-me?'
                 secureTextEntry
                 keyboardType='numeric'
                 leftIcon={
