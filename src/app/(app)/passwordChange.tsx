@@ -2,7 +2,6 @@ import { Button } from '@/src/components/Button';
 import { Icon } from '@/src/components/Icon';
 import { Input } from '@/src/components/Input';
 import { InputThreeGroup } from '@/src/components/InputThreeGroup';
-import { VerticalButtonGroup } from '@/src/components/VerticalButtonGroup/Index';
 import { Colors } from '@/src/constants/Colors';
 import { styles } from '@/src/screen/PasswordChange/styles';
 import { PasswordChangeProps } from '@/src/screen/PasswordChange/types';
@@ -133,23 +132,12 @@ export default function PasswordChange(props: PasswordChangeProps) {
                 }
             />
 
-            <VerticalButtonGroup
-                firstButton={
-                    <Button
-                        onPress={handleChangePassword}
-                        title='Alterar'
-                        type='primary'
-                        variant='filled'
-                    />
-                }
-                secondButton={
-                    <Button
-                        onPress={handleClear}
-                        title='Limpar'
-                        type='primary'
-                        variant='outlined'
-                    />
-                }
+            <Button
+                onPress={handleChangePassword}
+                title='Alterar'
+                type='primary'
+                variant='filled'
+                borderRadius='medium'
             />
         </SafeAreaView>
     );
