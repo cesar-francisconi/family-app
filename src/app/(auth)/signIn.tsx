@@ -132,6 +132,10 @@ export default function SignIn(props: SignInProps) {
                 placeholder='Sua senha aqui...'
                 withHelpMessageAndLabelCheck
                 helpMessage='Esqueceu sua senha?'
+                withLabelCheck={false}
+                fnHelpMessage={() => {
+                  route.push('/(auth)/resetPassword');
+                }}
                 helpMessageColor={Colors.primary.main}
                 labelCheckLabel='Lembrar-me?'
                 secureTextEntry
