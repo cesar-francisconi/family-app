@@ -47,6 +47,21 @@ export function getHeaderOptions({ params }: GetHeaderOptionsProps) {
             },
             pointerEvents: 'auto',
         },
+        resetPassword: {
+            category: '',
+            actorName: '',
+            transparentBackground: false,
+            withBottomStroke: true,
+            withHeaderActions: true,
+            withHeaderLeft: true,
+            withHeaderRight: false,
+            headerRightOptions: {
+                withFirstAction: false,
+                withSecondAction: false,
+                withTertiaryAction: false,
+            },
+            pointerEvents: 'auto',
+        },
         home: {
             category: '',
             actorName: '',
