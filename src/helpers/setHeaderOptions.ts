@@ -16,7 +16,7 @@ interface HeaderOptions {
 }
 
 export type RouteKey =
-    | 'signIn' | 'signUp' | 'home' | 'categories' | 'me' | 'search'
+    | 'signIn' | 'signUp' | 'resetPassword' | 'home' | 'categories' | 'me' | 'search'
     | 'explorer' | 'details' | 'actorDetails'
     | 'moviesYouLiked' | 'myList' | 'account' | 'passwordChange' | 'deleteUser' | 'emailChange';
 
@@ -33,6 +33,7 @@ export function setHeaderOptions(props: SetHeaderOptionsProps) {
     const routeMap: { [key: string]: RouteKey } = {
         signIn: 'signIn',
         signUp: 'signUp',
+        resetPassword: 'resetPassword',
         search: 'search',
         explorer: 'explorer',
         '(details)': 'details',
