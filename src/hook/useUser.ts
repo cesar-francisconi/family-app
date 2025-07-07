@@ -60,7 +60,7 @@ export const setLoggedInUser = async () => {
 
 export const getLoggedInUserBackground = () => useUser.getState().background;
 
-export const getLoggedInUserUsername = () => useUser.getState().username;
+export const getLoggedInUserUsername = () => useUser((state) => state.username);
 
 export const getLoggedInUserAvatar = () => useUser.getState().avatar;
 
