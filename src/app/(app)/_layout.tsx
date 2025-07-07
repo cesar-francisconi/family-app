@@ -15,7 +15,7 @@ export default function RootLayoutNav() {
     <SafeAreaView
       style={styles.container}
     >
-       <Header />
+      <Header />
 
       <Stack
         screenOptions={{
@@ -91,6 +91,13 @@ export default function RootLayoutNav() {
 
         <Stack.Screen
           name="deleteUser"
+          options={{
+
+          }}
+        />
+
+        <Stack.Screen
+          name="usernameChange"
           options={{
 
           }}
