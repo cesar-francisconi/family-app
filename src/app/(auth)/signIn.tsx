@@ -11,17 +11,22 @@ import { Colors } from '@/src/constants/Colors';
 import { getRandomColor } from '@/src/helpers/getRandomColor';
 import { styles } from '@/src/screen/SignIn/styles';
 import { SignInProps } from '@/src/screen/SignIn/types';
+import uuid from 'react-native-uuid';
 import {
   getAuth,
   sendEmailVerification,
   signInWithEmailAndPassword,
 } from '@react-native-firebase/auth';
 import {
+  collection,
   doc,
   getDoc,
+  getDocs,
   getFirestore,
+  query,
   setDoc,
   Timestamp,
+  where,
 } from '@react-native-firebase/firestore';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
@@ -30,6 +35,7 @@ import {
   SafeAreaView,
   View,
 } from 'react-native';
+import { handleSignIn } from '@/src/helpers/handleSignIn';
 
 export default function SignIn(props: SignInProps) {
 
@@ -40,61 +46,6 @@ export default function SignIn(props: SignInProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-
-  const handleSignIn = async () => {
-    setIsLoading(true);
-
-    const auth = getAuth();
-
-    try {
-      const { user } = await signInWithEmailAndPassword(auth, email, password);
-
-      if (!user.emailVerified) {
-        Alert.alert('', 'Confirme o cadastro no seu email!');
-        await sendEmailVerification(user);
-        return;
-      };
-
-      const db = getFirestore();
-      const userRef = doc(db, 'users', user.uid);
-      const userSnap = await getDoc(userRef);
-
-      if (!userSnap.exists()) {
-        const background = getRandomColor();
-
-        await setDoc(userRef, {
-          createdAt: Timestamp.fromMillis(
-            new Date(user.metadata.creationTime || Date.now()).getTime()
-          ),
-          email: user.email,
-          username: `@${user.displayName}`,
-          background,
-          avatar: null,
-          searchHistory: ['ação', 'ficção', 'romance'],
-          myList: [],
-          myLikedMovies: [],
-        });
-      } else {
-        const docData = userSnap.data()!;
-
-        if (docData.email !== user.email) {
-          await setDoc(
-            userRef,
-            {
-              email: user.email,
-            },
-            { merge: true }
-          );
-        }
-      };
-
-      route.replace('/(app)/(tabs)/home');
-    } catch (error: any) {
-      console.log('Erro ao fazer login:', error.code, error.message);
-    }
-
-    setIsLoading(false);
-  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -162,7 +113,11 @@ export default function SignIn(props: SignInProps) {
           />
 
           <Button
-            onPress={handleSignIn}
+            onPress={() => handleSignIn({
+              email,
+              password,
+              setIsLoading,
+            })}
             type='primary'
             variant='filled'
             size='medium'
