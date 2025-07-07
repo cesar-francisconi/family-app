@@ -257,6 +257,21 @@ export function getHeaderOptions({ params }: GetHeaderOptionsProps) {
             },
             pointerEvents: 'auto',
         },
+        usernameChange: {
+            category: 'Alterar usuário',
+            actorName: '',
+            transparentBackground: false,
+            withBottomStroke: false,
+            withHeaderActions: true,
+            withHeaderLeft: true,
+            withHeaderRight: false,
+            headerRightOptions: {
+                withFirstAction: false,
+                withSecondAction: false,
+                withTertiaryAction: false,
+            },
+            pointerEvents: 'auto',
+        },
     });
 
     return {
