@@ -44,27 +44,29 @@ export function Button(props: ButtonProps & Omit<TouchableOpacityProps, 'style'>
                 ...border,
             }, styles.button]}
         >
-            {leftIcon && React.cloneElement(leftIcon, {
-                color,
-                size: Size,
-            } as IconProps)}
-
-            {title && !isLoading ? <Text
-                style={[{
-                    ...text,
-                    color,
-                }, styles.title]}
-            >
-                {title}
-            </Text> : <ActivityIndicator
+            {isLoading ? <ActivityIndicator
                 COLOR="second"
                 SIZE="small"
-            />}
+            /> : <>
+                {leftIcon && React.cloneElement(leftIcon, {
+                    color,
+                    size: Size,
+                } as IconProps)}
 
-            {rightIcon && React.cloneElement(rightIcon, {
-                color,
-                size: Size,
-            } as IconProps)}
+                {title && <Text
+                    style={[{
+                        ...text,
+                        color,
+                    }, styles.title]}
+                >
+                    {title}
+                </Text>}
+
+                {rightIcon && React.cloneElement(rightIcon, {
+                    color,
+                    size: Size,
+                } as IconProps)}
+            </>}
         </TouchableOpacity>
     );
 }
