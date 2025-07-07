@@ -22,6 +22,17 @@ export default function Account(props: AccountProps) {
                 options={[
                     <Option
                         withStroke
+                        onPress={() => route.push('/usernameChange')}
+                        text='Alterar usuário'
+                        rightIcon={
+                            <Icon
+                                name='Entypo'
+                                icon='chevron-thin-right'
+                            />
+                        }
+                    />,
+                    <Option
+                        withStroke
                         onPress={() => route.push('/emailChange')}
                         text='Alterar e-mail da conta'
                         rightIcon={
