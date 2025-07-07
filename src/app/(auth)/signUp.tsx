@@ -26,6 +26,7 @@ export default function SignUp(props: SignUpProps) {
     const [name, setName] = useState('');
     const [lastName, setLastName] = useState('');
     const [password, setPassword] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
     return (
         <SafeAreaView style={styles.container}>
@@ -128,8 +129,10 @@ export default function SignUp(props: SignUpProps) {
                             name,
                             lastName,
                             password,
+                            setIsLoading,
                         })}
                         type='primary'
+                        isLoading={isLoading}
                         variant='filled'
                         size='medium'
                         title='Cadastrar'

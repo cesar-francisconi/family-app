@@ -13,6 +13,7 @@ interface HandleSignUpProps {
     name: string;
     lastName: string;
     password: string;
+    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const handleSignUp = async ({
@@ -20,16 +21,15 @@ export const handleSignUp = async ({
     name,
     lastName,
     password,
+    setIsLoading,
 }: HandleSignUpProps) => {
+    setIsLoading(true);
+
     const auth = getAuth();
     const usernameLowerCase = `${name}${lastName}`.toLowerCase();
     const route = useRouter();
 
     try {
-        const isExists = await checkIfUsernameAlreadyExists(`@${name}${lastName}`);
-
-        if (isExists) return Alert.alert('', 'O username já existe!');
-
         const { user } = await createUserWithEmailAndPassword(auth, email, password);
 
         await updateProfile(user, {
@@ -44,4 +44,6 @@ export const handleSignUp = async ({
         console.log('Erro ao cadastrar:', error.code, error.message);
         Alert.alert('Erro', 'Não foi possível criar a conta.');
     }
+
+    setIsLoading(false);
 };
