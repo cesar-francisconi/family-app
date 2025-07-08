@@ -12,6 +12,7 @@ import {
     CommentReplyFieldProps,
 } from './types';
 import {
+    getLoggedInUserAvatar,
     getLoggedInUserBackground,
     getLoggedInUserUsername,
 } from '@/src/hook/useUser';
@@ -31,6 +32,7 @@ export const CommentReplyField = forwardRef<TextInput, CommentReplyFieldProps>((
 
     const username = getLoggedInUserUsername();
     const background = getLoggedInUserBackground();
+    const avatar = getLoggedInUserAvatar();
 
     const borderWidth = onFocus ? 1 : 0;
 
@@ -40,12 +42,18 @@ export const CommentReplyField = forwardRef<TextInput, CommentReplyFieldProps>((
         <View
             style={styles.container}
         >
-            <Avatar
-                mode='initial'
-                initial={getInitialsFromUsername(username)}
-                background={background}
+            {avatar ? (<Avatar
+                mode='image'
+                imageUrl={avatar}
                 size='small'
-            />
+            />)
+                :
+                (<Avatar
+                    mode='initial'
+                    initial={getInitialsFromUsername(username)}
+                    background={background}
+                    size='small'
+                />)}
 
             <TextInput
                 autoCorrect={false}
