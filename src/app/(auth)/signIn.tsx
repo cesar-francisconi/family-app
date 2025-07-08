@@ -1,4 +1,3 @@
-import { ActivityIndicator } from '@/src/components/ActivityIndicator';
 import { AuthSuggestion } from '@/src/components/AuthSuggestion';
 import { Button } from '@/src/components/Button';
 import { Icon } from '@/src/components/Icon';
@@ -8,30 +7,11 @@ import { Or } from '@/src/components/Or';
 import { VerticalButtonGroup } from '@/src/components/VerticalButtonGroup/Index';
 import { Welcome } from '@/src/components/Welcome';
 import { Colors } from '@/src/constants/Colors';
-import { getRandomColor } from '@/src/helpers/getRandomColor';
 import { styles } from '@/src/screen/SignIn/styles';
 import { SignInProps } from '@/src/screen/SignIn/types';
-import uuid from 'react-native-uuid';
-import {
-  getAuth,
-  sendEmailVerification,
-  signInWithEmailAndPassword,
-} from '@react-native-firebase/auth';
-import {
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  getFirestore,
-  query,
-  setDoc,
-  Timestamp,
-  where,
-} from '@react-native-firebase/firestore';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import {
-  Alert,
   SafeAreaView,
   View,
 } from 'react-native';
