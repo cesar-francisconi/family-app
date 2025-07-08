@@ -16,6 +16,7 @@ import {
   View,
 } from 'react-native';
 import { handleSignIn } from '@/src/helpers/handleSignIn';
+import { handleGoogleAuth } from '@/src/helpers/handleGoogleAuth';
 
 export default function SignIn(props: SignInProps) {
 
@@ -114,6 +115,7 @@ export default function SignIn(props: SignInProps) {
         <VerticalButtonGroup
           firstButton={
             <Button
+              onPress={() => handleGoogleAuth('signIn')}
               type='secondary'
               variant='filled'
               title='Continue com Google'
