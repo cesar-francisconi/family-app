@@ -18,6 +18,13 @@ import { Colors } from '@/src/constants/Colors';
 import * as SystemUI from 'expo-system-ui';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+
+GoogleSignin.configure({
+  webClientId: '1081773549120-d8sevegtld10b4nflpgruulfdiepoetp.apps.googleusercontent.com',
+  offlineAccess: true, // opcional, apenas se você quiser acessar APIs do Google pelo seu servidor
+});
+
 SplashScreen.preventAutoHideAsync();
 
 LogBox.ignoreLogs([
