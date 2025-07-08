@@ -62,7 +62,7 @@ export const getLoggedInUserBackground = () => useUser.getState().background;
 
 export const getLoggedInUserUsername = () => useUser((state) => state.username);
 
-export const getLoggedInUserAvatar = () => useUser.getState().avatar;
+export const getLoggedInUserAvatar = () => useUser((state) => state.avatar);
 
 export const getLoggedInUser = () => useUser.getState();
 
