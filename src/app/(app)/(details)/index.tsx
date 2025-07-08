@@ -34,6 +34,7 @@ import {
     useState,
 } from 'react';
 import {
+    getLoggedInUserAvatar,
     getLoggedInUserBackground,
     getLoggedInUserUsername,
 } from '../../../hook/useUser';
@@ -42,6 +43,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Movie } from '@/movie';
 import { ActivityIndicator } from '@/src/components/ActivityIndicator';
 import { getInitialsFromUsername } from '@/src/helpers/getInitialsFromUsername';
+import { AvatarProps } from '@/src/components/Avatar/types';
 
 export const detailsMovieCardHeight = 216;
 export const screenHeight = Dimensions.get('window').height;
@@ -95,6 +97,17 @@ export default function Details(props: DetailsProps) {
     const route = useRouter();
 
     const lineageGradientHeight = detailsMovieCardHeight * 2;
+
+    const avatar = getLoggedInUserAvatar();
+
+    const avatarOptions: AvatarProps = avatar ? {
+        mode: 'image',
+        imageUrl: avatar,
+    } : {
+        mode: 'initial',
+        initial: getInitialsFromUsername(username),
+        background: getLoggedInUserBackground(),
+    };
 
     if (!username) return;
 
@@ -158,9 +171,7 @@ export default function Details(props: DetailsProps) {
                     >
                         <CommentActionRow
                             avatarOptions={{
-                                mode: 'initial',
-                                initial: getInitialsFromUsername(username),
-                                background: getLoggedInUserBackground(),
+                                ...avatarOptions,
                             }}
                             count={movie.comments.length}
                             title='Comentários'
