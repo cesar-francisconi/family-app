@@ -7,6 +7,7 @@ import { Or } from '@/src/components/Or';
 import { VerticalButtonGroup } from '@/src/components/VerticalButtonGroup/Index';
 import { Welcome } from '@/src/components/Welcome';
 import { handleSignUp } from '@/src/helpers/handleSignUp';
+import { handleGoogleAuth } from '@/src/helpers/handleGoogleAuth';
 import { styles } from '@/src/screen/SignUp/styles';
 import { SignUpProps } from '@/src/screen/SignUp/types';
 import { useRouter } from 'expo-router';
@@ -147,6 +148,7 @@ export default function SignUp(props: SignUpProps) {
                 <VerticalButtonGroup
                     firstButton={
                         <Button
+                            onPress={() => handleGoogleAuth('signUp')}
                             type='secondary'
                             variant='filled'
                             title='Cadastre com Google'
