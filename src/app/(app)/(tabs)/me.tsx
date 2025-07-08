@@ -46,14 +46,22 @@ export default function Me(props: MeProps) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <LabelAvatar
+            {avatar ? (<LabelAvatar
                 avatarOptions={{
-                    mode: 'initial',
-                    initial: username,
-                    background,
+                    mode: 'image',
+                    imageUrl: avatar,
                 }}
                 label={username}
-            />
+            />)
+                :
+                (<LabelAvatar
+                    avatarOptions={{
+                        mode: 'initial',
+                        initial: username,
+                        background,
+                    }}
+                    label={username}
+                />)}
 
             <OptionsList
                 options={[
