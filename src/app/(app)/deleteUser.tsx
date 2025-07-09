@@ -23,6 +23,7 @@ import {
     getFirestore,
 } from '@react-native-firebase/firestore';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { getLoggedInUserIsGoogleAccount } from '@/src/hook/useUser';
 
 export default function DeleteUser(props: DeleteUserProps) {
 
@@ -30,6 +31,8 @@ export default function DeleteUser(props: DeleteUserProps) {
 
     const [confirmEmail, setConfirmEmail] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+
+    const isGoogleAccount = getLoggedInUserIsGoogleAccount();
 
     const handleDeleteGoogleUser = async () => {
         const auth = getAuth();
@@ -116,47 +119,62 @@ export default function DeleteUser(props: DeleteUserProps) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <InputTwoGroup
-                firstInput={
-                    <Input
-                        label='Confirme seu email para excluir conta...'
-                        placeholder=''
-                        variant='outlined'
-                        state='filled'
-                        value={confirmEmail}
-                        onChangeText={setConfirmEmail}
-                        leftIcon={
-                            <Icon
-                                name='MaterialCommunityIcons'
-                                icon='email-outline'
-                            />
-                        }
+            {isGoogleAccount ? (<Input
+                label='Confirme seu email para excluir conta...'
+                placeholder=''
+                variant='outlined'
+                state='filled'
+                value={confirmEmail}
+                onChangeText={setConfirmEmail}
+                leftIcon={
+                    <Icon
+                        name='MaterialCommunityIcons'
+                        icon='email-outline'
                     />
                 }
-                secondInput={
-                    <Input
-                        label='Confirme sua senha para excluir conta...'
-                        placeholder=''
-                        value={confirmPassword}
-                        secureTextEntry
-                        onChangeText={setConfirmPassword}
-                        variant='outlined'
-                        state='filled'
-                        leftIcon={
-                            <Icon
-                                name='Feather'
-                                icon='lock'
-                            />
-                        }
-                        rightIcon={
-                            <Icon
-                                name='Feather'
-                                icon='eye-off'
-                            />
-                        }
-                    />
-                }
-            />
+            />)
+                :
+                (<InputTwoGroup
+                    firstInput={
+                        <Input
+                            label='Confirme seu email para excluir conta...'
+                            placeholder=''
+                            variant='outlined'
+                            state='filled'
+                            value={confirmEmail}
+                            onChangeText={setConfirmEmail}
+                            leftIcon={
+                                <Icon
+                                    name='MaterialCommunityIcons'
+                                    icon='email-outline'
+                                />
+                            }
+                        />
+                    }
+                    secondInput={
+                        <Input
+                            label='Confirme sua senha para excluir conta...'
+                            placeholder=''
+                            value={confirmPassword}
+                            secureTextEntry
+                            onChangeText={setConfirmPassword}
+                            variant='outlined'
+                            state='filled'
+                            leftIcon={
+                                <Icon
+                                    name='Feather'
+                                    icon='lock'
+                                />
+                            }
+                            rightIcon={
+                                <Icon
+                                    name='Feather'
+                                    icon='eye-off'
+                                />
+                            }
+                        />
+                    }
+                />)}
 
             <VerticalButtonGroup
                 firstButton={
