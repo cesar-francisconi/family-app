@@ -17,6 +17,7 @@ export interface User {
     background: string;
     myList: string[];
     myLikedMovies: string[];
+    isGoogleAccount: boolean,
 };
 
 const initialState: User = {
@@ -27,6 +28,7 @@ const initialState: User = {
     background: '',
     myList: [],
     myLikedMovies: [],
+    isGoogleAccount: false,
 };
 
 export const useUser = create(() => initialState);
@@ -59,6 +61,8 @@ export const setLoggedInUser = async () => {
 };
 
 export const getLoggedInUserBackground = () => useUser.getState().background;
+
+export const getLoggedInUserIsGoogleAccount = () => useUser.getState().isGoogleAccount;
 
 export const getLoggedInUserUsername = () => useUser((state) => state.username);
 
