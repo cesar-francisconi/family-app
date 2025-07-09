@@ -179,7 +179,7 @@ export default function DeleteUser(props: DeleteUserProps) {
             <VerticalButtonGroup
                 firstButton={
                     <Button
-                        onPress={handleDeleteUser}
+                        onPress={isGoogleAccount ? handleDeleteGoogleUser : handleDeleteUser}
                         title='Excluir'
                         type='primary'
                         variant='filled'
