@@ -35,7 +35,7 @@ export default function RootLayoutNav() {
                 name="(comments)"
                 options={{
                     presentation: 'transparentModal',
-                    animation: 'fade',
+                    animation: 'slide_from_bottom',
                 }}
             />
         </Stack >
