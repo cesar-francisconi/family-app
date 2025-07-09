@@ -25,6 +25,7 @@ import {
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { getLoggedInUserIsGoogleAccount } from '@/src/hook/useUser';
 import { handleDeleteGoogleUser } from '@/src/helpers/handleDeleteGoogleUser';
+import { handleDeleteUser } from '@/src/helpers/handleDeleteUser';
 
 export default function DeleteUser(props: DeleteUserProps) {
 
@@ -34,37 +35,6 @@ export default function DeleteUser(props: DeleteUserProps) {
     const [confirmPassword, setConfirmPassword] = useState('');
 
     const isGoogleAccount = getLoggedInUserIsGoogleAccount();
-
-    const handleDeleteUser = async () => {
-        const auth = getAuth();
-        const user = auth.currentUser;
-
-        if (!user?.email) return;
-
-        if (confirmEmail !== user.email) {
-            Alert.alert('Erro', 'O email confirmado não bate com o seu email de login.');
-            return;
-        }
-
-        const credential = EmailAuthProvider.credential(confirmEmail, confirmPassword);
-
-        try {
-            await reauthenticateWithCredential(user, credential);
-
-            const db = getFirestore();
-            const userRef = doc(db, 'users', user.uid);
-            await deleteDoc(userRef);
-
-            await deleteUser(user);
-            Alert.alert('Sucesso', 'Conta do usuário deletada!');
-        } catch (error: any) {
-            if (error.code === 'auth/invalid-credential') {
-                Alert.alert('Erro', 'Senha atual incorreta.');
-            } else {
-                Alert.alert('Erro', error.message || 'Erro ao deletar conta.');
-            }
-        }
-    };
 
     const handleClear = () => {
         setConfirmEmail('');
@@ -133,7 +103,7 @@ export default function DeleteUser(props: DeleteUserProps) {
             <VerticalButtonGroup
                 firstButton={
                     <Button
-                        onPress={() => isGoogleAccount ? handleDeleteGoogleUser({ confirmEmail }) : handleDeleteUser}
+                        onPress={() => isGoogleAccount ? handleDeleteGoogleUser({ confirmEmail }) : handleDeleteUser({ confirmEmail, confirmPassword })}
                         title='Excluir'
                         type='primary'
                         variant='filled'
