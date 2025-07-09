@@ -13,6 +13,8 @@ import { headerHeight } from '@/src/components/Header';
 import { CloseButton } from '@/src/components/CloseButton';
 import { detailsMovieCardHeight } from '..';
 import Animated, {
+  Extrapolation,
+  interpolate,
   runOnJS,
   useAnimatedStyle,
   useSharedValue,
@@ -22,6 +24,7 @@ import {
   GestureDetector,
   Gesture,
 } from 'react-native-gesture-handler';
+import { getScreenHeight } from '@/src/helpers/getScreenHeight';
 
 type Routes = 'comment' | 'answers'
 
@@ -67,6 +70,21 @@ export default function RootLayoutNav() {
       }
     });
 
+  // Estilo animado do BlackDrop: opacidade de 1 (total preto) para 0 conforme translateY cresce
+  const animatedBlackDropStyle = useAnimatedStyle(() => {
+    const opacity = interpolate(
+      translateY.value,
+      [0, screenHeight - (detailsMovieCardHeight + headerHeight)],
+      [1, 0],
+      Extrapolation.CLAMP
+    );
+    return {
+      opacity,
+      // ocupa todo o espaço do container
+      backgroundColor: Colors.surface.main,
+    };
+  });
+
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{ translateY: translateY.value }],
   }));
@@ -74,6 +92,7 @@ export default function RootLayoutNav() {
   return (
     <GestureDetector gesture={panGesture}>
       <SafeAreaView style={styles.container}>
+        <Animated.View style={[styles.renderbackDrop, animatedBlackDropStyle]} />
         <Animated.View style={[styles.content, animatedStyle]}>
           <Stack
             initialRouteName="comment"
@@ -128,5 +147,11 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     backgroundColor: Colors.surface.main,
+  },
+  renderbackDrop: {
+    position: 'absolute',
+    width: '100%',
+    height: getScreenHeight,
+    marginTop: detailsMovieCardHeight + headerHeight,
   },
 });
