@@ -4,120 +4,129 @@ import {
   useRouter,
 } from 'expo-router';
 import {
+  Dimensions,
+  SafeAreaView,
   StyleSheet,
 } from 'react-native';
 import { Colors } from '@/src/constants/Colors';
-import BottomSheet, {
-  BottomSheetView,
-} from '@gorhom/bottom-sheet';
-import {
-  useCallback,
-  useRef,
-} from 'react';
 import { headerHeight } from '@/src/components/Header';
 import { CloseButton } from '@/src/components/CloseButton';
-import { snapPoints } from '@/src/helpers/snapPoints';
 import { detailsMovieCardHeight } from '..';
-import { useBottomSheetBackdrop } from '@/src/components/Backdrop';
+import Animated, {
+  runOnJS,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
+import {
+  GestureDetector,
+  Gesture,
+} from 'react-native-gesture-handler';
 
 type Routes = 'comment' | 'answers'
 
 export default function RootLayoutNav() {
 
-  const bottomSheetRef = useRef<BottomSheet>(null);
+  const translateY = useSharedValue(0);
+  const screenHeight = Dimensions.get('window').height;
 
   const navigationRef = useNavigationContainerRef();
+  const route = useRouter();
 
   const getRouteName = navigationRef.getCurrentRoute as () => { name: Routes } | undefined;
 
-  const route = useRouter();
-
-  const renderBackdrop = useBottomSheetBackdrop({
-    pressBehavior: 'none',
-    opacity: 1,
-    onPress: () => {
-
-    },
-    style: styles.renderBackdrop,
-  });
-
-  const handleSheetChanges = useCallback((index: number) => {
+  // Função para voltar na navegação quando a animação terminar
+  const handleClose = () => {
     const current = getRouteName()?.name;
-    if (index === -1) {
-      if (current === 'answers') route.back();
+    if (current === 'comment') {
+      route.back();
+    } else if (current === 'answers') {
+      route.back();
       route.back();
     }
-  }, []);
+  };
+
+  const panGesture = Gesture.Pan()
+    .onUpdate((event) => {
+      // Não permite mover para cima (negativo), só para baixo (positivo)
+      translateY.value = Math.max(0, event.translationY);
+    })
+    .onEnd(() => {
+      const threshold = Math.floor((screenHeight - (detailsMovieCardHeight + headerHeight)) * 0.3);
+
+      if (translateY.value > threshold) {
+        // Anima para baixo até sumir (tela toda) e depois executa o route.back()
+        translateY.value = withTiming(screenHeight, { duration: 250 }, (isFinished) => {
+          if (isFinished) {
+            runOnJS(handleClose)();
+          }
+        });
+      } else {
+        // Caso contrário, volta para posição inicial
+        translateY.value = withTiming(0);
+      }
+    });
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ translateY: translateY.value }],
+  }));
 
   return (
-    <BottomSheet
-      ref={bottomSheetRef}
-      enablePanDownToClose
-      index={0}
-      onChange={handleSheetChanges}
-      handleIndicatorStyle={styles.handleIndicatorStyle}
-      backgroundStyle={styles.backgroundStyle}
-      snapPoints={snapPoints()}
-      backdropComponent={renderBackdrop}
-      containerStyle={styles.containerStyle}
-    >
-      <BottomSheetView style={styles.container}>
-        <Stack
-          initialRouteName="comment"
-          screenOptions={{
-            animation: 'flip',
-            presentation: 'transparentModal',
-            headerTintColor: Colors.surface.on,
-            headerStyle: {
-              backgroundColor: Colors.surface.container,
-            },
-            headerShadowVisible: false,
-            contentStyle: {
-              backgroundColor: Colors.surface.container,
-            },
-            headerRight: () => {
-              return <CloseButton
-                onPress={() => bottomSheetRef.current?.close()}
-              />;
-            }
-          }}
-        >
-          <Stack.Screen
-            name={"comment" as Routes}
-            options={{
-              animation: 'none',
-              title: 'Comentários',
-              headerBackVisible: false,
+    <GestureDetector gesture={panGesture}>
+      <SafeAreaView style={styles.container}>
+        <Animated.View style={[styles.content, animatedStyle]}>
+          <Stack
+            initialRouteName="comment"
+            screenOptions={{
+              animation: 'flip',
+              presentation: 'transparentModal',
+              headerTintColor: Colors.surface.on,
+              headerStyle: {
+                backgroundColor: Colors.surface.container,
+              },
+              headerShadowVisible: false,
+              contentStyle: {
+                backgroundColor: Colors.surface.container,
+              },
+              headerRight: () => (
+                <CloseButton onPress={() => {
+                  translateY.value = withTiming(screenHeight, { duration: 300 }, (isFinished) => {
+                    if (isFinished) {
+                      runOnJS(handleClose)();
+                    }
+                  });
+                }} />
+              ),
             }}
-          />
-
-          <Stack.Screen
-            name={"answers" as Routes}
-            options={{
-              title: 'Respostas',
-            }}
-          />
-        </Stack >
-      </BottomSheetView >
-    </BottomSheet >
+          >
+            <Stack.Screen
+              name={"comment" as Routes}
+              options={{
+                animation: 'none',
+                title: 'Comentários',
+                headerBackVisible: false,
+              }}
+            />
+            <Stack.Screen
+              name={"answers" as Routes}
+              options={{
+                title: 'Respostas',
+              }}
+            />
+          </Stack>
+        </Animated.View>
+      </SafeAreaView>
+    </GestureDetector>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    height: '100%',
+    flex: 1,
+    paddingTop: detailsMovieCardHeight + headerHeight,
+  },
+  content: {
+    flex: 1,
     backgroundColor: Colors.surface.main,
-  },
-  handleIndicatorStyle: {
-    backgroundColor: Colors.surface.containerExtraHigh,
-  },
-  backgroundStyle: {
-    backgroundColor: Colors.surface.container,
-  },
-  containerStyle: {
-
-  },
-  renderBackdrop: {
-    marginTop: detailsMovieCardHeight + headerHeight,
   },
 });
