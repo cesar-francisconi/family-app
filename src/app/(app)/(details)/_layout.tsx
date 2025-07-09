@@ -36,9 +36,6 @@ export default function RootLayoutNav() {
                 options={{
                     presentation: 'transparentModal',
                     animation: 'fade',
-                    contentStyle: {
-                        marginTop: detailsMovieCardHeight + headerHeight,
-                    }
                 }}
             />
         </Stack >
