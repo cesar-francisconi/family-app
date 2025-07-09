@@ -88,6 +88,7 @@ export const handleSignIn = async ({
                 searchHistory: ['ação', 'ficção', 'romance'],
                 myList: [],
                 myLikedMovies: [],
+                googleAccount: false,
             });
         } else {
             const docData = userSnap.data()!;
