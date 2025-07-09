@@ -99,6 +99,7 @@ export const handleGoogleAuth = async (mode: GoogleAuthMode) => {
                 searchHistory: ["ação", "ficção", "romance"],
                 myList: [],
                 myLikedMovies: [],
+                googleAccount: true,
             });
         }
 
