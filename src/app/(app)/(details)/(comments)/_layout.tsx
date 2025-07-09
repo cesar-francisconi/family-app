@@ -25,6 +25,7 @@ import {
   Gesture,
 } from 'react-native-gesture-handler';
 import { getScreenHeight } from '@/src/helpers/getScreenHeight';
+import { Indicator } from '@/src/components/Indicator';
 
 type Routes = 'comment' | 'answers'
 
@@ -94,6 +95,7 @@ export default function RootLayoutNav() {
       <SafeAreaView style={styles.container}>
         <Animated.View style={[styles.renderbackDrop, animatedBlackDropStyle]} />
         <Animated.View style={[styles.content, animatedStyle]}>
+          <Indicator />
           <Stack
             initialRouteName="comment"
             screenOptions={{
@@ -146,7 +148,9 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    backgroundColor: Colors.surface.main,
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    overflow: 'hidden',
   },
   renderbackDrop: {
     position: 'absolute',
