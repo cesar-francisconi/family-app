@@ -112,32 +112,16 @@ export default function SignIn(props: SignInProps) {
           text='Ou'
         />
 
-        <VerticalButtonGroup
-          firstButton={
-            <Button
-              onPress={() => handleGoogleAuth('signIn')}
-              type='secondary'
-              variant='filled'
-              title='Continue com Google'
-              leftIcon={
-                <Icon
-                  name='AntDesign'
-                  icon='google'
-                />
-              }
-            />
-          }
-          secondButton={
-            <Button
-              type='secondary'
-              variant='filled'
-              title='Continue com Facebook'
-              leftIcon={
-                <Icon
-                  name='MaterialCommunityIcons'
-                  icon='facebook'
-                />
-              }
+        <Button
+          onPress={() => handleGoogleAuth('signIn')}
+          type='secondary'
+          variant='filled'
+          title='Continue com Google'
+          borderRadius='medium'
+          leftIcon={
+            <Icon
+              name='AntDesign'
+              icon='google'
             />
           }
         />
