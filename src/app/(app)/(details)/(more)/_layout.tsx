@@ -3,106 +3,138 @@ import {
     useRouter,
 } from 'expo-router';
 import {
+    Dimensions,
+    SafeAreaView,
     StyleSheet,
 } from 'react-native';
 import { Colors } from '@/src/constants/Colors';
-import BottomSheet, {
-    BottomSheetView,
-} from '@gorhom/bottom-sheet';
-import {
-    useRef,
-} from 'react';
+import Animated, {
+    Extrapolation,
+    interpolate,
+    runOnJS,
+    useAnimatedStyle,
+    useSharedValue,
+    withTiming,
+} from 'react-native-reanimated';
 import { headerHeight } from '@/src/components/Header';
 import { CloseButton } from '@/src/components/CloseButton';
-import { useHandleSheetChange } from '@/src/hook/useHandleSheetChange';
-import { snapPoints } from '@/src/helpers/snapPoints';
 import { getScreenHeight } from '@/src/helpers/getScreenHeight';
 import { detailsMovieCardHeight } from '..';
-import { useBottomSheetBackdrop } from '@/src/components/Backdrop';
+import {
+    Gesture,
+    GestureDetector,
+} from 'react-native-gesture-handler';
+import { Indicator } from '@/src/components/Indicator';
 
 export default function RootLayoutNav() {
 
-    const bottomSheetRef = useRef<BottomSheet>(null);
+    const translateY = useSharedValue(0);
+    const screenHeight = Dimensions.get('window').height;
 
     const route = useRouter();
 
-    const renderBackdrop = useBottomSheetBackdrop({
-        pressBehavior: 'none',
-        opacity: 1,
-        onPress: () => {
+    // Função para voltar na navegação quando a animação terminar
+    const handleClose = () => {
+        route.back();
+    };
 
-        },
-        style: styles.renderBackdrop,
+    const panGesture = Gesture.Pan()
+        .onUpdate((event) => {
+            // Não permite mover para cima (negativo), só para baixo (positivo)
+            translateY.value = Math.max(0, event.translationY);
+        })
+        .onEnd(() => {
+            const threshold = Math.floor((screenHeight - (detailsMovieCardHeight + headerHeight)) * 0.3);
+
+            if (translateY.value > threshold) {
+                // Anima para baixo até sumir (tela toda) e depois executa o route.back()
+                translateY.value = withTiming(screenHeight, { duration: 250 }, (isFinished) => {
+                    if (isFinished) {
+                        runOnJS(handleClose)();
+                    }
+                });
+            } else {
+                // Caso contrário, volta para posição inicial
+                translateY.value = withTiming(0);
+            }
+        });
+
+    // Estilo animado do BlackDrop: opacidade de 1 (total preto) para 0 conforme translateY cresce
+    const animatedBlackDropStyle = useAnimatedStyle(() => {
+        const opacity = interpolate(
+            translateY.value,
+            [0, screenHeight - (detailsMovieCardHeight + headerHeight)],
+            [1, 0],
+            Extrapolation.CLAMP
+        );
+        return {
+            opacity,
+            // ocupa todo o espaço do container
+            backgroundColor: Colors.surface.main,
+        };
     });
 
-    const handleChange = useHandleSheetChange(
-        () => {
-            route.back();
-        },
-        () => {
-
-        }
-    );
+    const animatedStyle = useAnimatedStyle(() => ({
+        transform: [{ translateY: translateY.value }],
+    }));
 
     return (
-        <BottomSheet
-            ref={bottomSheetRef}
-            enablePanDownToClose
-            index={0}
-            onChange={handleChange}
-            handleIndicatorStyle={styles.handleIndicatorStyle}
-            backgroundStyle={styles.backgroundStyle}
-            snapPoints={snapPoints()}
-            containerStyle={styles.containerStyle}
-            backdropComponent={renderBackdrop}
-        >
-            <BottomSheetView style={styles.container}>
-                <Stack
-                    screenOptions={{
-                        animation: 'flip',
-                        presentation: 'transparentModal',
-                        headerTintColor: Colors.surface.on,
-                        headerStyle: {
-                            backgroundColor: Colors.surface.container,
-                        },
-                        headerShadowVisible: false,
-                        contentStyle: {
-                            backgroundColor: Colors.surface.container,
-                        },
-                        headerRight: () => {
-                            return <CloseButton
-                                onPress={() => bottomSheetRef.current?.close()}
-                            />
-                        }
-                    }}
-                >
-                    <Stack.Screen
-                        name="more"
-                        options={{
-                            headerBackVisible: false,
+        <GestureDetector gesture={panGesture}>
+            <SafeAreaView style={styles.container}>
+                <Animated.View style={[styles.renderbackDrop, animatedBlackDropStyle]} />
+                <Animated.View style={[styles.content, animatedStyle]}>
+                    <Indicator />
+                    <Stack
+                        screenOptions={{
+                            animation: 'flip',
+                            presentation: 'transparentModal',
+                            headerTintColor: Colors.surface.on,
+                            headerStyle: {
+                                backgroundColor: Colors.surface.container,
+                            },
+                            headerShadowVisible: false,
+                            contentStyle: {
+                                backgroundColor: Colors.surface.container,
+                            },
+                            headerRight: () => (
+                                <CloseButton onPress={() => {
+                                    translateY.value = withTiming(screenHeight, { duration: 300 }, (isFinished) => {
+                                        if (isFinished) {
+                                            runOnJS(handleClose)();
+                                        }
+                                    });
+                                }} />
+                            ),
                         }}
-                    />
-                </Stack >
-            </BottomSheetView >
-        </BottomSheet >
+                    >
+                        <Stack.Screen
+                            name="more"
+                            options={{
+                                headerBackVisible: false,
+                            }}
+                        />
+                    </Stack >
+                </Animated.View>
+            </SafeAreaView>
+        </GestureDetector>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        height: '100%',
-        backgroundColor: Colors.surface.main,
+        flex: 1,
+        paddingTop: detailsMovieCardHeight + headerHeight,
     },
-    handleIndicatorStyle: {
-        backgroundColor: Colors.surface.containerExtraHigh,
+    content: {
+        flex: 1,
+        borderTopLeftRadius: 30,
+        borderTopRightRadius: 30,
+        overflow: 'hidden',
     },
-    backgroundStyle: {
-        backgroundColor: Colors.surface.container,
-    },
-    containerStyle: {
+    renderbackDrop: {
+        position: 'absolute',
+        width: '100%',
         height: getScreenHeight,
-    },
-    renderBackdrop: {
         marginTop: detailsMovieCardHeight + headerHeight,
     },
 });
