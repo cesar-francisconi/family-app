@@ -145,32 +145,16 @@ export default function SignUp(props: SignUpProps) {
                     text='Ou'
                 />
 
-                <VerticalButtonGroup
-                    firstButton={
-                        <Button
-                            onPress={() => handleGoogleAuth('signUp')}
-                            type='secondary'
-                            variant='filled'
-                            title='Cadastre com Google'
-                            leftIcon={
-                                <Icon
-                                    name='AntDesign'
-                                    icon='google'
-                                />
-                            }
-                        />
-                    }
-                    secondButton={
-                        <Button
-                            type='secondary'
-                            variant='filled'
-                            title='Cadastre com Facebook'
-                            leftIcon={
-                                <Icon
-                                    name='MaterialCommunityIcons'
-                                    icon='facebook'
-                                />
-                            }
+                <Button
+                    onPress={() => handleGoogleAuth('signUp')}
+                    type='secondary'
+                    variant='filled'
+                    title='Cadastre com Google'
+                    borderRadius='medium'
+                    leftIcon={
+                        <Icon
+                            name='AntDesign'
+                            icon='google'
                         />
                     }
                 />
