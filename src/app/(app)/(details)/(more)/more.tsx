@@ -44,6 +44,8 @@ export default function More(props: MoreProps) {
     }, []);
 
     useEffect(() => {
+        navigation.setOptions({ title: '' });
+
         if (!movie) return;
 
         if (movie.title) {
