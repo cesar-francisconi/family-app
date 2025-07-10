@@ -27,7 +27,7 @@ export default function RootLayoutNav() {
                 name="(more)"
                 options={{
                     presentation: 'transparentModal',
-                    animation: 'fade',
+                    animation: 'slide_from_bottom',
                 }}
             />
 
