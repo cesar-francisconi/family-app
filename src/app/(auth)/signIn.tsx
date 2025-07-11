@@ -4,7 +4,6 @@ import { Icon } from '@/src/components/Icon';
 import { Input } from '@/src/components/Input';
 import { InputTwoGroup } from '@/src/components/InputTwoGroup';
 import { Or } from '@/src/components/Or';
-import { VerticalButtonGroup } from '@/src/components/VerticalButtonGroup/Index';
 import { Welcome } from '@/src/components/Welcome';
 import { Colors } from '@/src/constants/Colors';
 import { styles } from '@/src/screen/SignIn/styles';
