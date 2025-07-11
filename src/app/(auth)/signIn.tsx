@@ -10,12 +10,18 @@ import { styles } from '@/src/screen/SignIn/styles';
 import { SignInProps } from '@/src/screen/SignIn/types';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
 import {
   SafeAreaView,
   View,
 } from 'react-native';
 import { handleSignIn } from '@/src/helpers/handleSignIn';
 import { handleGoogleAuth } from '@/src/helpers/handleGoogleAuth';
+import { useForm } from 'react-hook-form';
+import {
+  FormDataSignIn,
+  formSchemaSignIn,
+} from '@/src/helpers/formSchemaSignIn';
 
 export default function SignIn(props: SignInProps) {
 
@@ -23,9 +29,26 @@ export default function SignIn(props: SignInProps) {
 
   const route = useRouter();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+
+  const {
+    control,
+    handleSubmit,
+  } = useForm<FormDataSignIn>({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+    resolver: zodResolver(formSchemaSignIn),
+  });
+
+  const onSubmit = (data: FormDataSignIn) => {
+    handleSignIn({
+      email: data.email,
+      password: data.password,
+      setIsLoading,
+    });
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -43,10 +66,10 @@ export default function SignIn(props: SignInProps) {
           <InputTwoGroup
             firstInput={
               <Input
+                name='email'
+                control={control}
                 variant='filled'
                 state='default'
-                value={email}
-                onChangeText={setEmail}
                 withLabel={false}
                 placeholder='Seu e-mail aqui...'
                 keyboardType='email-address'
@@ -61,11 +84,11 @@ export default function SignIn(props: SignInProps) {
 
             secondInput={
               <Input
+                name='password'
+                control={control}
                 variant='filled'
                 state='default'
                 withLabel={false}
-                value={password}
-                onChangeText={setPassword}
                 placeholder='Sua senha aqui...'
                 withHelpMessageAndLabelCheck
                 helpMessage='Esqueceu sua senha?'
@@ -93,11 +116,7 @@ export default function SignIn(props: SignInProps) {
           />
 
           <Button
-            onPress={() => handleSignIn({
-              email,
-              password,
-              setIsLoading,
-            })}
+            onPress={handleSubmit(onSubmit)}
             type='primary'
             variant='filled'
             size='medium'
