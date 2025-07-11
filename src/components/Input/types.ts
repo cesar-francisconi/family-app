@@ -2,6 +2,8 @@ import { JSX } from "react";
 import { TextInputProps } from "react-native";
 
 export interface InputProps extends TextInputProps {
+    name: string;
+    control: any;
     variant: 'filled' | 'outlined';
     state: 'default' | 'focus' | 'filled' | 'error' | 'validated' | 'disabled';
     borderRadius?: 'none' | 'small' | 'medium' | 'large';
@@ -19,6 +21,4 @@ export interface InputProps extends TextInputProps {
     withLabelCheck?: boolean;
     labelCheckLabel?: string;
     isCheckedLabelCheck?: boolean;
-    isError?: boolean;
-    errorMessage?: string;
 };
