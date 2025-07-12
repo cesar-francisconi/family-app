@@ -29,6 +29,7 @@ export default function SignUp(props: SignUpProps) {
     const {
         control,
         handleSubmit,
+        setError,
     } = useForm<FormDataSignUp>({
         defaultValues: {
             email: "",
@@ -39,14 +40,32 @@ export default function SignUp(props: SignUpProps) {
         resolver: zodResolver(formSchemaSignUp),
     });
 
-    const onSubmit = (data: FormDataSignUp) => {
-        handleSignUp({
-            email: data.email,
-            name: data.name,
-            lastName: data.lastName,
-            password: data.password,
-            setIsLoading,
-        })
+    const onSubmit = async (data: FormDataSignUp) => {
+        setIsLoading(true);
+
+        try {
+            await handleSignUp({
+                email: data.email,
+                name: data.name,
+                lastName: data.lastName,
+                password: data.password,
+            })
+
+        } catch (error: any) {
+            if (error.code === 'auth/email-already-in-use') {
+                setError('email', {
+                    type: 'manual',
+                    message: 'E-mail já cadastrado.',
+                });
+            } else {
+                setError('email', {
+                    type: 'manual',
+                    message: 'Erro ao tentar fazer login.',
+                });
+            }
+        } finally {
+            setIsLoading(false);
+        };
     };
 
     return (
