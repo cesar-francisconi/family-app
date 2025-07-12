@@ -6,14 +6,12 @@ import {
 } from "@react-native-firebase/auth";
 import { useRouter } from "expo-router";
 import { Alert } from "react-native";
-import { checkIfUsernameAlreadyExists } from "./checkIfUsernameAlreadyExists";
 
 interface HandleSignUpProps {
     email: string;
     name: string;
     lastName: string;
     password: string;
-    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const handleSignUp = async ({
@@ -21,10 +19,7 @@ export const handleSignUp = async ({
     name,
     lastName,
     password,
-    setIsLoading,
 }: HandleSignUpProps) => {
-    setIsLoading(true);
-
     const auth = getAuth();
     const usernameLowerCase = `${name}${lastName}`.toLowerCase();
     const route = useRouter();
@@ -41,9 +36,7 @@ export const handleSignUp = async ({
         Alert.alert('', 'Email de verificação enviado.');
         route.back();
     } catch (error: any) {
-        console.log('Erro ao cadastrar:', error.code, error.message);
-        Alert.alert('Erro', 'Não foi possível criar a conta.');
+        // Lance o erro para o chamador tratar
+        throw error;
     }
-
-    setIsLoading(false);
 };
