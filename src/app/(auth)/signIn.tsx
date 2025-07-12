@@ -22,6 +22,10 @@ import {
   FormDataSignIn,
   formSchemaSignIn,
 } from '@/src/helpers/formSchemaSignIn';
+import {
+  getAuth,
+  sendEmailVerification,
+} from '@react-native-firebase/auth';
 
 export default function SignIn(props: SignInProps) {
 
@@ -45,6 +49,7 @@ export default function SignIn(props: SignInProps) {
 
   const onSubmit = async (data: FormDataSignIn) => {
     setIsLoading(true);
+    const auth = getAuth();
 
     try {
       await handleSignIn({ email: data.email, password: data.password });
@@ -65,6 +70,10 @@ export default function SignIn(props: SignInProps) {
           type: 'manual',
           message: 'Confirme o cadastro no seu email!',
         });
+
+        if (error.user) {
+          await sendEmailVerification(error.user); // envia sem precisar fazer login de novo
+        }
       } else {
         setError('email', {
           type: 'manual',
