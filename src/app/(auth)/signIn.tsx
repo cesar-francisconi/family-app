@@ -61,10 +61,6 @@ export default function SignIn(props: SignInProps) {
           type: 'manual',
           message: 'Não foi possível acessar. Verifique suas informações de login.',
         });
-        setError('password', {
-          type: 'manual',
-          message: ' ',
-        }); // força o campo a mostrar erro visual também
       } else if (error.message === 'email-not-verified') {
         setError('email', {
           type: 'manual',
