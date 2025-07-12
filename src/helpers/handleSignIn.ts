@@ -35,8 +35,9 @@ export const handleSignIn = async ({
         const { user } = await signInWithEmailAndPassword(auth, email, password);
 
         if (!user.emailVerified) {
-            await sendEmailVerification(user);
-            throw new Error('email-not-verified'); // lancei erro específico
+            const error: any = new Error('email-not-verified');
+            error.user = user; // anexa o user
+            throw error;
         };
 
         const db = getFirestore();
