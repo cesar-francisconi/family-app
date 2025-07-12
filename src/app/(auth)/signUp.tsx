@@ -4,7 +4,6 @@ import { Icon } from '@/src/components/Icon';
 import { Input } from '@/src/components/Input';
 import { InputFourthGroup } from '@/src/components/InputFourthGroup';
 import { Or } from '@/src/components/Or';
-import { VerticalButtonGroup } from '@/src/components/VerticalButtonGroup/Index';
 import { Welcome } from '@/src/components/Welcome';
 import { handleSignUp } from '@/src/helpers/handleSignUp';
 import { handleGoogleAuth } from '@/src/helpers/handleGoogleAuth';
