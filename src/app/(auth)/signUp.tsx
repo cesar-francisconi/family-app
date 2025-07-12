@@ -15,18 +15,39 @@ import {
     SafeAreaView,
     View,
 } from 'react-native';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { FormDataSignUp, formSchemaSignUp } from '@/src/helpers/formSchemaSignUp';
 
 export default function SignUp(props: SignUpProps) {
 
     const { } = props;
 
     const route = useRouter();
-
-    const [email, setEmail] = useState('');
-    const [name, setName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+
+    const {
+        control,
+        handleSubmit,
+    } = useForm<FormDataSignUp>({
+        defaultValues: {
+            email: "",
+            name: "",
+            lastName: "",
+            password: "",
+        },
+        resolver: zodResolver(formSchemaSignUp),
+    });
+
+    const onSubmit = (data: FormDataSignUp) => {
+        handleSignUp({
+            email: data.email,
+            name: data.name,
+            lastName: data.lastName,
+            password: data.password,
+            setIsLoading,
+        })
+    };
 
     return (
         <SafeAreaView style={styles.container}>
@@ -44,12 +65,12 @@ export default function SignUp(props: SignUpProps) {
                     <InputFourthGroup
                         firstInput={
                             <Input
+                                name='email'
+                                control={control}
                                 variant='filled'
                                 state='default'
                                 withLabel={false}
                                 placeholder='E-mail'
-                                value={email}
-                                onChangeText={setEmail}
                                 keyboardType='email-address'
                                 textContentType='emailAddress'
                                 leftIcon={
@@ -63,10 +84,10 @@ export default function SignUp(props: SignUpProps) {
 
                         secondInput={
                             <Input
+                                name='name'
+                                control={control}
                                 variant='filled'
                                 state='default'
-                                value={name}
-                                onChangeText={setName}
                                 withLabel={false}
                                 textContentType='name'
                                 placeholder='Nome'
@@ -81,10 +102,10 @@ export default function SignUp(props: SignUpProps) {
 
                         tertiaryInput={
                             <Input
+                                name='lastName'
+                                control={control}
                                 variant='filled'
                                 state='default'
-                                value={lastName}
-                                onChangeText={setLastName}
                                 withLabel={false}
                                 placeholder='Sobrenome'
                                 textContentType='name'
@@ -99,12 +120,12 @@ export default function SignUp(props: SignUpProps) {
 
                         fourthInput={
                             <Input
+                                name='password'
+                                control={control}
                                 variant='filled'
                                 state='default'
                                 withLabel={false}
                                 placeholder='Senha'
-                                value={password}
-                                onChangeText={setPassword}
                                 secureTextEntry
                                 textContentType='password'
                                 leftIcon={
@@ -124,13 +145,7 @@ export default function SignUp(props: SignUpProps) {
                     />
 
                     <Button
-                        onPress={() => handleSignUp({
-                            email,
-                            name,
-                            lastName,
-                            password,
-                            setIsLoading,
-                        })}
+                        onPress={handleSubmit(onSubmit)}
                         type='primary'
                         isLoading={isLoading}
                         variant='filled'
