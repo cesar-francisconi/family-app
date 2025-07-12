@@ -14,7 +14,6 @@ import {
     Timestamp,
     where,
 } from "@react-native-firebase/firestore";
-import { Alert } from "react-native";
 import { getRandomColor } from "./getRandomColor";
 import uuid from 'react-native-uuid';
 import { useRouter } from "expo-router";
@@ -22,17 +21,13 @@ import { useRouter } from "expo-router";
 export interface HandleSignInProps {
     email: string;
     password: string;
-    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const handleSignIn = async ({
     email,
     password,
-    setIsLoading,
 }: HandleSignInProps) => {
     const route = useRouter();
-
-    setIsLoading(true);
 
     const auth = getAuth();
 
@@ -40,9 +35,8 @@ export const handleSignIn = async ({
         const { user } = await signInWithEmailAndPassword(auth, email, password);
 
         if (!user.emailVerified) {
-            Alert.alert('', 'Confirme o cadastro no seu email!');
             await sendEmailVerification(user);
-            return;
+            throw new Error('email-not-verified'); // lancei erro específico
         };
 
         const db = getFirestore();
@@ -52,7 +46,6 @@ export const handleSignIn = async ({
         if (!userSnap.exists()) {
             const background = getRandomColor();
 
-            const db = getFirestore();
             let baseUsername = user.displayName?.trim() || 'user';
             let username = `@${baseUsername}`;
             let usernameExists = true;
@@ -106,8 +99,7 @@ export const handleSignIn = async ({
 
         route.replace('/(app)/(tabs)/home');
     } catch (error: any) {
-        console.log('Erro ao fazer login:', error.code, error.message);
+        // Lance o erro para o chamador tratar
+        throw error;
     }
-
-    setIsLoading(false);
 };
