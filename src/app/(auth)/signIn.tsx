@@ -34,6 +34,7 @@ export default function SignIn(props: SignInProps) {
   const {
     control,
     handleSubmit,
+    setError,
   } = useForm<FormDataSignIn>({
     defaultValues: {
       email: "",
@@ -42,12 +43,37 @@ export default function SignIn(props: SignInProps) {
     resolver: zodResolver(formSchemaSignIn),
   });
 
-  const onSubmit = (data: FormDataSignIn) => {
-    handleSignIn({
-      email: data.email,
-      password: data.password,
-      setIsLoading,
-    });
+  const onSubmit = async (data: FormDataSignIn) => {
+    setIsLoading(true);
+
+    try {
+      await handleSignIn({ email: data.email, password: data.password });
+
+    } catch (error: any) {
+      if (error.code === 'auth/invalid-credential') {
+        // Erro genérico de credencial inválida
+        setError('email', {
+          type: 'manual',
+          message: 'Não foi possível acessar. Verifique suas informações de login.',
+        });
+        setError('password', {
+          type: 'manual',
+          message: ' ',
+        }); // força o campo a mostrar erro visual também
+      } else if (error.message === 'email-not-verified') {
+        setError('email', {
+          type: 'manual',
+          message: 'Confirme o cadastro no seu email!',
+        });
+      } else {
+        setError('email', {
+          type: 'manual',
+          message: 'Erro ao tentar fazer login.',
+        });
+      }
+    } finally {
+      setIsLoading(false);
+    };
   };
 
   return (
