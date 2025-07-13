@@ -1,0 +1,45 @@
+import {
+    EmailAuthProvider,
+    getAuth,
+    reauthenticateWithCredential,
+    signOut,
+    verifyBeforeUpdateEmail,
+} from "@react-native-firebase/auth";
+import { Alert } from "react-native";
+
+interface HandleChangeEmailProps {
+    confirmEmail: string;
+    confirmPassword: string;
+    newEmail: string;
+};
+
+export const handleChangeEmail = async ({
+    confirmEmail,
+    confirmPassword,
+    newEmail,
+}: HandleChangeEmailProps) => {
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    try {
+        if (!user?.email) return;
+
+        if (confirmEmail !== user.email) {
+            const error: any = new Error('O email confirmado não bate com o email da conta.');
+            error.code = 'confirmed-email-mismatch';
+            throw error;
+        }
+
+        const credential = EmailAuthProvider.credential(confirmEmail, confirmPassword);
+
+        await reauthenticateWithCredential(user, credential);
+        await verifyBeforeUpdateEmail(user, newEmail);
+
+        Alert.alert('', 'Verificação enviada para o novo e-mail. Confirme para concluir a troca.');
+
+        await signOut(auth);
+    } catch (error: any) {
+        // Lance o erro para o chamador tratar
+        throw error;
+    }
+};
