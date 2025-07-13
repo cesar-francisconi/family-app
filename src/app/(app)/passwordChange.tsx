@@ -3,18 +3,17 @@ import { Icon } from '@/src/components/Icon';
 import { Input } from '@/src/components/Input';
 import { InputThreeGroup } from '@/src/components/InputThreeGroup';
 import { Colors } from '@/src/constants/Colors';
+import {
+    FormDataPasswordChange,
+    formSchemaPasswordChange,
+} from '@/src/helpers/formSchemaPasswordChange';
+import { handleChangePassword } from '@/src/helpers/handleChangePassword';
 import { styles } from '@/src/screen/PasswordChange/styles';
 import { PasswordChangeProps } from '@/src/screen/PasswordChange/types';
-import {
-    EmailAuthProvider,
-    getAuth,
-    reauthenticateWithCredential,
-    signOut,
-    updatePassword,
-} from '@react-native-firebase/auth';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import {
-    Alert,
     SafeAreaView,
 } from 'react-native';
 
@@ -22,41 +21,46 @@ export default function PasswordChange(props: PasswordChangeProps) {
 
     const { } = props;
 
-    const [currentPassword, setCurrentPassword] = useState('');
-    const [newPassword, setNewPassword] = useState('');
-    const [confirmNewPassword, setConfirmNewPassword] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
-    const handleChangePassword = async () => {
-        if (newPassword !== confirmNewPassword) {
-            return Alert.alert('', '"Nova senha" e "Confirmar a nova senha" precisam ser iguais!');
-        }
+    const {
+        control,
+        handleSubmit,
+        setError,
+    } = useForm<FormDataPasswordChange>({
+        defaultValues: {
+            currentPassword: "",
+            newPassword: "",
+            confirmNewPassword: "",
+        },
+        resolver: zodResolver(formSchemaPasswordChange),
+    });
 
-        const auth = getAuth();
-        const user = auth.currentUser;
-
-        if (!user?.email) return;
+    const onSubmit = async (data: FormDataPasswordChange) => {
+        setIsLoading(true);
 
         try {
-            const credential = EmailAuthProvider.credential(user.email, currentPassword);
-            await reauthenticateWithCredential(user, credential);
-            await updatePassword(user, newPassword);
+            await handleChangePassword({
+                currentPassword: data.currentPassword,
+                newPassword: data.newPassword,
+                confirmNewPassword: data.confirmNewPassword,
+            });
 
-            Alert.alert('', 'Senha atualizada com sucesso!');
-            await signOut(auth);
         } catch (error: any) {
-            const message = error.code === 'auth/invalid-credential'
-                ? 'Senha atual incorreta.'
-                : 'Erro ao atualizar a senha.';
-
-            console.log('Erro:', error.message);
-            Alert.alert('', message);
-        }
-    };
-
-    const handleClear = () => {
-        setCurrentPassword('');
-        setNewPassword('');
-        setConfirmNewPassword('');
+            if (error.code === 'auth/invalid-credential') {
+                setError('currentPassword', {
+                    type: 'manual',
+                    message: 'Senha atual incorreta.',
+                });
+            } else if (error.code === 'new-password-mismatch') {
+                setError('confirmNewPassword', {
+                    type: 'manual',
+                    message: error.message,
+                });
+            }
+        } finally {
+            setIsLoading(false);
+        };
     };
 
     return (
@@ -64,13 +68,14 @@ export default function PasswordChange(props: PasswordChangeProps) {
             <InputThreeGroup
                 firstInput={
                     <Input
-                        label='Senha atual'
-                        placeholder=''
+                        name='currentPassword'
+                        control={control}
+                        withLabel={false}
+                        placeholder='Senha atual aqui...'
                         variant='outlined'
                         state='filled'
-                        value={currentPassword}
-                        onChangeText={setCurrentPassword}
                         withLabelCheck={false}
+                        secureTextEntry
                         helpMessageColor={Colors.primary.main}
                         leftIcon={
                             <Icon
@@ -88,11 +93,12 @@ export default function PasswordChange(props: PasswordChangeProps) {
                 }
                 secondInput={
                     <Input
-                        label='Nova senha (6 a 20 caracteres)'
-                        placeholder=''
-                        value={newPassword}
-                        onChangeText={setNewPassword}
+                        name='newPassword'
+                        control={control}
+                        placeholder='Nova senha (6 a 20 caracteres)'
                         variant='outlined'
+                        withLabel={false}
+                        secureTextEntry
                         state='filled'
                         leftIcon={
                             <Icon
@@ -110,11 +116,12 @@ export default function PasswordChange(props: PasswordChangeProps) {
                 }
                 tertiaryInput={
                     <Input
-                        label='Confirmar a nova senha'
-                        placeholder=''
+                        name='confirmNewPassword'
+                        control={control}
+                        placeholder='Confirmar a nova senha'
+                        withLabel={false}
+                        secureTextEntry
                         variant='outlined'
-                        value={confirmNewPassword}
-                        onChangeText={setConfirmNewPassword}
                         state='filled'
                         leftIcon={
                             <Icon
@@ -133,11 +140,12 @@ export default function PasswordChange(props: PasswordChangeProps) {
             />
 
             <Button
-                onPress={handleChangePassword}
+                onPress={handleSubmit(onSubmit)}
                 title='Alterar'
                 type='primary'
                 variant='filled'
                 borderRadius='medium'
+                isLoading={isLoading}
             />
         </SafeAreaView>
     );
