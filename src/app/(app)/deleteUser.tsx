@@ -1,55 +1,76 @@
 import { Button } from '@/src/components/Button';
 import { Icon } from '@/src/components/Icon';
 import { Input } from '@/src/components/Input';
-import { VerticalButtonGroup } from '@/src/components/VerticalButtonGroup/Index';
 import { useState } from 'react';
 import {
-    Alert,
     SafeAreaView,
 } from 'react-native';
 import { InputTwoGroup } from '../../components/InputTwoGroup';
 import { DeleteUserProps } from '../../screen/DeleteUser/types';
 import { styles } from '../../screen/DeleteUser/styles';
-import {
-    deleteUser,
-    EmailAuthProvider,
-    getAuth,
-    GoogleAuthProvider,
-    reauthenticateWithCredential,
-} from '@react-native-firebase/auth';
-import {
-    deleteDoc,
-    doc,
-    getFirestore,
-} from '@react-native-firebase/firestore';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { getLoggedInUserIsGoogleAccount } from '@/src/hook/useUser';
 import { handleDeleteGoogleUser } from '@/src/helpers/handleDeleteGoogleUser';
 import { handleDeleteUser } from '@/src/helpers/handleDeleteUser';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import {
+    FormDataDeleteUser,
+    formSchemaDeleteUser,
+} from '@/src/helpers/formSchemaDeleteUser';
 
 export default function DeleteUser(props: DeleteUserProps) {
 
     const { } = props;
 
-    const [confirmEmail, setConfirmEmail] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
+    const {
+        control,
+        handleSubmit,
+        setError,
+    } = useForm<FormDataDeleteUser>({
+        defaultValues: {
+            confirmEmail: '',
+            confirmPassword: '',
+        },
+        resolver: zodResolver(formSchemaDeleteUser),
+    });
+
+    const [isLoading, setIsLoading] = useState(false);
 
     const isGoogleAccount = getLoggedInUserIsGoogleAccount();
 
-    const handleClear = () => {
-        setConfirmEmail('');
-        setConfirmPassword('');
+    const onSubmit = async (data: FormDataDeleteUser) => {
+        setIsLoading(true);
+        const handle = isGoogleAccount ? handleDeleteGoogleUser({ confirmEmail: data.confirmEmail }) : handleDeleteUser({ confirmEmail: data.confirmEmail, confirmPassword: data.confirmPassword });
+
+        try {
+            await handle;
+
+        } catch (error: any) {
+            if (error.code === 'confirmed-email-mismatch') {
+                setError('confirmEmail', {
+                    type: 'manual',
+                    message: error.message,
+                });
+            } else if (error.code === 'auth/invalid-credential') {
+                setError('confirmPassword', {
+                    type: 'manual',
+                    message: 'A senha confirmada não bate com a sua senha de login. Verifique se você digitou corretamente.',
+                });
+            }
+        } finally {
+            setIsLoading(false);
+        };
     };
 
     return (
         <SafeAreaView style={styles.container}>
             {isGoogleAccount ? (<Input
+                name='confirmEmail'
+                control={control}
                 label='Confirme seu email para excluir conta...'
                 placeholder=''
                 variant='outlined'
                 state='filled'
-                value={confirmEmail}
-                onChangeText={setConfirmEmail}
                 leftIcon={
                     <Icon
                         name='MaterialCommunityIcons'
@@ -61,12 +82,12 @@ export default function DeleteUser(props: DeleteUserProps) {
                 (<InputTwoGroup
                     firstInput={
                         <Input
-                            label='Confirme seu email para excluir conta...'
-                            placeholder=''
+                            name='confirmEmail'
+                            control={control}
+                            withLabel={false}
+                            placeholder='E-mail atual para excluir conta...'
                             variant='outlined'
                             state='filled'
-                            value={confirmEmail}
-                            onChangeText={setConfirmEmail}
                             leftIcon={
                                 <Icon
                                     name='MaterialCommunityIcons'
@@ -77,11 +98,11 @@ export default function DeleteUser(props: DeleteUserProps) {
                     }
                     secondInput={
                         <Input
-                            label='Confirme sua senha para excluir conta...'
-                            placeholder=''
-                            value={confirmPassword}
+                            name='confirmPassword'
+                            control={control}
+                            withLabel={false}
+                            placeholder='Senha atual para excluir conta...'
                             secureTextEntry
-                            onChangeText={setConfirmPassword}
                             variant='outlined'
                             state='filled'
                             leftIcon={
@@ -100,23 +121,13 @@ export default function DeleteUser(props: DeleteUserProps) {
                     }
                 />)}
 
-            <VerticalButtonGroup
-                firstButton={
-                    <Button
-                        onPress={() => isGoogleAccount ? handleDeleteGoogleUser({ confirmEmail }) : handleDeleteUser({ confirmEmail, confirmPassword })}
-                        title='Excluir'
-                        type='primary'
-                        variant='filled'
-                    />
-                }
-                secondButton={
-                    <Button
-                        onPress={handleClear}
-                        title='Limpar'
-                        type='primary'
-                        variant='outlined'
-                    />
-                }
+            <Button
+                onPress={handleSubmit(onSubmit)}
+                isLoading={isLoading}
+                title='Excluir'
+                type='primary'
+                variant='filled'
+                borderRadius='medium'
             />
         </SafeAreaView>
     );
