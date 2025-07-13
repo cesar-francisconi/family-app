@@ -26,8 +26,9 @@ export const handleDeleteUser = async ({
     if (!user?.email) return;
 
     if (confirmEmail !== user.email) {
-        Alert.alert('Erro', 'O email confirmado não bate com o seu email de login.');
-        return;
+        const error: any = new Error('O email confirmado não bate com o email da conta.');
+        error.code = 'confirmed-email-mismatch';
+        throw error;
     }
 
     const credential = EmailAuthProvider.credential(confirmEmail, confirmPassword);
@@ -42,10 +43,7 @@ export const handleDeleteUser = async ({
         await deleteUser(user);
         Alert.alert('Sucesso', 'Conta do usuário deletada!');
     } catch (error: any) {
-        if (error.code === 'auth/invalid-credential') {
-            Alert.alert('Erro', 'Senha atual incorreta.');
-        } else {
-            Alert.alert('Erro', error.message || 'Erro ao deletar conta.');
-        }
+        // Lance o erro para o chamador tratar
+        throw error;
     }
 };
