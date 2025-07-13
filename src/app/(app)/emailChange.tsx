@@ -2,62 +2,60 @@ import { Button } from '@/src/components/Button';
 import { Icon } from '@/src/components/Icon';
 import { Input } from '@/src/components/Input';
 import { InputThreeGroup } from '@/src/components/InputThreeGroup';
-import {
-    EmailAuthProvider,
-    getAuth,
-    reauthenticateWithCredential,
-    signOut,
-    verifyBeforeUpdateEmail,
-} from '@react-native-firebase/auth';
 import { useState } from 'react';
 import {
     SafeAreaView,
 } from 'react-native';
 import { EmailChangeProps } from '../../screen/EmailChange/types';
 import { styles } from '../../screen/EmailChange/styles';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import {
+    FormDataEmailChange,
+    formSchemaEmailChange,
+} from '@/src/helpers/formSchemaEmailChange';
+import { handleChangeEmail } from '@/src/helpers/handleChangeEmail';
 
 export default function EmailChange(props: EmailChangeProps) {
 
     const { } = props;
 
-    const [confirmEmail, setConfirmEmail] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [newEmail, setNewEmail] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
-    const handleChangeEmail = async () => {
-        const auth = getAuth();
-        const user = auth.currentUser;
+    const {
+        control,
+        handleSubmit,
+        setError,
+    } = useForm<FormDataEmailChange>({
+        defaultValues: {
+            confirmEmail: "",
+            confirmPassword: "",
+            newEmail: "",
+        },
+        resolver: zodResolver(formSchemaEmailChange),
+    });
 
-        if (!user?.email) return;
-
-        if (confirmEmail !== user.email) {
-            alert("O email confirmado não bate com o seu email de login.");
-            return;
-        }
-
-        const credential = EmailAuthProvider.credential(confirmEmail, confirmPassword);
+    const onSubmit = async (data: FormDataEmailChange) => {
+        setIsLoading(true);
 
         try {
-            await reauthenticateWithCredential(user, credential);
-            await verifyBeforeUpdateEmail(user, newEmail);
+            await handleChangeEmail({ confirmEmail: data.confirmEmail, confirmPassword: data.confirmPassword, newEmail: data.newEmail });
 
-            alert('Verificação enviada para o novo e-mail. Confirme para concluir a troca.');
-            await signOut(auth);
         } catch (error: any) {
-            const code = error.code;
-
-            if (code === 'auth/invalid-credential') {
-                console.log('Senha atual incorreta.');
-            } else {
-                console.log('Erro:', error.message);
+            if (error.code === 'auth/invalid-credential') {
+                setError('confirmPassword', {
+                    type: 'manual',
+                    message: 'A senha confirmada não bate com a sua senha de login. Verifique se você digitou corretamente.',
+                });
+            } else if (error.code === 'confirmed-email-mismatch') {
+                setError('confirmEmail', {
+                    type: 'manual',
+                    message: error.message,
+                });
             }
-        }
-    };
-
-    const handleCancel = () => {
-        setConfirmEmail('');
-        setConfirmPassword('');
-        setNewEmail('');
+        } finally {
+            setIsLoading(false);
+        };
     };
 
     return (
@@ -65,12 +63,13 @@ export default function EmailChange(props: EmailChangeProps) {
             <InputThreeGroup
                 firstInput={
                     <Input
-                        label='Confirme o email (atual) para mudar...'
-                        placeholder=''
+                        name='confirmEmail'
+                        control={control}
+                        withLabel={false}
+                        placeholder='Confirme seu e-mail (atual) aqui...'
                         variant='outlined'
+                        autoCorrect={false}
                         state='filled'
-                        value={confirmEmail}
-                        onChangeText={setConfirmEmail}
                         leftIcon={
                             <Icon
                                 name='MaterialCommunityIcons'
@@ -81,11 +80,13 @@ export default function EmailChange(props: EmailChangeProps) {
                 }
                 secondInput={
                     <Input
-                        label='Confirme a senha (atual) para mudar...'
-                        placeholder=''
-                        value={confirmPassword}
-                        onChangeText={setConfirmPassword}
+                        name='confirmPassword'
+                        control={control}
+                        withLabel={false}
+                        placeholder='Confirme sua senha (atual) aqui...'
+                        secureTextEntry
                         variant='outlined'
+                        autoCorrect={false}
                         state='filled'
                         leftIcon={
                             <Icon
@@ -103,10 +104,11 @@ export default function EmailChange(props: EmailChangeProps) {
                 }
                 tertiaryInput={
                     <Input
-                        label='Novo e-mail'
-                        placeholder=''
-                        value={newEmail}
-                        onChangeText={setNewEmail}
+                        name='newEmail'
+                        control={control}
+                        withLabel={false}
+                        autoCorrect={false}
+                        placeholder='Novo e-mail aqui...'
                         variant='outlined'
                         state='filled'
                         leftIcon={
@@ -120,11 +122,12 @@ export default function EmailChange(props: EmailChangeProps) {
             />
 
             <Button
-                onPress={handleChangeEmail}
+                onPress={handleSubmit(onSubmit)}
                 title='Alterar'
                 type='primary'
                 variant='filled'
                 borderRadius='medium'
+                isLoading={isLoading}
             />
         </SafeAreaView>
     );
