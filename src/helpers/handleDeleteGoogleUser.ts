@@ -22,16 +22,12 @@ export const handleDeleteGoogleUser = async ({
     const auth = getAuth();
     const user = auth.currentUser;
 
-    if (!user) {
-        Alert.alert('Erro', 'Nenhum usuário logado.');
-        return;
-    };
-
     if (!user?.email) return;
 
     if (confirmEmail !== user.email) {
-        Alert.alert('Erro', 'O email confirmado não bate com o seu email de login.');
-        return;
+        const error: any = new Error('O email confirmado não bate com o seu email de login.');
+        error.code = 'confirmed-email-mismatch';
+        throw error;
     }
 
     try {
