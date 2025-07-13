@@ -9,10 +9,12 @@ export default function Index() {
     useEffect(() => {
         const auth = getAuth();
         const unsubscribe = onAuthStateChanged(auth, (user) => {
-            if (user && user.email) {
-                router.replace('/(app)/(tabs)/home'); // usuário logado
+            if (user && user.emailVerified) {
+                // Usuário logado e com e-mail verificado
+                router.replace('/(app)/(tabs)/home');
             } else {
-                router.replace('/(auth)/signIn'); // usuário não logado
+                // Usuário não logado ou e-mail não verificado
+                router.replace('/(auth)/signIn');
             }
         });
 
