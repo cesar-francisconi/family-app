@@ -17,30 +17,45 @@ import {
     FormDataDeleteUser,
     formSchemaDeleteUser,
 } from '@/src/helpers/formSchemaDeleteUser';
+import {
+    FormDataDeleteGoogleUser,
+    formSchemaDeleteGoogleUser,
+} from '@/src/helpers/formSchemaDeleteGoogleUser';
 
 export default function DeleteUser(props: DeleteUserProps) {
 
     const { } = props;
 
-    const {
-        control,
-        handleSubmit,
-        setError,
-    } = useForm<FormDataDeleteUser>({
-        defaultValues: {
-            confirmEmail: '',
-            confirmPassword: '',
-        },
-        resolver: zodResolver(formSchemaDeleteUser),
-    });
+    const isGoogleAccount = getLoggedInUserIsGoogleAccount();
+
+    const form = isGoogleAccount
+        ? useForm<FormDataDeleteGoogleUser>({
+            defaultValues: { confirmEmail: '' },
+            resolver: zodResolver(formSchemaDeleteGoogleUser),
+        })
+        : useForm<FormDataDeleteUser>({
+            defaultValues: { confirmEmail: '', confirmPassword: '' },
+            resolver: zodResolver(formSchemaDeleteUser),
+        });
+
+    const { control, handleSubmit, setError } = form;
 
     const [isLoading, setIsLoading] = useState(false);
 
-    const isGoogleAccount = getLoggedInUserIsGoogleAccount();
 
-    const onSubmit = async (data: FormDataDeleteUser) => {
+    const onSubmit = async (data: FormDataDeleteUser | FormDataDeleteGoogleUser) => {
         setIsLoading(true);
-        const handle = isGoogleAccount ? handleDeleteGoogleUser({ confirmEmail: data.confirmEmail }) : handleDeleteUser({ confirmEmail: data.confirmEmail, confirmPassword: data.confirmPassword });
+
+        let handle;
+        if (isGoogleAccount) {
+            handle = handleDeleteGoogleUser({ confirmEmail: data.confirmEmail });
+        } else {
+            // Type guard: data is FormDataDeleteUser here
+            handle = handleDeleteUser({
+                confirmEmail: data.confirmEmail,
+                confirmPassword: (data as FormDataDeleteUser).confirmPassword,
+            });
+        }
 
         try {
             await handle;
@@ -52,10 +67,15 @@ export default function DeleteUser(props: DeleteUserProps) {
                     message: error.message,
                 });
             } else if (error.code === 'auth/invalid-credential') {
-                setError('confirmPassword', {
-                    type: 'manual',
-                    message: 'A senha confirmada não bate com a sua senha de login. Verifique se você digitou corretamente.',
-                });
+                if (!isGoogleAccount) {
+                    (setError as (name: 'confirmPassword', error: { type: string; message: string }) => void)(
+                        'confirmPassword',
+                        {
+                            type: 'manual',
+                            message: 'A senha confirmada não bate com a sua senha de login. Verifique se você digitou corretamente.',
+                        }
+                    );
+                }
             }
         } finally {
             setIsLoading(false);
