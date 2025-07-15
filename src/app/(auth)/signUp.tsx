@@ -87,7 +87,6 @@ export default function SignUp(props: SignUpProps) {
                                 name='email'
                                 control={control}
                                 variant='filled'
-                                state='default'
                                 withLabel={false}
                                 placeholder='E-mail'
                                 keyboardType='email-address'
@@ -106,7 +105,6 @@ export default function SignUp(props: SignUpProps) {
                                 name='name'
                                 control={control}
                                 variant='filled'
-                                state='default'
                                 withLabel={false}
                                 textContentType='name'
                                 placeholder='Nome'
@@ -124,7 +122,6 @@ export default function SignUp(props: SignUpProps) {
                                 name='lastName'
                                 control={control}
                                 variant='filled'
-                                state='default'
                                 withLabel={false}
                                 placeholder='Sobrenome'
                                 textContentType='name'
@@ -142,7 +139,6 @@ export default function SignUp(props: SignUpProps) {
                                 name='password'
                                 control={control}
                                 variant='filled'
-                                state='default'
                                 withLabel={false}
                                 placeholder='Senha'
                                 secureTextEntry
