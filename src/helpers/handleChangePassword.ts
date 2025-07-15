@@ -1,5 +1,6 @@
 import { EmailAuthProvider, getAuth, reauthenticateWithCredential, signOut, updatePassword } from "@react-native-firebase/auth";
 import { Alert } from "react-native";
+import Toast from "react-native-toast-message";
 
 interface HandleChangePasswordProps {
     currentPassword: string;
@@ -28,7 +29,13 @@ export const handleChangePassword = async ({
         await reauthenticateWithCredential(user, credential);
         await updatePassword(user, newPassword);
 
-        Alert.alert('', 'Senha atualizada com sucesso!');
+        Toast.show({
+            type: 'customSuccess',
+            text2: 'Senha atualizada com sucesso!',
+            position: 'top',
+            visibilityTime: 3000,
+        });
+
         await signOut(auth);
     } catch (error: any) {
         // Lance o erro para o chamador tratar
