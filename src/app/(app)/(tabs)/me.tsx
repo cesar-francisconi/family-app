@@ -19,6 +19,7 @@ import {
     Alert,
     SafeAreaView,
 } from 'react-native';
+import Toast from 'react-native-toast-message';
 
 export default function Me(props: MeProps) {
 
@@ -36,7 +37,12 @@ export default function Me(props: MeProps) {
         const auth = getAuth();
 
         signOut(auth).then(() => {
-            Alert.alert('', 'Usuário deslogado!');
+            Toast.show({
+                type: 'customSuccess',
+                text2: 'Usuário deslogado!',
+                position: 'top',
+                visibilityTime: 3000,
+            });
         }).catch((error) => {
 
         });
