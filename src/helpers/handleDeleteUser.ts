@@ -9,7 +9,7 @@ import {
     doc,
     getFirestore,
 } from "@react-native-firebase/firestore";
-import { Alert } from "react-native";
+import Toast from "react-native-toast-message";
 
 interface HandleDeleteUserProps {
     confirmEmail: string;
@@ -41,7 +41,14 @@ export const handleDeleteUser = async ({
         await deleteDoc(userRef);
 
         await deleteUser(user);
-        Alert.alert('Sucesso', 'Conta do usuário deletada!');
+
+        Toast.show({
+            type: 'customSuccess',
+            text1: 'Sucesso',
+            text2: 'Conta do usuário deletada!',
+            position: 'top',
+            visibilityTime: 3000,
+        });
     } catch (error: any) {
         // Lance o erro para o chamador tratar
         throw error;
