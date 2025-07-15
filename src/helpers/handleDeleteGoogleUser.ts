@@ -11,6 +11,7 @@ import {
 } from "@react-native-firebase/firestore";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { Alert } from "react-native";
+import Toast from "react-native-toast-message";
 
 interface HandleDeleteGoogleUserProps {
     confirmEmail: string;
@@ -51,12 +52,15 @@ export const handleDeleteGoogleUser = async ({
         // 🧨 Remove conta do Firebase
         await deleteUser(user);
 
-        Alert.alert('Sucesso', 'Conta Google deletada com sucesso.');
+        Toast.show({
+            type: 'customSuccess',
+            text1: 'Sucesso',
+            text2: 'Conta Google deletada com sucesso.',
+            position: 'top',
+            visibilityTime: 3000,   
+        });
     } catch (error: any) {
-        if (error.code === 'auth/user-mismatch') {
-            Alert.alert('Erro', 'Conta Google não corresponde à conta logada.');
-        } else {
-            Alert.alert('Erro', error.message || 'Erro ao deletar conta.');
-        }
+        // Lance o erro para o chamador tratar
+        throw error;
     }
 };
