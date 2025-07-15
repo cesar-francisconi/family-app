@@ -8,6 +8,7 @@ import {
 import * as SplashScreen from 'expo-splash-screen';
 import { Stack } from 'expo-router';
 import { useEffect } from 'react';
+import Toast from 'react-native-toast-message';
 import {
   LogBox,
   SafeAreaView,
@@ -17,8 +18,8 @@ import {
 import { Colors } from '@/src/constants/Colors';
 import * as SystemUI from 'expo-system-ui';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { toastConfig } from '../helpers/toastConfig';
 
 GoogleSignin.configure({
   webClientId: '1081773549120-d8sevegtld10b4nflpgruulfdiepoetp.apps.googleusercontent.com',
@@ -74,6 +75,8 @@ export default function RootLayoutNav() {
         </Stack >
 
         <StatusBar barStyle={'light-content'} backgroundColor={Colors.surface.main} />
+
+        <Toast config={toastConfig} />
       </SafeAreaView>
     </GestureHandlerRootView>
   );
