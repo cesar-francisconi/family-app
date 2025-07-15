@@ -25,6 +25,7 @@ const primitives = {
         900: '#121212',
         950: '#080807',
         transparent95070: '#080807B3',
+        transparent95040: '#08080766',
     },
     error: {
         50: '#F9F1F1',
@@ -115,6 +116,7 @@ export const Colors = {
 
     surface: {
         main: primitives.grayscale[950],
+        transparentMain40: primitives.grayscale['transparent95040'],
         transparentMain70: primitives.grayscale['transparent95070'],
         on: primitives.grayscale[50],
         onVariant: primitives.grayscale[300],
