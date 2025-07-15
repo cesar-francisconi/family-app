@@ -4,7 +4,7 @@ import {
     updateDoc,
 } from "@react-native-firebase/firestore";
 import { checkIfUsernameAlreadyExists } from "./checkIfUsernameAlreadyExists";
-import { Alert } from "react-native";
+import Toast from 'react-native-toast-message';
 import { setLoggedInUser } from "../hook/useUser";
 import { getAuth } from "@react-native-firebase/auth";
 
@@ -44,6 +44,14 @@ export const handleChangeUsername = async ({
         username: newUsernameWithAt,
     });
 
-    Alert.alert('', 'Nome de usuário alterado com sucesso!');
+    // ✅ Toast de sucesso
+    Toast.show({
+        type: 'customSuccess',
+        text1: 'Sucesso',
+        text2: 'Nome de usuário alterado com sucesso!',
+        position: 'top',
+        visibilityTime: 3000,
+    });
+
     setLoggedInUser();
 };
