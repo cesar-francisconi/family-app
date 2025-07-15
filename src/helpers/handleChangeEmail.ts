@@ -6,6 +6,7 @@ import {
     verifyBeforeUpdateEmail,
 } from "@react-native-firebase/auth";
 import { Alert } from "react-native";
+import Toast from "react-native-toast-message";
 
 interface HandleChangeEmailProps {
     confirmEmail: string;
@@ -35,7 +36,13 @@ export const handleChangeEmail = async ({
         await reauthenticateWithCredential(user, credential);
         await verifyBeforeUpdateEmail(user, newEmail);
 
-        Alert.alert('', 'Verificação enviada para o novo e-mail. Confirme para concluir a troca.');
+        Toast.show({
+            type: 'customSuccess',
+            text1: 'Verifique seu novo e-mail!',
+            text2: 'Verificação enviada. Confirme no novo endereço para concluir a troca.',
+            position: 'top',
+            visibilityTime: 6000,
+        });
 
         await signOut(auth);
     } catch (error: any) {
