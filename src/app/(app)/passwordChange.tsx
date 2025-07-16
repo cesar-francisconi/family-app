@@ -73,7 +73,6 @@ export default function PasswordChange(props: PasswordChangeProps) {
                         withLabel={false}
                         placeholder='Senha atual aqui...'
                         variant='outlined'
-                        state='filled'
                         withLabelCheck={false}
                         secureTextEntry
                         helpMessageColor={Colors.primary.main}
@@ -99,7 +98,6 @@ export default function PasswordChange(props: PasswordChangeProps) {
                         variant='outlined'
                         withLabel={false}
                         secureTextEntry
-                        state='filled'
                         leftIcon={
                             <Icon
                                 name='Feather'
@@ -122,7 +120,6 @@ export default function PasswordChange(props: PasswordChangeProps) {
                         withLabel={false}
                         secureTextEntry
                         variant='outlined'
-                        state='filled'
                         leftIcon={
                             <Icon
                                 name='Feather'
