@@ -90,7 +90,6 @@ export default function DeleteUser(props: DeleteUserProps) {
                 label='Confirme seu email para excluir conta...'
                 placeholder=''
                 variant='outlined'
-                state='filled'
                 leftIcon={
                     <Icon
                         name='MaterialCommunityIcons'
@@ -107,7 +106,6 @@ export default function DeleteUser(props: DeleteUserProps) {
                             withLabel={false}
                             placeholder='E-mail atual para excluir conta...'
                             variant='outlined'
-                            state='filled'
                             leftIcon={
                                 <Icon
                                     name='MaterialCommunityIcons'
@@ -124,7 +122,6 @@ export default function DeleteUser(props: DeleteUserProps) {
                             placeholder='Senha atual para excluir conta...'
                             secureTextEntry
                             variant='outlined'
-                            state='filled'
                             leftIcon={
                                 <Icon
                                     name='Feather'
