@@ -69,7 +69,6 @@ export default function EmailChange(props: EmailChangeProps) {
                         placeholder='Confirme seu e-mail (atual) aqui...'
                         variant='outlined'
                         autoCorrect={false}
-                        state='filled'
                         leftIcon={
                             <Icon
                                 name='MaterialCommunityIcons'
@@ -87,7 +86,6 @@ export default function EmailChange(props: EmailChangeProps) {
                         secureTextEntry
                         variant='outlined'
                         autoCorrect={false}
-                        state='filled'
                         leftIcon={
                             <Icon
                                 name='Feather'
@@ -110,7 +108,6 @@ export default function EmailChange(props: EmailChangeProps) {
                         autoCorrect={false}
                         placeholder='Novo e-mail aqui...'
                         variant='outlined'
-                        state='filled'
                         leftIcon={
                             <Icon
                                 name='MaterialCommunityIcons'
