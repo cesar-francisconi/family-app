@@ -100,7 +100,6 @@ export default function SignIn(props: SignInProps) {
                 name='email'
                 control={control}
                 variant='filled'
-                state='default'
                 withLabel={false}
                 placeholder='Seu e-mail aqui...'
                 keyboardType='email-address'
@@ -118,7 +117,6 @@ export default function SignIn(props: SignInProps) {
                 name='password'
                 control={control}
                 variant='filled'
-                state='default'
                 withLabel={false}
                 placeholder='Sua senha aqui...'
                 withHelpMessageAndLabelCheck
