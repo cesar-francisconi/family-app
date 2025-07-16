@@ -47,6 +47,8 @@ export default function SignIn(props: SignInProps) {
     resolver: zodResolver(formSchemaSignIn),
   });
 
+  const [isSecureTextEntry, setIsSecureTextEntry] = useState(true);
+
   const onSubmit = async (data: FormDataSignIn) => {
     setIsLoading(true);
     const auth = getAuth();
@@ -122,11 +124,14 @@ export default function SignIn(props: SignInProps) {
                 withHelpMessageAndLabelCheck
                 helpMessage='Esqueceu sua senha?'
                 withLabelCheck={false}
+                fnRightIcon={() => {
+                  setIsSecureTextEntry(isSecureTextEntry ? false : true);
+                }}
                 fnHelpMessage={() => {
                   route.push('/(auth)/resetPassword');
                 }}
                 helpMessageColor={Colors.primary.main}
-                secureTextEntry
+                secureTextEntry={isSecureTextEntry}
                 keyboardType='numeric'
                 leftIcon={
                   <Icon
@@ -137,7 +142,7 @@ export default function SignIn(props: SignInProps) {
                 rightIcon={
                   <Icon
                     name='Feather'
-                    icon='eye-off'
+                    icon={isSecureTextEntry ? 'eye-off' : 'eye'}
                   />
                 }
               />
