@@ -36,6 +36,10 @@ export default function PasswordChange(props: PasswordChangeProps) {
         resolver: zodResolver(formSchemaPasswordChange),
     });
 
+    const [isCurrentPasswordSecureTextEntry, setIsCurrentPasswordSecureTextEntry] = useState(true);
+    const [isNewPasswordSecureTextEntry, setIsNewPasswordSecureTextEntry] = useState(true);
+    const [isConfirmNewPasswordSecureTextEntry, setIsConfirmNewPasswordSecureTextEntry] = useState(true);
+
     const onSubmit = async (data: FormDataPasswordChange) => {
         setIsLoading(true);
 
@@ -73,8 +77,11 @@ export default function PasswordChange(props: PasswordChangeProps) {
                         withLabel={false}
                         placeholder='Senha atual aqui...'
                         variant='outlined'
+                        fnRightIcon={() => {
+                            setIsCurrentPasswordSecureTextEntry(isCurrentPasswordSecureTextEntry ? false : true);
+                        }}
                         withLabelCheck={false}
-                        secureTextEntry
+                        secureTextEntry={isCurrentPasswordSecureTextEntry}
                         helpMessageColor={Colors.primary.main}
                         leftIcon={
                             <Icon
@@ -85,7 +92,7 @@ export default function PasswordChange(props: PasswordChangeProps) {
                         rightIcon={
                             <Icon
                                 name='Feather'
-                                icon='eye-off'
+                                icon={isCurrentPasswordSecureTextEntry ? 'eye-off' : 'eye'}
                             />
                         }
                     />
@@ -97,7 +104,10 @@ export default function PasswordChange(props: PasswordChangeProps) {
                         placeholder='Nova senha (6 a 20 caracteres)'
                         variant='outlined'
                         withLabel={false}
-                        secureTextEntry
+                        secureTextEntry={isNewPasswordSecureTextEntry}
+                        fnRightIcon={() => {
+                            setIsNewPasswordSecureTextEntry(isNewPasswordSecureTextEntry ? false : true);
+                        }}
                         leftIcon={
                             <Icon
                                 name='Feather'
@@ -107,7 +117,7 @@ export default function PasswordChange(props: PasswordChangeProps) {
                         rightIcon={
                             <Icon
                                 name='Feather'
-                                icon='eye-off'
+                                icon={isNewPasswordSecureTextEntry ? 'eye-off' : 'eye'}
                             />
                         }
                     />
@@ -118,8 +128,11 @@ export default function PasswordChange(props: PasswordChangeProps) {
                         control={control}
                         placeholder='Confirmar a nova senha'
                         withLabel={false}
-                        secureTextEntry
+                        secureTextEntry={isConfirmNewPasswordSecureTextEntry}
                         variant='outlined'
+                        fnRightIcon={() => {
+                            setIsConfirmNewPasswordSecureTextEntry(isConfirmNewPasswordSecureTextEntry ? false : true);
+                        }}
                         leftIcon={
                             <Icon
                                 name='Feather'
@@ -129,7 +142,7 @@ export default function PasswordChange(props: PasswordChangeProps) {
                         rightIcon={
                             <Icon
                                 name='Feather'
-                                icon='eye-off'
+                                icon={isConfirmNewPasswordSecureTextEntry ? 'eye-off' : 'eye'}
                             />
                         }
                     />
