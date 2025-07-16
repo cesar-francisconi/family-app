@@ -41,7 +41,7 @@ export default function DeleteUser(props: DeleteUserProps) {
     const { control, handleSubmit, setError } = form;
 
     const [isLoading, setIsLoading] = useState(false);
-
+    const [isSecureTextEntry, setIsSecureTextEntry] = useState(true);
 
     const onSubmit = async (data: FormDataDeleteUser | FormDataDeleteGoogleUser) => {
         setIsLoading(true);
@@ -120,7 +120,10 @@ export default function DeleteUser(props: DeleteUserProps) {
                             control={control}
                             withLabel={false}
                             placeholder='Senha atual para excluir conta...'
-                            secureTextEntry
+                            secureTextEntry={isSecureTextEntry}
+                            fnRightIcon={() => {
+                                setIsSecureTextEntry(isSecureTextEntry ? false : true);
+                            }}
                             variant='outlined'
                             leftIcon={
                                 <Icon
@@ -131,7 +134,7 @@ export default function DeleteUser(props: DeleteUserProps) {
                             rightIcon={
                                 <Icon
                                     name='Feather'
-                                    icon='eye-off'
+                                    icon={isSecureTextEntry ? 'eye-off' : 'eye'}
                                 />
                             }
                         />
