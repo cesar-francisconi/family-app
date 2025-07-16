@@ -35,6 +35,8 @@ export default function EmailChange(props: EmailChangeProps) {
         resolver: zodResolver(formSchemaEmailChange),
     });
 
+    const [isSecureTextEntry, setIsSecureTextEntry] = useState(true);
+
     const onSubmit = async (data: FormDataEmailChange) => {
         setIsLoading(true);
 
@@ -82,8 +84,11 @@ export default function EmailChange(props: EmailChangeProps) {
                         name='confirmPassword'
                         control={control}
                         withLabel={false}
+                        fnRightIcon={() => {
+                            setIsSecureTextEntry(isSecureTextEntry ? false : true);
+                        }}
                         placeholder='Confirme sua senha (atual) aqui...'
-                        secureTextEntry
+                        secureTextEntry={isSecureTextEntry}
                         variant='outlined'
                         autoCorrect={false}
                         leftIcon={
@@ -95,7 +100,7 @@ export default function EmailChange(props: EmailChangeProps) {
                         rightIcon={
                             <Icon
                                 name='Feather'
-                                icon='eye-off'
+                                icon={isSecureTextEntry ? 'eye-off' : 'eye'}
                             />
                         }
                     />
