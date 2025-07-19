@@ -18,6 +18,7 @@ import {
     onSnapshot,
 } from '@react-native-firebase/firestore';
 import { getAuth } from '@react-native-firebase/auth';
+import Toast from 'react-native-toast-message';
 
 type CurrentMovieId = Movie['id'] | null;
 type CurrentCommentId = Comment['id'] | null;
@@ -701,6 +702,13 @@ export const setComment = async (
     await updateDoc(movieRef, {
         comments: updatedComments,
     });
+
+    Toast.show({
+        type: 'customSuccessBase',
+        text2: 'Comentário adicionado.',
+        position: 'top',
+        visibilityTime: 3000,
+    });
 };
 
 export const setAnswer = async (
@@ -748,6 +756,13 @@ export const setAnswer = async (
 
     await updateDoc(movieRef, {
         comments: updatedComments,
+    });
+
+    Toast.show({
+        type: 'customSuccessBase',
+        text2: 'Resposta adicionada.',
+        position: 'top',
+        visibilityTime: 3000,
     });
 };
 
