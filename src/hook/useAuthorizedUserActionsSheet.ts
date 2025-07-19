@@ -9,6 +9,8 @@ import {
     removeAnswerById,
     removeCommentById,
 } from "../hook/useMovie";
+import { setConfirmDeleteCommentModal } from './useConfirmDeleteCommentModal';
+import Toast from 'react-native-toast-message';
 
 export interface AuthorizedUserActionsSheetOptions {
     isOpen: boolean;
@@ -144,29 +146,58 @@ export const handleAuthorizedEdit = ({
 interface HandleAuthorizedDeleteProps {
     bottomSheetRef: React.RefObject<BottomSheetMethods | null>;
     origin: AuthorizedUserActionsSheetOptions['origin'];
-    param: AuthorizedUserActionsSheetOptions['param'];
+    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export const handleAuthorizedDelete = ({
+export const handleAuthorizedDelete = async ({
     bottomSheetRef,
     origin,
+    setIsLoading,
 }: HandleAuthorizedDeleteProps) => {
+    setIsLoading(true);
     const route = useRouter();
 
     switch (origin) {
         case 'isComment':
-            removeCommentById();
+            await removeCommentById();
+
+            Toast.show({
+                type: 'customSuccessBase',
+                text2: 'Comentário deletado.',
+                position: 'top',
+                visibilityTime: 3000,
+            });
             break;
         case 'isSelectedParentComment':
             route.back();
-            removeCommentById();
+            await removeCommentById();
+
+            Toast.show({
+                type: 'customSuccessBase',
+                text2: 'Comentário deletado.',
+                position: 'top',
+                visibilityTime: 3000,
+            });
             break;
         case 'isAnswer':
-            removeAnswerById();
+            await removeAnswerById();
+
+            Toast.show({
+                type: 'customSuccessBase',
+                text2: 'Resposta deletada.',
+                position: 'top',
+                visibilityTime: 3000,
+            });
             break;
     };
+
+    setConfirmDeleteCommentModal({
+        isOpen: false,
+    });
 
     closeAuthorizedUserActionsSheet({
         bottomSheetRef,
     });
+
+    setIsLoading(false);
 };
