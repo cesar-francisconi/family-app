@@ -8,6 +8,8 @@ import { AuthorizedUserActionsSheet } from '../../components/AuthorizedUserActio
 import { CommentReplyFieldSheet } from '../../components/CommentReplyFieldSheet';
 import { UnauthorizedUserActionsSheet } from '../../components/UnauthorizedUserActionsSheet';
 import { Header } from '@/src/components/Header';
+import { ConfirmDeleteCommentModal } from '@/src/components/ConfirmDeleteCommentModal';
+import { ConfirmDeleteUserModal } from '@/src/components/ConfirmDeleteUserModal';
 
 export default function RootLayoutNav() {
 
@@ -124,6 +126,10 @@ export default function RootLayoutNav() {
       />
 
       <CommentReplyFieldSheet />
+
+      <ConfirmDeleteCommentModal />
+
+      <ConfirmDeleteUserModal />
     </SafeAreaView>
   );
 }
