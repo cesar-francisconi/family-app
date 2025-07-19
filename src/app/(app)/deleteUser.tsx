@@ -21,6 +21,7 @@ import {
     FormDataDeleteGoogleUser,
     formSchemaDeleteGoogleUser,
 } from '@/src/helpers/formSchemaDeleteGoogleUser';
+import { setConfirmDeleteUserModal } from '@/src/hook/useConfirmDeleteUserModal';
 
 export default function DeleteUser(props: DeleteUserProps) {
 
@@ -44,42 +45,11 @@ export default function DeleteUser(props: DeleteUserProps) {
     const [isSecureTextEntry, setIsSecureTextEntry] = useState(true);
 
     const onSubmit = async (data: FormDataDeleteUser | FormDataDeleteGoogleUser) => {
-        setIsLoading(true);
-
-        let handle;
-        if (isGoogleAccount) {
-            handle = handleDeleteGoogleUser({ confirmEmail: data.confirmEmail });
-        } else {
-            // Type guard: data is FormDataDeleteUser here
-            handle = handleDeleteUser({
-                confirmEmail: data.confirmEmail,
-                confirmPassword: (data as FormDataDeleteUser).confirmPassword,
-            });
-        }
-
-        try {
-            await handle;
-
-        } catch (error: any) {
-            if (error.code === 'confirmed-email-mismatch') {
-                setError('confirmEmail', {
-                    type: 'manual',
-                    message: error.message,
-                });
-            } else if (error.code === 'auth/invalid-credential') {
-                if (!isGoogleAccount) {
-                    (setError as (name: 'confirmPassword', error: { type: string; message: string }) => void)(
-                        'confirmPassword',
-                        {
-                            type: 'manual',
-                            message: 'A senha confirmada não bate com a sua senha de login. Verifique se você digitou corretamente.',
-                        }
-                    );
-                }
-            }
-        } finally {
-            setIsLoading(false);
-        };
+        setConfirmDeleteUserModal({
+            isOpen: true,
+            data,
+            setError,
+        });
     };
 
     return (
@@ -87,8 +57,8 @@ export default function DeleteUser(props: DeleteUserProps) {
             {isGoogleAccount ? (<Input
                 name='confirmEmail'
                 control={control}
-                label='Confirme seu email para excluir conta...'
-                placeholder=''
+                placeholder='E-mail atual para excluir conta...'
+                withLabel={false}
                 variant='outlined'
                 leftIcon={
                     <Icon
