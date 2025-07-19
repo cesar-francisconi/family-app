@@ -30,6 +30,8 @@ export const handleGoogleAuth = async (mode: GoogleAuthMode) => {
     try {
         const route = useRouter();
         await GoogleSignin.hasPlayServices();
+        // Força mostrar a tela de escolha de contas
+        await GoogleSignin.signOut();
         const result = await GoogleSignin.signIn();
 
         if (!result.data || !result.data.idToken) {
