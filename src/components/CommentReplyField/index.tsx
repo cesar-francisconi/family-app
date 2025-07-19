@@ -26,6 +26,7 @@ export const CommentReplyField = forwardRef<TextInput, CommentReplyFieldProps>((
         editable = true,
         fnButton,
         buttonDisabled,
+        isButtonLoading,
     } = props;
 
     const [onFocus, setOnFocus] = useState(false);
@@ -70,6 +71,7 @@ export const CommentReplyField = forwardRef<TextInput, CommentReplyFieldProps>((
                 onPress={fnButton}
                 disabled={buttonDisabled}
                 type="primary"
+                isLoading={isButtonLoading}
                 variant="filled"
                 size='small'
                 borderRadius='large'
