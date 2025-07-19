@@ -27,6 +27,7 @@ interface SubmitCommentOrAnswerProps {
     commentReplySheetOptions: CommentReplySheetOptions,
     bottomSheetRef: React.RefObject<BottomSheet | null>;
     resetInput: () => void;
+    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
 };
 
 export const submitCommentOrAnswer = async (props: SubmitCommentOrAnswerProps) => {
@@ -39,7 +40,10 @@ export const submitCommentOrAnswer = async (props: SubmitCommentOrAnswerProps) =
         commentReplySheetOptions,
         bottomSheetRef,
         resetInput,
+        setIsLoading,
     } = props;
+
+    setIsLoading(true);
 
     const auth = getAuth();
     const user = auth.currentUser;
@@ -54,7 +58,7 @@ export const submitCommentOrAnswer = async (props: SubmitCommentOrAnswerProps) =
     const userSnap = await getDoc(userRef);
 
     const data = userSnap.data() as Omit<User, 'id'>;
-    
+
     if (!data) {
         console.error(`User com ID ${uid} não encontrado.`);
         return;
@@ -66,7 +70,7 @@ export const submitCommentOrAnswer = async (props: SubmitCommentOrAnswerProps) =
     const userId = uid;
 
     if (commentReplySheetOptions.origin === 'isCommentAuthorizedUserActionsSheetEdit' || commentReplySheetOptions.origin === 'isSelectedParentCommentAuthorizedUserActionsSheetEdit') {
-        changeCommentById(inputValue);
+        await changeCommentById(inputValue);
 
         bottomSheetRef.current?.close();
         inputRef.current?.blur();
@@ -77,7 +81,7 @@ export const submitCommentOrAnswer = async (props: SubmitCommentOrAnswerProps) =
     };
 
     if (commentReplySheetOptions.origin === 'isAnswerAuthorizedUserActionsSheetEdit') {
-        changeAnswerById(inputValue);
+        await changeAnswerById(inputValue);
 
         bottomSheetRef.current?.close();
         inputRef.current?.blur();
@@ -88,7 +92,7 @@ export const submitCommentOrAnswer = async (props: SubmitCommentOrAnswerProps) =
     };
 
     if (isComment) {
-        setComment(movieId, {
+        await setComment(movieId, {
             username,
             avatar,
             background,
@@ -96,7 +100,7 @@ export const submitCommentOrAnswer = async (props: SubmitCommentOrAnswerProps) =
             comment: inputValue,
         });
     } else if (isAnswers) {
-        setAnswer(movieId, {
+        await setAnswer(movieId, {
             username,
             avatar,
             background,
@@ -109,4 +113,5 @@ export const submitCommentOrAnswer = async (props: SubmitCommentOrAnswerProps) =
     inputRef.current?.blur();
     setCommentReplySheet({ isOpen: false });
     resetInput();
+    setIsLoading(false);
 };
