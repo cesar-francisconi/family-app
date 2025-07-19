@@ -34,6 +34,7 @@ export default function SignIn(props: SignInProps) {
   const route = useRouter();
 
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingGoogle, setIsLoadingGoogle] = useState(false);
 
   const {
     control,
@@ -165,9 +166,16 @@ export default function SignIn(props: SignInProps) {
         />
 
         <Button
-          onPress={() => handleGoogleAuth('signIn')}
+          onPress={async () => {
+            setIsLoadingGoogle(true);
+
+            await handleGoogleAuth('signIn');
+
+            setIsLoadingGoogle(false);
+          }}
           type='secondary'
           variant='filled'
+          isLoading={isLoadingGoogle}
           title='Continue com Google'
           borderRadius='medium'
           leftIcon={
