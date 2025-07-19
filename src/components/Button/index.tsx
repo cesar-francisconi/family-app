@@ -3,6 +3,7 @@ import {
     Text,
     TouchableOpacity,
     TouchableOpacityProps,
+    View,
 } from "react-native";
 import { styles } from "./styles";
 import { ButtonProps } from "./types";
@@ -44,10 +45,12 @@ export function Button(props: ButtonProps & Omit<TouchableOpacityProps, 'style'>
                 ...border,
             }, styles.button]}
         >
-            {isLoading ? <ActivityIndicator
-                COLOR="second"
-                SIZE="small"
-            /> : <>
+            <View
+                style={[{
+                    opacity: isLoading ? 0 : 1,
+                    gap: background['gap'],
+                }, styles.button]}
+            >
                 {leftIcon && React.cloneElement(leftIcon, {
                     color,
                     size: Size,
@@ -66,7 +69,18 @@ export function Button(props: ButtonProps & Omit<TouchableOpacityProps, 'style'>
                     color,
                     size: Size,
                 } as IconProps)}
-            </>}
+            </View>
+            <View
+                style={{
+                    position: 'absolute',
+                    opacity: isLoading ? 1 : 0,
+                }}
+            >
+                <ActivityIndicator
+                    COLOR="second"
+                    SIZE="small"
+                />
+            </View>
         </TouchableOpacity>
     );
 }
