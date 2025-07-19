@@ -1,20 +1,32 @@
-import { Dimensions, Pressable, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import Toast, {
   BaseToastProps,
-  ErrorToast,
-  InfoToast,
-  SuccessToast,
 } from "react-native-toast-message"
 import { getScreenHeight } from "./getScreenHeight";
 import { Spacing } from "../constants/Spacing";
 import { Colors } from "../constants/Colors";
 import { Font } from "../constants/Font";
-import { Button } from "../components/Button";
 import { BorderRadius } from "../constants/BorderRadius";
 
-const screenWidth = Dimensions.get('window').width;
-
 export const toastConfig = {
+  customSuccessBase: ({ text2 }: BaseToastProps) => (
+    <Pressable
+      style={styles.toastMainContainer}
+      onPress={() => Toast.hide()}
+    >
+      <View style={[styles.toastContainer, styles.successContainer]}>
+        <Text style={[styles.message, {
+          marginBottom: 0,
+        }]}>{text2}</Text>
+      </View>
+    </Pressable>
+  ),
+
   customSuccess: ({ text1, text2 }: BaseToastProps) => (
     <Pressable
       style={styles.toastMainContainer}
