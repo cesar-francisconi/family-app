@@ -13,7 +13,6 @@ import { styles } from './styles';
 import { AuthorizedUserActionsSheetProps } from './types';
 import { usePathName } from '@/src/hook/usePathname';
 import {
-    handleAuthorizedDelete,
     handleAuthorizedEdit,
     handleAuthorizedReply,
     setAuthorizedUserActionsSheet,
@@ -24,6 +23,7 @@ import { useBackHandlerForReplySheet } from '@/src/hook/useBackHandlerForReplySh
 import { useHandleSheetChange } from '@/src/hook/useHandleSheetChange';
 import { useExpandBottomSheetOnOpen } from '@/src/hook/useExpandBottomSheetOnOpen';
 import { useBottomSheetBackdrop } from '../Backdrop';
+import { setConfirmDeleteCommentModal } from '@/src/hook/useConfirmDeleteCommentModal';
 
 export const AuthorizedUserActionsSheet = (props: AuthorizedUserActionsSheetProps) => {
 
@@ -137,10 +137,12 @@ export const AuthorizedUserActionsSheet = (props: AuthorizedUserActionsSheetProp
 
                 <TouchableOpacity
                     style={styles.actionContainer}
-                    onPress={() => handleAuthorizedDelete({
-                        bottomSheetRef,
-                        origin,
-                        param,
+                    onPress={() => setConfirmDeleteCommentModal({
+                        isOpen: true,
+                        param: {
+                            bottomSheetRef,
+                            origin,
+                        }
                     })}
                 >
                     <Icon
