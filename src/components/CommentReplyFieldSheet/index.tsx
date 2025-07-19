@@ -31,6 +31,7 @@ import { useBottomSheetBackdrop } from '../Backdrop';
 export function CommentReplyFieldSheet(_: CommentReplyFieldSheetProps) {
 
     const [inputValue, setInputValue] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
     const bottomSheetRef = useRef<BottomSheet>(null);
     const inputRef = useRef<TextInput>(null);
@@ -101,6 +102,7 @@ export function CommentReplyFieldSheet(_: CommentReplyFieldSheetProps) {
                         inputValue,
                         commentReplySheetOptions,
                     })}
+                    isButtonLoading={isLoading}
                     onChangeText={setInputValue}
                     fnButton={() => {
                         const inputValueTrim = inputValue.trim();
@@ -113,6 +115,7 @@ export function CommentReplyFieldSheet(_: CommentReplyFieldSheetProps) {
                             commentReplySheetOptions,
                             bottomSheetRef,
                             resetInput: () => setInputValue(''),
+                            setIsLoading,
                         });
                     }}
                     ref={inputRef}
