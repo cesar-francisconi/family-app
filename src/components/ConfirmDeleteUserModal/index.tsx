@@ -20,6 +20,7 @@ import { useState } from "react";
 import { handleDeleteGoogleUser } from "@/src/helpers/handleDeleteGoogleUser";
 import { handleDeleteUser } from "@/src/helpers/handleDeleteUser";
 import { FormDataDeleteUser } from "@/src/helpers/formSchemaDeleteUser";
+import { useBackHandlerForReplySheet } from "@/src/hook/useBackHandlerForReplySheet";
 
 
 export function ConfirmDeleteUserModal(props: ConfirmDeleteUserModalProps) {
@@ -86,6 +87,13 @@ export function ConfirmDeleteUserModal(props: ConfirmDeleteUserModalProps) {
             handleClose();
         };
     };
+
+    useBackHandlerForReplySheet({
+        isOpen: isOpen,
+        onClose: () => {
+            handleClose();
+        },
+    });
 
     return isOpen ? (
         <SafeAreaView style={styles.container}>
