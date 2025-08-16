@@ -1,9 +1,11 @@
 import React, {
     forwardRef,
+    useImperativeHandle,
     useRef,
     useState,
 } from 'react';
 import {
+    Pressable,
     Text,
     TextInput,
     TouchableOpacity,
@@ -35,14 +37,22 @@ export const Input = forwardRef<TextInput, Omit<InputProps, 'state'>>((props, re
         leftIcon,
         rightIcon,
         fnLeftIcon,
+        autoCapitalize = 'none',
         fnRightIcon,
         fnHelpMessage,
+        isAt,
         style,
         ...inputProps
     } = props;
 
+    const inputRef = useRef<TextInput>(null);
+
+    useImperativeHandle(ref, () => inputRef.current!);
+
     const [isFocused, setIsFocused] = useState(false);
     const IsValidating = useRef(false);
+    const [rawValue, setRawValue] = useState('');
+
 
     let token = getInputToken({ ...props, state: 'default' });
 
@@ -66,7 +76,10 @@ export const Input = forwardRef<TextInput, Omit<InputProps, 'state'>>((props, re
                 });
 
                 return (
-                    <View style={[styles.mainContainer, token.mainContainer, style]}>
+                    <Pressable
+                        style={[styles.mainContainer, token.mainContainer, style]}
+                        onPress={() => inputRef.current?.focus()}
+                    >
                         {withLabel && (
                             <Text style={[styles.label, token.label]}>
                                 {label}
@@ -81,24 +94,35 @@ export const Input = forwardRef<TextInput, Omit<InputProps, 'state'>>((props, re
                                     </TouchableOpacity>
                                 )}
 
-                                <TextInput
-                                    ref={ref}
-                                    value={value}
-                                    onChangeText={onChange}
-                                    onBlur={() => {
-                                        onBlur();
-                                        setIsFocused(false);
-                                    }}
-                                    onFocus={() => setIsFocused(true)}
-                                    placeholder={placeholder}
-                                    placeholderTextColor={token.placeholderTextColor}
-                                    style={[styles.input, token.input]}
-                                    {...inputProps}
-                                />
+                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                    {isAt && <Text style={styles.at}>@</Text>}
+                                    <TextInput
+                                        ref={inputRef}
+                                        value={rawValue}
+                                        autoCapitalize={autoCapitalize}
+                                        onChangeText={(text) => {
+                                            setRawValue(text);          // mantém espaços visíveis
+                                            onChange(text.trim());      // envia valor limpo para validação
+                                        }}
+                                        onBlur={() => {
+                                            onBlur();
+                                            setIsFocused(false);
+                                        }}
+                                        onFocus={() => setIsFocused(true)}
+                                        placeholder={placeholder}
+                                        placeholderTextColor={token.placeholderTextColor}
+                                        style={[styles.input, token.input]}
+                                        {...inputProps}
+                                    />
+                                </View>
                             </View>
 
                             {rightIcon && (
-                                <TouchableOpacity onPress={fnRightIcon} disabled={!fnRightIcon}>
+                                <TouchableOpacity
+                                    style={styles.rightIcon}
+                                    onPress={fnRightIcon}
+                                    disabled={!fnRightIcon}
+                                >
                                     {React.cloneElement(rightIcon, token.icon)}
                                 </TouchableOpacity>
                             )}
@@ -126,12 +150,12 @@ export const Input = forwardRef<TextInput, Omit<InputProps, 'state'>>((props, re
                             </View>
                         )}
 
-                        {error && (
+                        {error && error.message && (
                             <Text style={[styles.error, token.error]}>
                                 {error.message}
                             </Text>
                         )}
-                    </View>
+                    </Pressable>
                 )
             }}
         />
