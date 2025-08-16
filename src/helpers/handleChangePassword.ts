@@ -33,7 +33,7 @@ export const handleChangePassword = async ({
             type: 'customSuccess',
             text2: 'Senha atualizada com sucesso!',
             position: 'top',
-            visibilityTime: 3000,
+            visibilityTime: 1700,
         });
 
         await signOut(auth);
