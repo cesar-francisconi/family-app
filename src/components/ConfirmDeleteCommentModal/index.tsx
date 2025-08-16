@@ -17,6 +17,7 @@ import {
 } from "@/src/hook/useConfirmDeleteCommentModal";
 import { handleAuthorizedDelete } from "@/src/hook/useAuthorizedUserActionsSheet";
 import { useState } from "react";
+import { useBackHandlerForReplySheet } from "@/src/hook/useBackHandlerForReplySheet";
 
 
 export function ConfirmDeleteCommentModal(props: ConfirmDeleteCommentModalProps) {
@@ -32,11 +33,19 @@ export function ConfirmDeleteCommentModal(props: ConfirmDeleteCommentModalProps)
         param,
     } = useConfirmDeleteCommentModal((state) => state.options);
 
-    if (!param) return null;
 
     const handleClose = () => {
         setConfirmDeleteCommentModal({ isOpen: false });
     };
+
+    useBackHandlerForReplySheet({
+        isOpen: isOpen,
+        onClose: () => {
+            handleClose();
+        },
+    });
+
+    if (!param) return null;
 
     return isOpen && param ? (
         <SafeAreaView style={styles.container}>
