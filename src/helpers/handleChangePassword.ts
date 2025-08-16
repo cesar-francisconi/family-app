@@ -35,8 +35,6 @@ export const handleChangePassword = async ({
             position: 'top',
             visibilityTime: 1700,
         });
-
-        await signOut(auth);
     } catch (error: any) {
         // Lance o erro para o chamador tratar
         throw error;
