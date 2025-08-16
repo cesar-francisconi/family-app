@@ -76,6 +76,7 @@ export const submitCommentOrAnswer = async (props: SubmitCommentOrAnswerProps) =
         inputRef.current?.blur();
         setCommentReplySheet({ isOpen: false });
         resetInput();
+        setIsLoading(false);
 
         return;
     };
@@ -87,6 +88,7 @@ export const submitCommentOrAnswer = async (props: SubmitCommentOrAnswerProps) =
         inputRef.current?.blur();
         setCommentReplySheet({ isOpen: false });
         resetInput();
+        setIsLoading(false);
 
         return;
     };
