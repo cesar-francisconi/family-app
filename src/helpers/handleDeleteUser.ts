@@ -44,10 +44,9 @@ export const handleDeleteUser = async ({
 
         Toast.show({
             type: 'customSuccess',
-            text1: 'Sucesso',
             text2: 'Conta do usuário deletada!',
             position: 'top',
-            visibilityTime: 3000,
+            visibilityTime: 1700,
         });
     } catch (error: any) {
         // Lance o erro para o chamador tratar
