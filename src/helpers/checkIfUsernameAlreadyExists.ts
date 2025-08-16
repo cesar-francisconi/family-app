@@ -12,7 +12,7 @@ export const checkIfUsernameAlreadyExists = async (username: string) => {
 
     const q = query(
         collection(db, 'users'),
-        where('username', '==', usernameLowerCase)
+        where('username_lowercase', '==', usernameLowerCase)
     );
 
     const querySnapshot = await getDocs(q);
