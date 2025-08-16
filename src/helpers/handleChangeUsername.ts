@@ -50,10 +50,9 @@ export const handleChangeUsername = async ({
     // ✅ Toast de sucesso
     Toast.show({
         type: 'customSuccess',
-        text1: 'Sucesso',
         text2: 'Nome de usuário alterado com sucesso!',
         position: 'top',
-        visibilityTime: 3000,
+        visibilityTime: 1700,
     });
 
     setLoggedInUser();
