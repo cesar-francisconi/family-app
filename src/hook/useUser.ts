@@ -170,29 +170,10 @@ export const getMyList = async () => {
     return myLikedMovies;
 };
 
-export const isMovieInMyList = async (movieId: string) => {
-    const auth = getAuth();
-    const user = auth.currentUser;
+export const isMovieInMyList = (movieId: string) => {
+    const isMovieInMyList = getLoggedInUserMyList();
 
-    if (user && user.uid) {
-        const uid = user.uid;
-
-        const db = getFirestore();
-        const userRef = doc(db, 'users', uid);
-        const userSnap = await getDoc(userRef);
-
-        const data = userSnap.data();
-        if (!data) {
-            console.error(`Usuário com ID ${uid} não encontrado.`);
-            return false;
-        }
-
-        const existingMyList = (data.myList || []) as string[];
-
-        return existingMyList.includes(movieId);
-    }
-
-    return false;
+    return isMovieInMyList.includes(movieId);
 };
 
 export const addToLikedMovies = async (movieId: string) => {
@@ -291,30 +272,10 @@ export const getMoviesYouLiked = async () => {
     return myLikedMoviesListMovies;
 };
 
-export const isMovieLiked = async (movieId: string) => {
-    const auth = getAuth();
-    const user = auth.currentUser;
+export const isMovieLiked = (movieId: string) => {
+    const isMovieLiked = getLoggedInUserMyLikedMovies();
 
-    if (user && user.uid) {
-        const uid = user.uid;
-
-        const db = getFirestore();
-        const userRef = doc(db, 'users', uid);
-        const userSnap = await getDoc(userRef);
-
-        const data = userSnap.data();
-
-        if (!data) {
-            console.error(`Usuário com ID ${uid} não encontrado.`);
-            return false;
-        }
-
-        const existingMyLikedMovies = (data.myLikedMovies || []) as string[];
-
-        return existingMyLikedMovies.includes(movieId);
-    }
-
-    return false;
+    return isMovieLiked.includes(movieId);
 };
 
 export const setUserSearchHistory = async (search: string) => {
