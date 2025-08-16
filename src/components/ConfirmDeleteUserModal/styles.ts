@@ -15,6 +15,7 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
     },
     overlay: {
+        width: '100%',
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
@@ -31,6 +32,7 @@ export const styles = StyleSheet.create({
     description: {
         ...StyleSheet.flatten(Font.body.medium),
         color: Colors.inverseSurface.on,
+        textAlign:'center',
     },
     buttonsContainer: {
         flexDirection: 'row',
