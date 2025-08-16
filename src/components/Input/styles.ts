@@ -7,6 +7,10 @@ export const styles = StyleSheet.create({
     mainContainer: {
 
     },
+    at: {
+        ...StyleSheet.flatten(Font.label.extraLarge),
+        color: Colors.surface.on,
+    },
     label: {
 
     },
