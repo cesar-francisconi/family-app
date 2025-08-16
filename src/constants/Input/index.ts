@@ -46,6 +46,7 @@ export type InputTokens = {
 };
 
 const inputSize = 50;
+const preventInputScroll = inputSize - 5;
 
 export const inputStyles: InputTokens = {
     variant: {
@@ -81,6 +82,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 flex: 1,
                                 color: undefined,
+                                height: preventInputScroll,
                             },
                             error: {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
@@ -128,6 +130,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 flex: 1,
                                 color: undefined,
+                                height: preventInputScroll,
                             },
                             error: {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
@@ -175,6 +178,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 flex: 1,
                                 color: undefined,
+                                height: preventInputScroll,
                             },
                             error: {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
@@ -222,6 +226,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 flex: 1,
                                 color: undefined,
+                                height: preventInputScroll,
                             },
                             error: {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
@@ -275,6 +280,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 flex: 1,
                                 color: Colors.inverseSurface.on,
+                                height: preventInputScroll,
                             },
                             error: {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
@@ -288,7 +294,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 color: Colors.surface.on,
                             },
-                            placeholderTextColor: Colors.inverseSurface.on,
+                            placeholderTextColor: Colors.inverseSurface.onVariant,
                             icon: {
                                 color: Colors.inverseSurface.on,
                                 size: 'small',
@@ -324,6 +330,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 flex: 1,
                                 color: Colors.inverseSurface.on,
+                                height: preventInputScroll,
                             },
                             error: {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
@@ -337,7 +344,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 color: Colors.surface.on,
                             },
-                            placeholderTextColor: Colors.inverseSurface.on,
+                            placeholderTextColor: Colors.inverseSurface.onVariant,
                             icon: {
                                 color: Colors.inverseSurface.on,
                                 size: 'small',
@@ -373,6 +380,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 flex: 1,
                                 color: Colors.inverseSurface.on,
+                                height: preventInputScroll,
                             },
                             error: {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
@@ -386,7 +394,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 color: Colors.surface.on,
                             },
-                            placeholderTextColor: Colors.inverseSurface.on,
+                            placeholderTextColor: Colors.inverseSurface.onVariant,
                             icon: {
                                 color: Colors.inverseSurface.on,
                                 size: 'small',
@@ -422,6 +430,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 flex: 1,
                                 color: Colors.inverseSurface.on,
+                                height: preventInputScroll,
                             },
                             error: {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
@@ -435,7 +444,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 color: Colors.surface.on,
                             },
-                            placeholderTextColor: Colors.inverseSurface.on,
+                            placeholderTextColor: Colors.inverseSurface.onVariant,
                             icon: {
                                 color: Colors.inverseSurface.on,
                                 size: 'small',
@@ -473,6 +482,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 flex: 1,
                                 color: Colors.inverseSurface.on,
+                                height: preventInputScroll,
                             },
                             error: {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
@@ -486,7 +496,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 color: Colors.surface.on,
                             },
-                            placeholderTextColor: Colors.inverseSurface.on,
+                            placeholderTextColor: Colors.inverseSurface.onVariant,
                             icon: {
                                 color: Colors.inverseSurface.on,
                                 size: 'small',
@@ -520,6 +530,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 flex: 1,
                                 color: Colors.inverseSurface.on,
+                                height: preventInputScroll,
                             },
                             error: {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
@@ -533,7 +544,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 color: Colors.surface.on,
                             },
-                            placeholderTextColor: Colors.inverseSurface.on,
+                            placeholderTextColor: Colors.inverseSurface.onVariant,
                             icon: {
                                 color: Colors.inverseSurface.on,
                                 size: 'small',
@@ -567,6 +578,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 flex: 1,
                                 color: Colors.inverseSurface.on,
+                                height: preventInputScroll,
                             },
                             error: {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
@@ -580,7 +592,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 color: Colors.surface.on,
                             },
-                            placeholderTextColor: Colors.inverseSurface.on,
+                            placeholderTextColor: Colors.inverseSurface.onVariant,
                             icon: {
                                 color: Colors.inverseSurface.on,
                                 size: 'small',
@@ -614,6 +626,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 flex: 1,
                                 color: Colors.inverseSurface.on,
+                                height: preventInputScroll,
                             },
                             error: {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
@@ -627,7 +640,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 color: Colors.surface.on,
                             },
-                            placeholderTextColor: Colors.inverseSurface.on,
+                            placeholderTextColor: Colors.inverseSurface.onVariant,
                             icon: {
                                 color: Colors.inverseSurface.on,
                                 size: 'small',
@@ -678,7 +691,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 color: Colors.surface.on,
                             },
-                            placeholderTextColor: Colors.error.onContainer,
+                            placeholderTextColor: Colors.inverseSurface.onVariant,
                             icon: {
                                 color: Colors.error.onContainer,
                                 size: 'small',
@@ -725,7 +738,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 color: Colors.surface.on,
                             },
-                            placeholderTextColor: Colors.error.onContainer,
+                            placeholderTextColor: Colors.inverseSurface.onVariant,
                             icon: {
                                 color: Colors.error.onContainer,
                                 size: 'small',
@@ -772,7 +785,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 color: Colors.surface.on,
                             },
-                            placeholderTextColor: Colors.error.onContainer,
+                            placeholderTextColor: Colors.inverseSurface.onVariant,
                             icon: {
                                 color: Colors.error.onContainer,
                                 size: 'small',
@@ -819,7 +832,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 color: Colors.surface.on,
                             },
-                            placeholderTextColor: Colors.error.onContainer,
+                            placeholderTextColor: Colors.inverseSurface.onVariant,
                             icon: {
                                 color: Colors.error.onContainer,
                                 size: 'small',
@@ -870,7 +883,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 color: Colors.surface.on,
                             },
-                            placeholderTextColor: Colors.success.onContainer,
+                            placeholderTextColor: Colors.inverseSurface.onVariant,
                             icon: {
                                 color: Colors.success.onContainer,
                                 size: 'small',
@@ -917,7 +930,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 color: Colors.surface.on,
                             },
-                            placeholderTextColor: Colors.success.onContainer,
+                            placeholderTextColor: Colors.inverseSurface.onVariant,
                             icon: {
                                 color: Colors.success.onContainer,
                                 size: 'small',
@@ -964,7 +977,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 color: Colors.surface.on,
                             },
-                            placeholderTextColor: Colors.success.onContainer,
+                            placeholderTextColor: Colors.inverseSurface.onVariant,
                             icon: {
                                 color: Colors.success.onContainer,
                                 size: 'small',
@@ -1011,7 +1024,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 color: Colors.surface.on,
                             },
-                            placeholderTextColor: Colors.success.onContainer,
+                            placeholderTextColor: Colors.inverseSurface.onVariant,
                             icon: {
                                 color: Colors.success.onContainer,
                                 size: 'small',
@@ -1062,7 +1075,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 color: Colors.surface.on,
                             },
-                            placeholderTextColor: Colors.disabled.text,
+                            placeholderTextColor: Colors.inverseSurface.onVariant,
                             icon: {
                                 color: Colors.disabled.text,
                                 size: 'small',
@@ -1109,7 +1122,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 color: Colors.surface.on,
                             },
-                            placeholderTextColor: Colors.disabled.text,
+                            placeholderTextColor: Colors.inverseSurface.onVariant,
                             icon: {
                                 color: Colors.disabled.text,
                                 size: 'small',
@@ -1156,7 +1169,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 color: Colors.surface.on,
                             },
-                            placeholderTextColor: Colors.disabled.text,
+                            placeholderTextColor: Colors.inverseSurface.onVariant,
                             icon: {
                                 color: Colors.disabled.text,
                                 size: 'small',
@@ -1203,7 +1216,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 color: Colors.surface.on,
                             },
-                            placeholderTextColor: Colors.disabled.text,
+                            placeholderTextColor: Colors.inverseSurface.onVariant,
                             icon: {
                                 color: Colors.disabled.text,
                                 size: 'small',
@@ -1247,6 +1260,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 flex: 1,
                                 color: undefined,
+                                height: preventInputScroll,
                             },
                             error: {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
@@ -1296,6 +1310,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 flex: 1,
                                 color: undefined,
+                                height: preventInputScroll,
                             },
                             error: {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
@@ -1345,6 +1360,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 flex: 1,
                                 color: undefined,
+                                height: preventInputScroll,
                             },
                             error: {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
@@ -1394,6 +1410,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 flex: 1,
                                 color: undefined,
+                                height: preventInputScroll,
                             },
                             error: {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
@@ -1460,7 +1477,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 color: Colors.surface.on,
                             },
-                            placeholderTextColor: Colors.success.on,
+                            placeholderTextColor: Colors.inverseSurface.onVariant,
                             icon: {
                                 color: Colors.success.on,
                                 size: 'small',
@@ -1509,7 +1526,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 color: Colors.surface.on,
                             },
-                            placeholderTextColor: Colors.success.on,
+                            placeholderTextColor: Colors.inverseSurface.onVariant,
                             icon: {
                                 color: Colors.success.on,
                                 size: 'small',
@@ -1558,7 +1575,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 color: Colors.surface.on,
                             },
-                            placeholderTextColor: Colors.success.on,
+                            placeholderTextColor: Colors.inverseSurface.onVariant,
                             icon: {
                                 color: Colors.success.on,
                                 size: 'small',
@@ -1607,7 +1624,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 color: Colors.surface.on,
                             },
-                            placeholderTextColor: Colors.success.on,
+                            placeholderTextColor: Colors.inverseSurface.onVariant,
                             icon: {
                                 color: Colors.success.on,
                                 size: 'small',
@@ -1660,7 +1677,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 color: Colors.surface.on,
                             },
-                            placeholderTextColor: Colors.success.on,
+                            placeholderTextColor: Colors.inverseSurface.onVariant,
                             icon: {
                                 color: Colors.success.on,
                                 size: 'small',
@@ -1709,7 +1726,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 color: Colors.surface.on,
                             },
-                            placeholderTextColor: Colors.success.on,
+                            placeholderTextColor: Colors.inverseSurface.onVariant,
                             icon: {
                                 color: Colors.success.on,
                                 size: 'small',
@@ -1758,7 +1775,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 color: Colors.surface.on,
                             },
-                            placeholderTextColor: Colors.success.on,
+                            placeholderTextColor: Colors.inverseSurface.onVariant,
                             icon: {
                                 color: Colors.success.on,
                                 size: 'small',
@@ -1807,7 +1824,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 color: Colors.surface.on,
                             },
-                            placeholderTextColor: Colors.success.on,
+                            placeholderTextColor: Colors.inverseSurface.onVariant,
                             icon: {
                                 color: Colors.success.on,
                                 size: 'small',
@@ -1860,7 +1877,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 color: Colors.surface.on,
                             },
-                            placeholderTextColor: Colors.success.on,
+                            placeholderTextColor: Colors.inverseSurface.onVariant,
                             icon: {
                                 color: Colors.success.on,
                                 size: 'small',
@@ -1909,7 +1926,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 color: Colors.surface.on,
                             },
-                            placeholderTextColor: Colors.success.on,
+                            placeholderTextColor: Colors.inverseSurface.onVariant,
                             icon: {
                                 color: Colors.success.on,
                                 size: 'small',
@@ -1958,7 +1975,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 color: Colors.surface.on,
                             },
-                            placeholderTextColor: Colors.success.on,
+                            placeholderTextColor: Colors.inverseSurface.onVariant,
                             icon: {
                                 color: Colors.success.on,
                                 size: 'small',
@@ -2007,7 +2024,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 color: Colors.surface.on,
                             },
-                            placeholderTextColor: Colors.success.on,
+                            placeholderTextColor: Colors.inverseSurface.onVariant,
                             icon: {
                                 color: Colors.success.on,
                                 size: 'small',
@@ -2060,7 +2077,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 color: Colors.surface.on,
                             },
-                            placeholderTextColor: Colors.surface.on,
+                            placeholderTextColor: Colors.inverseSurface.onVariant,
                             icon: {
                                 color: Colors.surface.on,
                                 size: 'small',
@@ -2109,7 +2126,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 color: Colors.surface.on,
                             },
-                            placeholderTextColor: Colors.surface.on,
+                            placeholderTextColor: Colors.inverseSurface.onVariant,
                             icon: {
                                 color: Colors.surface.on,
                                 size: 'small',
@@ -2158,7 +2175,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 color: Colors.surface.on,
                             },
-                            placeholderTextColor: Colors.surface.on,
+                            placeholderTextColor: Colors.inverseSurface.onVariant,
                             icon: {
                                 color: Colors.surface.on,
                                 size: 'small',
@@ -2207,7 +2224,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 color: Colors.surface.on,
                             },
-                            placeholderTextColor: Colors.surface.on,
+                            placeholderTextColor: Colors.inverseSurface.onVariant,
                             icon: {
                                 color: Colors.surface.on,
                                 size: 'small',
@@ -2258,7 +2275,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 color: Colors.surface.on,
                             },
-                            placeholderTextColor: Colors.disabled.text,
+                            placeholderTextColor: Colors.inverseSurface.onVariant,
                             icon: {
                                 color: Colors.disabled.text,
                                 size: 'small',
@@ -2305,7 +2322,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 color: Colors.surface.on,
                             },
-                            placeholderTextColor: Colors.disabled.text,
+                            placeholderTextColor: Colors.inverseSurface.onVariant,
                             icon: {
                                 color: Colors.disabled.text,
                                 size: 'small',
@@ -2352,7 +2369,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 color: Colors.surface.on,
                             },
-                            placeholderTextColor: Colors.disabled.text,
+                            placeholderTextColor: Colors.inverseSurface.onVariant,
                             icon: {
                                 color: Colors.disabled.text,
                                 size: 'small',
@@ -2399,7 +2416,7 @@ export const inputStyles: InputTokens = {
                                 ...StyleSheet.flatten(Font.label.extraLarge),
                                 color: Colors.surface.on,
                             },
-                            placeholderTextColor: Colors.disabled.text,
+                            placeholderTextColor: Colors.inverseSurface.onVariant,
                             icon: {
                                 color: Colors.disabled.text,
                                 size: 'small',
