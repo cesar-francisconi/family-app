@@ -68,7 +68,6 @@ const styles = StyleSheet.create({
   },
   toastMainContainer: {
     width: '100%',
-    height: getScreenHeight,
     paddingHorizontal: Spacing['2xl'],
     backgroundColor: Colors.surface.transparentMain40,
   },
@@ -87,7 +86,6 @@ const styles = StyleSheet.create({
   message: {
     color: Colors.inverseSurface.on,
     ...StyleSheet.flatten(Font.body.medium),
-    marginBottom: Spacing['lg'],
   },
   button: {
     alignSelf: 'flex-end',
