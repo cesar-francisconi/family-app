@@ -21,4 +21,5 @@ export interface InputProps extends TextInputProps {
     withLabelCheck?: boolean;
     labelCheckLabel?: string;
     isCheckedLabelCheck?: boolean;
+    isAt?: boolean;
 };
