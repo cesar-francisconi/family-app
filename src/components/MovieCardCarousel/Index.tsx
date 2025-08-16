@@ -25,7 +25,7 @@ export function MovieCardCarousel(props: MovieCardCarouselProps) {
         movieCardOptions = { withTitle: true },
     } = props;
 
-    const { debounce } = useDebounce(1000);
+    const { debounce } = useDebounce();
 
     const router = useRouter();
 
@@ -74,7 +74,7 @@ export function MovieCardCarousel(props: MovieCardCarouselProps) {
                             } else {
                                 handleMoviePress(item.id);
                             };
-                        })}>
+                        }, 1000)}>
                             <MovieCard {...item} withTitle={movieCardOptions.withTitle} withMore={withMore} />
                         </TouchableOpacity>
                     );
