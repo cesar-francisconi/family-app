@@ -80,10 +80,10 @@ export function ConfirmDeleteUserModal(props: ConfirmDeleteUserModalProps) {
                         }
                     );
                 }
-            }
-        } finally {
-            setIsLoading(false);
+            };
 
+            setIsLoading(false);
+        } finally {
             handleClose();
         };
     };
