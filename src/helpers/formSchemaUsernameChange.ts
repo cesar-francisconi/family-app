@@ -4,15 +4,18 @@ export const formSchemaUsernameChange = z.object({
     newUsername: z
         .string()
         .min(2, { message: 'O nome de usuário deve ter pelo menos 2 caracteres.' })
-        .max(18, { message: 'O nome de usuário deve ter no máximo 18 caracteres.' })
-        .refine((value) => !/\s/.test(value), {
-            message: 'Não é permitido usar espaços no nome de usuário.',
+        .max(30, { message: 'O nome de usuário deve ter no máximo 30 caracteres.' })
+        // Não permite espaços entre palavras
+        .refine((value) => !/\S\s+\S/.test(value), {
+            message: 'Não é permitido usar espaços entre palavras no nome de usuário.',
         })
-        .refine((value) => !/[0-9]/.test(value), {
-            message: 'O nome de usuário não pode conter números.',
+        // Só permite letras, números, ponto, traço, underline e espaço (nas bordas)
+        .refine((value) => /^[A-Za-zÀ-ÿ0-9._\- ]+$/.test(value), {
+            message: 'O nome de usuário só pode conter os seguintes caracteres especiais: ponto (.), traço (-), underline (_)'
         })
-        .refine((value) => /^[A-Za-zÀ-ÿ]+$/.test(value), {
-            message: 'O nome de usuário não pode conter caracteres especiais.',
+        // Após remover espaços das bordas, só pode ter os caracteres válidos, sem espaço no meio
+        .refine((value) => /^[A-Za-zÀ-ÿ0-9._\-]+$/.test(value.trim()), {
+            message: 'O nome de usuário não pode conter espaços no meio ou caracteres inválidos.',
         }),
 });
 
