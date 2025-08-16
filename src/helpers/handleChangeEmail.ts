@@ -43,8 +43,6 @@ export const handleChangeEmail = async ({
             position: 'top',
             visibilityTime: 6000,
         });
-
-        await signOut(auth);
     } catch (error: any) {
         // Lance o erro para o chamador tratar
         throw error;
