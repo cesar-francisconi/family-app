@@ -27,5 +27,11 @@ export const styles = StyleSheet.create({
     },
     helpText: {
 
-    }
+    },
+    rightIcon: {
+        height: '100%',
+        justifyContent: 'center',
+        paddingHorizontal: Spacing['2xl'],
+        marginRight: -Spacing['2xl'],
+    },
 });
