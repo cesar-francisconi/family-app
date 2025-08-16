@@ -38,10 +38,13 @@ export const handleChangeUsername = async ({
         throw error;
     }
 
+    const usernameLowerCase = newUsernameWithAt.toLowerCase();
+
     // Atualiza o username do usuário atual
     const userRef = doc(db, 'users', user.uid);
     await updateDoc(userRef, {
         username: newUsernameWithAt,
+        username_lowercase: usernameLowerCase,
     });
 
     // ✅ Toast de sucesso
