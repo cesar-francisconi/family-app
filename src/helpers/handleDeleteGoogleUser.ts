@@ -54,10 +54,9 @@ export const handleDeleteGoogleUser = async ({
 
         Toast.show({
             type: 'customSuccess',
-            text1: 'Sucesso',
             text2: 'Conta Google deletada com sucesso.',
             position: 'top',
-            visibilityTime: 3000,   
+            visibilityTime: 1700,   
         });
     } catch (error: any) {
         // Lance o erro para o chamador tratar
