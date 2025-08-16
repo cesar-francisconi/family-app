@@ -15,7 +15,7 @@ export function HeaderLeft() {
     const handleBack = () => {
         const backTimes: Partial<Record<AppRoutes, number>> = {
             '/more': 2,
-            '/comment': 2,
+            '/comments': 2,
             '/answers': 3,
         };
 
