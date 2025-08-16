@@ -60,13 +60,11 @@ export const closeAuthorizedUserActionsSheet = ({
 
 
 interface HandleAuthorizedReplyProps {
-    bottomSheetRef: React.RefObject<BottomSheetMethods | null>;
     origin: AuthorizedUserActionsSheetOptions['origin'];
     param: AuthorizedUserActionsSheetOptions['param'];
 };
 
 export const handleAuthorizedReply = ({
-    bottomSheetRef,
     origin,
     param,
 }: HandleAuthorizedReplyProps) => {
@@ -91,22 +89,16 @@ export const handleAuthorizedReply = ({
                 param: { authorizedUserActionsSheetReply: replyTo },
             });
             break;
-    }
-
-    closeAuthorizedUserActionsSheet({
-        bottomSheetRef,
-    });
+    };
 };
 
 
 interface HandleAuthorizedEditProps {
-    bottomSheetRef: React.RefObject<BottomSheetMethods | null>;
     origin: AuthorizedUserActionsSheetOptions['origin'];
     param: AuthorizedUserActionsSheetOptions['param'];
 };
 
 export const handleAuthorizedEdit = ({
-    bottomSheetRef,
     origin,
     param,
 }: HandleAuthorizedEditProps) => {
@@ -137,20 +129,14 @@ export const handleAuthorizedEdit = ({
             });
             break;
     };
-
-    closeAuthorizedUserActionsSheet({
-        bottomSheetRef,
-    });
 };
 
 interface HandleAuthorizedDeleteProps {
-    bottomSheetRef: React.RefObject<BottomSheetMethods | null>;
     origin: AuthorizedUserActionsSheetOptions['origin'];
     setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const handleAuthorizedDelete = async ({
-    bottomSheetRef,
     origin,
     setIsLoading,
 }: HandleAuthorizedDeleteProps) => {
@@ -193,10 +179,6 @@ export const handleAuthorizedDelete = async ({
 
     setConfirmDeleteCommentModal({
         isOpen: false,
-    });
-
-    closeAuthorizedUserActionsSheet({
-        bottomSheetRef,
     });
 
     setIsLoading(false);
