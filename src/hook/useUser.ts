@@ -99,6 +99,10 @@ export const addToMyList = async (movieId: string) => {
         await updateDoc(userRef, {
             myList: updatedMyList,
         });
+
+        useUser.setState({
+            myList: updatedMyList,
+        });
     }
 };
 
@@ -125,6 +129,10 @@ export const removeFromMyList = async (MOVIEID: string) => {
         const updatedMyList = existingMyList.filter((movieId) => movieId !== MOVIEID);
 
         await updateDoc(userRef, {
+            myList: updatedMyList,
+        });
+
+        useUser.setState({
             myList: updatedMyList,
         });
     };
@@ -212,6 +220,10 @@ export const addToLikedMovies = async (movieId: string) => {
         await updateDoc(userRef, {
             myLikedMovies: updatedMyLikedMovies,
         });
+
+        useUser.setState({
+            myLikedMovies: updatedMyLikedMovies,
+        })
     }
 };
 
@@ -240,6 +252,10 @@ export const removeFromLikedMovies = async (MOVIEID: string) => {
         await updateDoc(userRef, {
             myLikedMovies: updatedMyLikedMovies,
         });
+
+        useUser.setState({
+            myLikedMovies: updatedMyLikedMovies,
+        })
     };
 };
 
