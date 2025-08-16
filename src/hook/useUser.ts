@@ -64,9 +64,13 @@ export const getLoggedInUserBackground = () => useUser.getState().background;
 
 export const getLoggedInUserIsGoogleAccount = () => useUser.getState().isGoogleAccount;
 
-export const getLoggedInUserUsername = () => useUser((state) => state.username);
+export const getLoggedInUserUsername = () => useUser.getState().username;
 
-export const getLoggedInUserAvatar = () => useUser((state) => state.avatar);
+export const getLoggedInUserAvatar = () => useUser.getState().avatar;
+
+export const getLoggedInUserMyLikedMovies = () => useUser.getState().myLikedMovies;
+
+export const getLoggedInUserMyList = () => useUser.getState().myList;
 
 export const getLoggedInUser = () => useUser.getState();
 
