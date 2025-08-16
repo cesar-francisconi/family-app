@@ -5,7 +5,6 @@ import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 export interface ConfirmDeleteCommentModalOptions {
     isOpen: boolean;
     param?: {
-        bottomSheetRef: React.RefObject<BottomSheetMethods | null>;
         origin: AuthorizedUserActionsSheetOptions['origin'];
     };
 };
