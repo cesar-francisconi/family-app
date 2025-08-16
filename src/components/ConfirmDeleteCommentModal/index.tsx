@@ -49,7 +49,7 @@ export function ConfirmDeleteCommentModal(props: ConfirmDeleteCommentModalProps)
 
     return isOpen && param ? (
         <SafeAreaView style={styles.container}>
-            <TouchableWithoutFeedback onPress={handleClose}>
+            <TouchableWithoutFeedback onPress={isLoading ? undefined : handleClose}>
                 <View
                     style={styles.overlay}
                 >
@@ -69,7 +69,7 @@ export function ConfirmDeleteCommentModal(props: ConfirmDeleteCommentModalProps)
                             style={styles.buttonsContainer}
                         >
                             <Button
-                                onPress={handleClose}
+                                onPress={isLoading ? undefined : handleClose}
                                 type="primary"
                                 variant="filled"
                                 title='Cancelar'
@@ -78,14 +78,12 @@ export function ConfirmDeleteCommentModal(props: ConfirmDeleteCommentModalProps)
                             />
 
                             <Button
-                                onPress={() => {
+                                onPress={isLoading ? undefined : () => {
                                     const {
-                                        bottomSheetRef,
                                         origin,
                                     } = param;
 
                                     handleAuthorizedDelete({
-                                        bottomSheetRef,
                                         origin,
                                         setIsLoading,
                                     });
