@@ -146,34 +146,13 @@ export const handleAuthorizedDelete = async ({
     switch (origin) {
         case 'isComment':
             await removeCommentById();
-
-            Toast.show({
-                type: 'customSuccessBase',
-                text2: 'Comentário deletado.',
-                position: 'top',
-                visibilityTime: 3000,
-            });
             break;
         case 'isSelectedParentComment':
             route.back();
             await removeCommentById();
-
-            Toast.show({
-                type: 'customSuccessBase',
-                text2: 'Comentário deletado.',
-                position: 'top',
-                visibilityTime: 3000,
-            });
             break;
         case 'isAnswer':
             await removeAnswerById();
-
-            Toast.show({
-                type: 'customSuccessBase',
-                text2: 'Resposta deletada.',
-                position: 'top',
-                visibilityTime: 3000,
-            });
             break;
     };
 
