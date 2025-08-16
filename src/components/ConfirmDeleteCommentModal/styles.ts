@@ -31,6 +31,7 @@ export const styles = StyleSheet.create({
     description: {
         ...StyleSheet.flatten(Font.body.medium),
         color: Colors.inverseSurface.on,
+        textAlign:'center',
     },
     buttonsContainer: {
         flexDirection: 'row',
