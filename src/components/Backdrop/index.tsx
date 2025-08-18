@@ -8,7 +8,7 @@ import {
 import { BackdropPressBehavior } from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetBackdrop/types';
 
 type UseBottomSheetBackdropProps = {
-    onPress: () => void;
+    onPress?: () => void;
     style?: StyleProp<ViewStyle>;
     opacity?: number;
     disappearsOnIndex?: number;
