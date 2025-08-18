@@ -8,6 +8,8 @@ export const styles = StyleSheet.create({
     commentContainer: {
         flexDirection: 'row',
         gap: Spacing['xl'],
+        paddingLeft: 32 + Spacing['2xl'],
+        paddingHorizontal: Spacing['2xl'],
     },
     content: {
         gap: Spacing['4xl'],
