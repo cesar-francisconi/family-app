@@ -9,6 +9,7 @@ import {
 import { handleChangeUsername } from '@/src/helpers/handleChangeUsername';
 import {
     getLoggedInUserUsername,
+    useUser,
 } from '@/src/hook/useUser';
 import { styles } from '@/src/screen/UsernameChange/styles';
 import { UsernameChangeProps } from '@/src/screen/UsernameChange/types';
@@ -55,7 +56,7 @@ export default function UsernameChange(props: UsernameChangeProps) {
         };
     };
 
-    const username = getLoggedInUserUsername();
+    const username = useUser((state) => state.username);
 
     if (!username) return;
 
@@ -77,15 +78,10 @@ export default function UsernameChange(props: UsernameChangeProps) {
                 placeholder='Seu novo usuário aqui...'
                 variant='outlined'
                 withLabel={false}
-                state='filled'
+                autoCorrect={false}
                 withLabelCheck={false}
                 helpMessageColor={Colors.primary.main}
-                leftIcon={
-                    <Icon
-                        name='Feather'
-                        icon='user'
-                    />
-                }
+                isAt
             />
 
             <Button
