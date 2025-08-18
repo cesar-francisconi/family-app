@@ -8,21 +8,14 @@ import { UserCommentProps } from './types';
 import { ReactionGroup } from '../ReactionGroup';
 import { Avatar } from '../Avatar';
 import { Icon } from '../Icon';
-
-import { useRouter } from 'expo-router';
-import { useDebounce } from '@/src/helpers/debounce';
-
-import {
-    setCurrentCommentId,
-    setCurrentUserId,
-} from '@/src/hook/useMovie';
 import { formatTimeAgo } from '@/src/helpers/formatTimeAgo';
 import { formatToK } from '@/src/helpers/formatTok';
 import { getInitialsFromUsername } from '@/src/helpers/getInitialsFromUsername';
 import { AvatarProps } from '../Avatar/types';
-import { usePathName } from '@/src/hook/usePathname';
-import { openCommentActionsSheet } from '@/src/helpers/openCommentActionsSheet';
-import { getLoggedInUserId } from '@/src/hook/useUser';
+import {
+    memo,
+    useMemo,
+} from 'react';
 
 export function Comment(props: UserCommentProps) {
 
@@ -40,33 +33,23 @@ export function Comment(props: UserCommentProps) {
         withAnswersText = true,
         isEdit = false,
         dislikes,
+        onMorePress,
+        handleAnswersPress,
     } = props;
 
-    const loggedInUserId = getLoggedInUserId();
-    const pathname = usePathName();
-    const router = useRouter();
-    const { debounce } = useDebounce(1000);
-
-    const getAvatarProps = (): AvatarProps => (
+    const getAvatarProps = useMemo((): AvatarProps =>
         avatar
             ? { mode: 'image', imageUrl: avatar, size: 'small' }
-            : { mode: 'initial', initial: getInitialsFromUsername(username), size: 'small', background }
-    );
+            : { mode: 'initial', initial: getInitialsFromUsername(username), size: 'small', background }, [avatar, username, background]);
 
-    const handleAnswersPress = () => {
-        setCurrentUserId(userId);
-        setCurrentCommentId(id);
+    const showAnswers = useMemo(() => withAnswersText && answers.length > 0, [withAnswersText, answers.length]);
 
-        router.push(`/(app)/(details)/(comments)/answers?commentId=${id}`);
-    };
-
-    const showAnswers = withAnswersText && answers.length > 0;
-
-    if (!loggedInUserId) return;
+    const formattedTime = useMemo(() => formatTimeAgo(time), [time]);
+    const answersCount = useMemo(() => formatToK(answers.length), [answers]);
 
     return (
         <View style={styles.commentContainer}>
-            <Avatar {...getAvatarProps()} />
+            <Avatar {...getAvatarProps} />
 
             <View style={styles.content}>
                 <View style={styles.headerAndReactions}>
@@ -74,7 +57,7 @@ export function Comment(props: UserCommentProps) {
                         <View style={styles.userInfoRow}>
                             <Text style={[styles.header, styles.username]}>{username}</Text>
                             <Text style={[styles.header, styles.separator]}>-</Text>
-                            <Text style={[styles.header, styles.time]}>{formatTimeAgo(time)}</Text>
+                            <Text style={[styles.header, styles.time]}>{formattedTime}</Text>
                             {isEdit && <Text style={[styles.header, styles.edit]}>{'(Editado)'}</Text>}
                         </View>
 
@@ -93,22 +76,16 @@ export function Comment(props: UserCommentProps) {
                 </View>
 
                 {showAnswers && (
-                    <TouchableOpacity onPress={() => debounce(handleAnswersPress)} style={styles.answersButton}>
-                        <Text style={styles.answersCount}>{formatToK(answers.length)}</Text>
+                    <TouchableOpacity onPress={handleAnswersPress} style={styles.answersButton}>
+                        <Text style={styles.answersCount}>{answersCount}</Text>
                         <Text style={styles.answersText}>{answersText}</Text>
                     </TouchableOpacity>
                 )}
             </View>
 
-            <TouchableOpacity style={styles.moreButton} onPress={() => debounce(() => openCommentActionsSheet({
-                loggedInUserId,
-                pathname,
-                comment,
-                id,
-                userId,
-            }))}>
+            <TouchableOpacity style={styles.moreButton} onPress={onMorePress}>
                 <Icon name="Feather" icon="more-vertical" size="small" />
             </TouchableOpacity>
         </View >
     );
-}
+};
