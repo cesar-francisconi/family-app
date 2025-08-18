@@ -1,7 +1,9 @@
 import {
+    Keyboard,
     TextInput,
 } from 'react-native';
 import {
+    useEffect,
     useRef,
     useState,
 } from 'react';
@@ -42,6 +44,21 @@ export function CommentReplyFieldSheet(_: CommentReplyFieldSheetProps) {
 
     const pathname = usePathName();
 
+    const submitAfterKeyboardHide = useRef<null | (() => void)>(null);
+
+    useEffect(() => {
+        const keyboardHideListener = Keyboard.addListener('keyboardDidHide', () => {
+            if (submitAfterKeyboardHide.current) {
+                submitAfterKeyboardHide.current();
+                submitAfterKeyboardHide.current = null; // limpa para não chamar duas vezes
+            }
+        });
+
+        return () => {
+            keyboardHideListener.remove();
+        };
+    }, []);
+
     useBackHandlerForReplySheet({
         isOpen: commentReplySheetOptions.isOpen,
         onClose: () => {
@@ -59,12 +76,8 @@ export function CommentReplyFieldSheet(_: CommentReplyFieldSheetProps) {
     });
 
     const renderBackdrop = useBottomSheetBackdrop({
-        onPress: () => {
-            setCommentReplySheet({ isOpen: false });
-
-            inputRef.current?.blur();
-        },
         style: styles.renderBackdrop,
+        pressBehavior: isLoading ? 'none' : 'close',
     });
 
     const handleChange = useHandleSheetChange(
@@ -107,16 +120,21 @@ export function CommentReplyFieldSheet(_: CommentReplyFieldSheetProps) {
                     fnButton={() => {
                         const inputValueTrim = inputValue.trim();
 
-                        submitCommentOrAnswer({
-                            movieId,
-                            inputValue: inputValueTrim,
-                            pathname,
-                            inputRef,
-                            commentReplySheetOptions,
-                            bottomSheetRef,
-                            resetInput: () => setInputValue(''),
-                            setIsLoading,
-                        });
+                        // define a função a ser executada quando o teclado fechar
+                        submitAfterKeyboardHide.current = () => {
+                            submitCommentOrAnswer({
+                                movieId,
+                                inputValue: inputValueTrim,
+                                pathname,
+                                inputRef,
+                                commentReplySheetOptions,
+                                bottomSheetRef,
+                                resetInput: () => setInputValue(''),
+                                setIsLoading,
+                            });
+                        };
+
+                        Keyboard.dismiss(); // isso vai disparar o evento 'keyboardDidHide'
                     }}
                     ref={inputRef}
                 />
