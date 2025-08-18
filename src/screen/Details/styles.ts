@@ -19,8 +19,13 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderBottomWidth: 1,
+        backgroundColor: Colors.surface.main,
         borderColor: Colors.surface.main,
         zIndex: 999,
+    },
+    movieMainCardThumbnailContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     linearGradient: {
         position: 'absolute',
@@ -29,7 +34,10 @@ export const styles = StyleSheet.create({
         opacity: 0.6,
     },
     movieMainCard: {
-        width: '100%',
+
+    },
+    video: {
+
     },
     playCircleButton: {
         position: 'absolute',
