@@ -3,6 +3,7 @@ import { styles } from './styles';
 import { CommentProps } from './types';
 import { AddCommentWithAvatar } from '../AddCommentWithAvatar';
 import { BorderRadius } from '@/src/constants/BorderRadius';
+import { getCurrentMovieCommentCount } from '@/src/hook/useMovie';
 
 export function CommentActionRow(props: CommentProps) {
 
@@ -11,10 +12,11 @@ export function CommentActionRow(props: CommentProps) {
         addCommentOptions,
         withTitle = true,
         title = 'Comments',
-        count = 0,
         borderRadius = 'medium',
         withStroke,
     } = props;
+
+    const commentCount = getCurrentMovieCommentCount();
 
     const borderRadiusMap = {
         large: BorderRadius.md,
@@ -37,7 +39,7 @@ export function CommentActionRow(props: CommentProps) {
                         {title}
                     </Text>
                     <Text style={[styles.text, styles.count]} numberOfLines={1}>
-                        {count}
+                        {commentCount}
                     </Text>
                 </View>
             )}
