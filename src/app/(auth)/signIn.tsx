@@ -23,9 +23,9 @@ import {
   formSchemaSignIn,
 } from '@/src/helpers/formSchemaSignIn';
 import {
-  getAuth,
   sendEmailVerification,
 } from '@react-native-firebase/auth';
+import Toast from 'react-native-toast-message';
 
 export default function SignIn(props: SignInProps) {
 
@@ -52,31 +52,80 @@ export default function SignIn(props: SignInProps) {
 
   const onSubmit = async (data: FormDataSignIn) => {
     setIsLoading(true);
-    const auth = getAuth();
 
     try {
       await handleSignIn({ email: data.email, password: data.password });
-
     } catch (error: any) {
       if (error.code === 'auth/invalid-credential') {
-        // Erro genérico de credencial inválida
-        setError('email', {
-          type: 'manual',
-          message: 'Não foi possível acessar. Verifique suas informações de login.',
-        });
-      } else if (error.message === 'email-not-verified') {
-        setError('email', {
-          type: 'manual',
-          message: 'Confirme o cadastro no seu email!',
+        Toast.show({
+          type: 'customError',
+          text2: 'Não foi possível acessar. Verifique suas informações de login.',
+          position: 'top',
+          visibilityTime: 1700,
         });
 
+        setError('email', {
+          type: 'manual',
+          message: undefined,
+        });
+
+        setError('password', {
+          type: 'manual',
+          message: undefined,
+        });
+      } else if (error.message === 'email-not-verified') {
+        Toast.show({
+          type: 'customError',
+          text2: 'Confirme o cadastro no seu email!',
+          position: 'top',
+          visibilityTime: 1700,
+        });
+
+        setError('email', {
+          type: 'manual',
+          message: undefined,
+        });
+
+        setError('password', {
+          type: 'manual',
+          message: undefined,
+        });
         if (error.user) {
           await sendEmailVerification(error.user); // envia sem precisar fazer login de novo
         }
-      } else {
+      } else if (error.code === 'auth/too-many-requests') {
+        Toast.show({
+          type: 'customError',
+          text2: 'Detectamos muitas tentativas. Por segurança, bloqueamos temporariamente o acesso deste dispositivo. Tente novamente mais tarde.',
+          position: 'top',
+          visibilityTime: 7000,
+        });
+
         setError('email', {
           type: 'manual',
-          message: 'Erro ao tentar fazer login.',
+          message: undefined,
+        });
+
+        setError('password', {
+          type: 'manual',
+          message: undefined,
+        });
+      } else {
+        Toast.show({
+          type: 'customError',
+          text2: 'Erro ao tentar fazer login.',
+          position: 'top',
+          visibilityTime: 1700,
+        });
+
+        setError('email', {
+          type: 'manual',
+          message: undefined,
+        });
+
+        setError('password', {
+          type: 'manual',
+          message: undefined,
         });
       }
     } finally {
@@ -133,7 +182,6 @@ export default function SignIn(props: SignInProps) {
                 }}
                 helpMessageColor={Colors.primary.main}
                 secureTextEntry={isSecureTextEntry}
-                keyboardType='numeric'
                 leftIcon={
                   <Icon
                     name='Feather'
