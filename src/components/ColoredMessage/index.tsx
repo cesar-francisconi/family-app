@@ -1,66 +1,29 @@
-import { parseMessage } from "@/src/helpers/parseMessage";
-import { getAnswerUsernamesByIds } from "@/src/hook/useMovie";
-import React, {
-    useEffect,
-    useState,
-} from "react";
-import { Text } from "react-native";
 import { ColoredMessageProps } from "./types";
 import { styles } from "./styles";
 import { Colors } from "@/src/constants/Colors";
+import ParsedText from 'react-native-parsed-text';
 
 export function ColoredMessage(props: ColoredMessageProps) {
 
-    const {
-        message
-    } = props;
+    const { message } = props;
 
-    const [answerUsernames, setAnswerUsernames] = useState<string[] | null>();
-
-    useEffect(() => {
-        (async () => {
-            const answerUsernames = await getAnswerUsernamesByIds();
-
-            setAnswerUsernames(answerUsernames);
-        })();
-    }, []);
-
-    if (!answerUsernames) return;
-
-    const segments = parseMessage(message, answerUsernames);
+    if (!message) return null;
 
     return (
-        <Text
+        <ParsedText
             style={styles.text}
             numberOfLines={4}
+            parse={[
+                {
+                    pattern: /@\w+/,
+                    style: { color: Colors.link },
+                    onPress: (username) => {
+                        console.log("Mencionado:", username);
+                    },
+                },
+            ]}
         >
-            {segments.map((segment, index) => {
-                if (segment.type === 'mention') {
-                    return (
-                        <React.Fragment key={index}>
-                            <Text
-                                onPress={() => {
-
-                                }}
-                                style={{ color: Colors.link }}
-                            >
-                                {segment.text}
-                            </Text>
-                            {segment.punctuation && (
-                                <Text key={`${index}-p`}>
-                                    {segment.punctuation}
-                                </Text>
-                            )}
-                        </React.Fragment>
-                    );
-                }
-
-                return (
-                    <Text key={index}>
-                        {segment.text}
-                    </Text>
-                );
-            })}
-        </Text>
+            {message}
+        </ParsedText>
     );
 };
