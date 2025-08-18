@@ -25,6 +25,8 @@ export default function SignUp(props: SignUpProps) {
 
     const route = useRouter();
     const [isLoading, setIsLoading] = useState(false);
+    const [isSecureTextEntry, setIsSecureTextEntry] = useState(true);
+    const [isLoadingGoogle, setIsLoadingGoogle] = useState(false);
 
     const {
         control,
@@ -141,7 +143,10 @@ export default function SignUp(props: SignUpProps) {
                                 variant='filled'
                                 withLabel={false}
                                 placeholder='Senha'
-                                secureTextEntry
+                                secureTextEntry={isSecureTextEntry}
+                                fnRightIcon={() => {
+                                    setIsSecureTextEntry(isSecureTextEntry ? false : true);
+                                }}
                                 textContentType='password'
                                 leftIcon={
                                     <Icon
@@ -152,7 +157,7 @@ export default function SignUp(props: SignUpProps) {
                                 rightIcon={
                                     <Icon
                                         name='Feather'
-                                        icon='eye-off'
+                                        icon={isSecureTextEntry ? 'eye-off' : 'eye'}
                                     />
                                 }
                             />
@@ -175,11 +180,18 @@ export default function SignUp(props: SignUpProps) {
                 />
 
                 <Button
-                    onPress={() => handleGoogleAuth('signUp')}
+                    onPress={async () => {
+                        setIsLoadingGoogle(true);
+
+                        await handleGoogleAuth('signUp')
+
+                        setIsLoadingGoogle(false);
+                    }}
                     type='secondary'
                     variant='filled'
                     title='Cadastre com Google'
                     borderRadius='medium'
+                    isLoading={isLoadingGoogle}
                     leftIcon={
                         <Icon
                             name='AntDesign'
