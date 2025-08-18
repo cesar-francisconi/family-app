@@ -11,6 +11,10 @@ export const styles = StyleSheet.create({
         flex: 1,
         borderTopWidth: 1,
         borderColor: Colors.outline.variant,
+        backgroundColor: Colors.surface.container,
+    },
+    commentsContainer: {
+        flex: 1,
     },
     contentContainerStyle: {
         padding: Spacing['2xl'],
