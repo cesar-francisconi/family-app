@@ -1,41 +1,62 @@
 import { Button } from '@/src/components/Button';
 import { Input } from '@/src/components/Input';
 import { Welcome } from '@/src/components/Welcome';
+import { FormDataResetPassword, formSchemaResetPassword } from '@/src/helpers/formSchemaResetPassword';
 import { styles } from '@/src/screen/ResetPassword/styles';
 import { ResetPasswordProps } from '@/src/screen/ResetPassword/types';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { getAuth, sendPasswordResetEmail } from '@react-native-firebase/auth';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import {
     Alert,
     SafeAreaView,
     View,
 } from 'react-native';
+import Toast from 'react-native-toast-message';
 
 export default function ResetPassword(props: ResetPasswordProps) {
 
     const { } = props;
 
-    const [email, setEmail] = useState('');
+    const {
+        control,
+        handleSubmit,
+        setError,
+    } = useForm<FormDataResetPassword>({
+        defaultValues: {
+            resetEmail: "",
+        },
+        resolver: zodResolver(formSchemaResetPassword),
+    });
+
+    const [isLoading, setIsLoading] = useState(false);
 
     const route = useRouter();
 
-    const handleSendPasswordResetEmail = () => {
+    const onSubmit = async (data: FormDataResetPassword) => {
+        setIsLoading(true);
+
         const auth = getAuth();
 
-        sendPasswordResetEmail(auth, email)
-            .then(() => {
-                Alert.alert('', 'Se este e-mail estiver cadastrado, enviaremos um link para redefinir sua senha.');
+        try {
+            await sendPasswordResetEmail(auth, data.resetEmail);
 
-                route.back();
-            })
-            .catch((error) => {
-                console.error('Erro ao enviar o email:', error.message);
+            Toast.show({
+                type: 'customSuccess',
+                text1: 'Verifique seu e-mail!',
+                text2: 'Se este e-mail estiver cadastrado, enviaremos um link para redefinir sua senha.',
+                position: 'top',
+                visibilityTime: 6000,
             });
-    };
 
-    const handleClear = () => {
-        setEmail('');
+            route.back();
+        } catch (error: any) {
+            console.error('Erro ao enviar o email:', error.message);
+
+            setIsLoading(false);
+        };
     };
 
     return (
@@ -50,18 +71,19 @@ export default function ResetPassword(props: ResetPasswordProps) {
             >
 
                 <Input
-                    state='filled'
+                    name='resetEmail'
+                    control={control}
                     variant='filled'
-                    value={email}
+                    keyboardType='email-address'
                     placeholder='Seu e-mail cadastrado aqui...'
                     withLabel={false}
-                    onChangeText={setEmail}
                 />
 
                 <Button
-                    onPress={handleSendPasswordResetEmail}
+                    onPress={handleSubmit(onSubmit)}
                     title='Enviar'
                     type='primary'
+                    isLoading={isLoading}
                     variant='filled'
                     borderRadius='medium'
                 />
