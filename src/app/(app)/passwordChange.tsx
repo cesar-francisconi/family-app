@@ -11,6 +11,7 @@ import { handleChangePassword } from '@/src/helpers/handleChangePassword';
 import { styles } from '@/src/screen/PasswordChange/styles';
 import { PasswordChangeProps } from '@/src/screen/PasswordChange/types';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { getAuth, signOut } from '@react-native-firebase/auth';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import {
@@ -42,6 +43,7 @@ export default function PasswordChange(props: PasswordChangeProps) {
 
     const onSubmit = async (data: FormDataPasswordChange) => {
         setIsLoading(true);
+        const auth = getAuth();
 
         try {
             await handleChangePassword({
@@ -49,6 +51,8 @@ export default function PasswordChange(props: PasswordChangeProps) {
                 newPassword: data.newPassword,
                 confirmNewPassword: data.confirmNewPassword,
             });
+
+            await signOut(auth);
 
         } catch (error: any) {
             if (error.code === 'auth/invalid-credential') {
@@ -62,9 +66,9 @@ export default function PasswordChange(props: PasswordChangeProps) {
                     message: error.message,
                 });
             }
-        } finally {
+
             setIsLoading(false);
-        };
+        }
     };
 
     return (
