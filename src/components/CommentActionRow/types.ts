@@ -6,7 +6,6 @@ export type CommentProps = {
     addCommentOptions: AddCommentProps,
     withTitle?: boolean;
     title?: string;
-    count?: number;
     borderRadius?: 'none' | 'small' | 'medium' | 'large';
     withStroke?: boolean;
 };
