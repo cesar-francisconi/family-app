@@ -76,7 +76,7 @@ export default function RootLayoutNav() {
 
         <StatusBar barStyle={'light-content'} backgroundColor={Colors.surface.main} />
 
-        <Toast config={toastConfig} />
+        <Toast swipeable={false} config={toastConfig} />
       </SafeAreaView>
     </GestureHandlerRootView>
   );
