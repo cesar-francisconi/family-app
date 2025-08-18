@@ -10,13 +10,11 @@ import { ColoredMessage } from '../ColoredMessage';
 import { Icon } from '../Icon';
 import { formatTimeAgo } from '@/src/helpers/formatTimeAgo';
 import { getInitialsFromUsername } from '@/src/helpers/getInitialsFromUsername';
-import { useDebounce } from '@/src/helpers/debounce';
 import { AnswerProps } from './types';
 import { AvatarProps } from '../Avatar/types';
-import { openAnswerActionsSheet } from '@/src/helpers/openAnswerActionsSheet';
-import { getLoggedInUserId } from '@/src/hook/useUser';
+import { memo, useMemo } from 'react';
 
-export function Answer(props: AnswerProps) {
+export const Answer = memo(function Answer(props: AnswerProps) {
     const {
         id,
         username,
@@ -28,21 +26,18 @@ export function Answer(props: AnswerProps) {
         likes,
         isEdit,
         dislikes,
+        answerUsernames,
+        onMorePress,
     } = props;
 
-    const loggedInUserId = getLoggedInUserId();
-    const { debounce } = useDebounce(1000);
-
-    const getAvatarProps = (): AvatarProps =>
+    const getAvatarProps = useMemo((): AvatarProps =>
         avatar
             ? { mode: 'image', imageUrl: avatar, size: 'small' }
-            : { mode: 'initial', initial: getInitialsFromUsername(username), size: 'small', background };
-
-    if (!loggedInUserId) return;
+            : { mode: 'initial', initial: getInitialsFromUsername(username), size: 'small', background }, [avatar, username, background]);
 
     return (
         <View style={styles.commentContainer}>
-            <Avatar {...getAvatarProps()} />
+            <Avatar {...getAvatarProps} />
 
             <View style={styles.content}>
                 <View style={styles.headerAndReactions}>
@@ -54,7 +49,7 @@ export function Answer(props: AnswerProps) {
                             {isEdit && <Text style={[styles.header, styles.edit]}>{'(Editado)'}</Text>}
                         </View>
 
-                        <ColoredMessage message={answer} />
+                        <ColoredMessage message={answer} answerUsernames={answerUsernames} />
                     </View>
 
                     <ReactionGroup
@@ -68,15 +63,9 @@ export function Answer(props: AnswerProps) {
                 </View>
             </View>
 
-            <TouchableOpacity style={styles.moreButton} onPress={() => debounce(() => openAnswerActionsSheet({
-                answer,
-                id,
-                loggedInUserId,
-                userId,
-                username,
-            }))}>
+            <TouchableOpacity style={styles.moreButton} onPress={onMorePress}>
                 <Icon name="Feather" icon="more-vertical" size="small" />
             </TouchableOpacity>
         </View>
     );
-}
+});
