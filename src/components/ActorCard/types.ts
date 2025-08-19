@@ -1,10 +1,12 @@
 import { CastMember } from "@/movie";
 import { ActorNameProps } from "../ActorName/types";
 
+export type BorderRadiusActorCard = 'none' | 'small' | 'medium' | 'large';
+
 export type ActorCardPropsDefault = {
     withStroke?: boolean;
     actorNameOptions?: ActorNameProps;
-    borderRadius?: 'none' | 'large' | 'medium' | 'small' | 'none';
+    borderRadius?: BorderRadiusActorCard;
     fnActorCardPress?: () => void;
 }
 
