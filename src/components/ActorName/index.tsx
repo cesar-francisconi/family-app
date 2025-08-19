@@ -5,6 +5,7 @@ import {
 } from 'react-native';
 import { ActorNameProps } from './types';
 import { styles } from './styles';
+import { getActorNameOpacity } from '@/src/helpers/getActorNameOpacity';
 
 export const ActorName = React.memo((props: ActorNameProps) => {
 
@@ -13,7 +14,7 @@ export const ActorName = React.memo((props: ActorNameProps) => {
         bgTransparent = true,
     } = props;
 
-    const opacity = bgTransparent ? 0.8 : 1;
+    const opacity = getActorNameOpacity(bgTransparent);
 
     return (
         <View
