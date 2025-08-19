@@ -3,6 +3,7 @@ import { Icon } from '@/src/components/Icon';
 import { LabelAvatar } from '@/src/components/LabelAvatar';
 import { Option } from '@/src/components/Option';
 import { OptionsList } from '@/src/components/OptionsList';
+import { setConfirmSignOutModal } from '@/src/hook/useConfirmSignOutModal';
 import {
     getLoggedInUserBackground,
     getLoggedInUserAvatar,
@@ -34,18 +35,7 @@ export default function Me(props: MeProps) {
     const background = getLoggedInUserBackground();
 
     const handleSignOut = () => {
-        const auth = getAuth();
-
-        signOut(auth).then(() => {
-            Toast.show({
-                type: 'customSuccess',
-                text2: 'Usuário deslogado!',
-                position: 'top',
-                visibilityTime: 3000,
-            });
-        }).catch((error) => {
-
-        });
+        setConfirmSignOutModal({ isOpen: true });
     };
 
     if (!username) return;
