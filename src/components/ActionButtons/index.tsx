@@ -41,9 +41,9 @@ export function ActionButtons(props: ActionButtonsProps) {
 
     useFocusEffect(
         useCallback(() => {
-            const loadMovieStatus = async () => {
-                const liked = await isMovieLiked(id);
-                const inList = await isMovieInMyList(id);
+            const loadMovieStatus = () => {
+                const liked = isMovieLiked(id);
+                const inList = isMovieInMyList(id);
 
                 if (liked) {
                     animationLikeRef.current?.play(130, 130);
@@ -75,17 +75,16 @@ export function ActionButtons(props: ActionButtonsProps) {
         if (isReadyToggleLikeMovie.current) {
             isReadyToggleLikeMovie.current = false;
 
-            !isMovieLikedState ? animationLikeRef.current?.play(30, 130) : animationLikeRef.current?.play(0, 0);
+            !isMovieLikedState ? animationLikeRef.current?.play(40, 130) : animationLikeRef.current?.play(0, 0);
 
-            await toggleItemStatus({
+            toggleItemStatus({
                 id,
-                checkFn: isMovieLiked,
+                check: isMovieLikedState,
                 addFn: addToLikedMovies,
                 removeFn: removeFromLikedMovies,
             });
 
-            const result = await isMovieLiked(id);
-            setIsMovieLikedState(result);
+            setIsMovieLikedState(!isMovieLikedState);
 
             isReadyToggleLikeMovie.current = true;
         };
@@ -95,18 +94,16 @@ export function ActionButtons(props: ActionButtonsProps) {
         if (isReadyToggleMyList.current) {
             isReadyToggleMyList.current = false;
 
-            !isMovieInMyListState ? animationMyListRef.current?.play(0, 15) : animationMyListRef.current?.play(0, 0);
+            !isMovieInMyListState ? animationMyListRef.current?.play(5, 15) : animationMyListRef.current?.play(0, 0);
 
-            await toggleItemStatus({
+            toggleItemStatus({
                 id,
-                checkFn: isMovieInMyList,
+                check: isMovieInMyListState,
                 addFn: addToMyList,
                 removeFn: removeFromMyList,
             });
 
-
-            const result = await isMovieInMyList(id);
-            setIsMovieInMyListState(result);
+            setIsMovieInMyListState(!isMovieInMyListState);
 
             isReadyToggleMyList.current = true;
         };
