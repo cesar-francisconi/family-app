@@ -77,8 +77,8 @@ export function Button(props: ButtonProps & Omit<TouchableOpacityProps, 'style'>
                 }}
             >
                 <ActivityIndicator
-                    COLOR="second"
-                    SIZE="small"
+                    color={"second"}
+                    size={"small"}
                 />
             </View>
         </TouchableOpacity>
