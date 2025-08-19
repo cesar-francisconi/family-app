@@ -6,8 +6,7 @@ import {
 import { ActorCardProps } from './types';
 import { styles } from './styles';
 import { ActorName } from '../ActorName';
-import { Colors } from '@/src/constants/Colors';
-import { BorderRadius } from '@/src/constants/BorderRadius';
+import { getActorCardBorderValue } from '@/src/helpers/getActorCardBorderValue';
 
 export const ActorCard = React.memo((props: ActorCardProps) => {
 
@@ -20,16 +19,9 @@ export const ActorCard = React.memo((props: ActorCardProps) => {
         fnActorCardPress,
     } = props;
 
-    const borderRadiusMap = {
-        none: BorderRadius.none,
-        large: BorderRadius.md,
-        medium: BorderRadius.sm,
-        small: BorderRadius.xs,
-    };
-
-    const borderWidth = withStroke ? 0.5 : 0;
-    const borderColor = withStroke ? Colors.outline.main : undefined;
-    const radius = borderRadiusMap[borderRadius];
+    const borderWidth = getActorCardBorderValue('borderWidth', withStroke);
+    const borderColor = getActorCardBorderValue('borderColor', withStroke);
+    const radius = getActorCardBorderValue('borderRadius', borderRadius);
 
     return (
         <TouchableOpacity
