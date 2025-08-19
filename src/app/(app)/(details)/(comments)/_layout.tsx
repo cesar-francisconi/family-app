@@ -10,8 +10,6 @@ import {
 } from 'react-native';
 import { Colors } from '@/src/constants/Colors';
 import { headerHeight } from '@/src/components/Header';
-import { CloseButton } from '@/src/components/CloseButton';
-import { detailsMovieCardHeight } from '..';
 import Animated, {
   Extrapolation,
   interpolate,
@@ -26,8 +24,12 @@ import {
 } from 'react-native-gesture-handler';
 import { getScreenHeight } from '@/src/helpers/getScreenHeight';
 import { Indicator } from '@/src/components/Indicator';
+import { useMemo } from 'react';
+import { CloseButton } from '@/src/components/CloseButton';
 
-type Routes = 'comment' | 'answers'
+const detailsMovieCardHeight = 216;
+
+type Routes = 'comments' | 'answers'
 
 export default function RootLayoutNav() {
 
@@ -42,7 +44,7 @@ export default function RootLayoutNav() {
   // Função para voltar na navegação quando a animação terminar
   const handleClose = () => {
     const current = getRouteName()?.name;
-    if (current === 'comment') {
+    if (current === 'comments') {
       route.back();
     } else if (current === 'answers') {
       route.back();
@@ -50,17 +52,21 @@ export default function RootLayoutNav() {
     }
   };
 
+  const bottomSheetHeight = useMemo(() => {
+    return screenHeight - (detailsMovieCardHeight + headerHeight);
+  }, []);
+
   const panGesture = Gesture.Pan()
     .onUpdate((event) => {
       // Não permite mover para cima (negativo), só para baixo (positivo)
       translateY.value = Math.max(0, event.translationY);
     })
     .onEnd(() => {
-      const threshold = Math.floor((screenHeight - (detailsMovieCardHeight + headerHeight)) * 0.3);
+      const threshold = Math.floor(bottomSheetHeight * 0.2);
 
       if (translateY.value > threshold) {
         // Anima para baixo até sumir (tela toda) e depois executa o route.back()
-        translateY.value = withTiming(screenHeight, { duration: 250 }, (isFinished) => {
+        translateY.value = withTiming(bottomSheetHeight, { duration: 250 }, (isFinished) => {
           if (isFinished) {
             runOnJS(handleClose)();
           }
@@ -75,14 +81,13 @@ export default function RootLayoutNav() {
   const animatedBlackDropStyle = useAnimatedStyle(() => {
     const opacity = interpolate(
       translateY.value,
-      [0, screenHeight - (detailsMovieCardHeight + headerHeight)],
+      [0, bottomSheetHeight],
       [1, 0],
       Extrapolation.CLAMP
     );
     return {
       opacity,
       // ocupa todo o espaço do container
-      backgroundColor: Colors.surface.main,
     };
   });
 
@@ -91,13 +96,12 @@ export default function RootLayoutNav() {
   }));
 
   return (
-    <GestureDetector gesture={panGesture}>
-      <SafeAreaView style={styles.container}>
-        <Animated.View style={[styles.renderbackDrop, animatedBlackDropStyle]} />
+    <SafeAreaView style={styles.container}>
+      <Animated.View style={[styles.renderbackDrop, animatedBlackDropStyle]} />
+      <GestureDetector gesture={panGesture}>
         <Animated.View style={[styles.content, animatedStyle]}>
           <Indicator />
           <Stack
-            initialRouteName="comment"
             screenOptions={{
               animation: 'flip',
               presentation: 'transparentModal',
@@ -121,41 +125,40 @@ export default function RootLayoutNav() {
             }}
           >
             <Stack.Screen
-              name={"comment" as Routes}
+              name="comments"
               options={{
-                animation: 'none',
                 title: 'Comentários',
                 headerBackVisible: false,
               }}
             />
             <Stack.Screen
-              name={"answers" as Routes}
+              name="answers"
               options={{
                 title: 'Respostas',
               }}
             />
           </Stack>
         </Animated.View>
-      </SafeAreaView>
-    </GestureDetector>
+      </GestureDetector>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: detailsMovieCardHeight + headerHeight,
   },
   content: {
     flex: 1,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     overflow: 'hidden',
+    backgroundColor: Colors.surface.container,
   },
   renderbackDrop: {
     position: 'absolute',
     width: '100%',
-    height: getScreenHeight,
-    marginTop: detailsMovieCardHeight + headerHeight,
+    height: '100%',
+    backgroundColor: Colors.surface.main,
   },
 });
