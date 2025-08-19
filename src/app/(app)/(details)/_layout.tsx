@@ -28,6 +28,9 @@ export default function RootLayoutNav() {
                 options={{
                     presentation: 'transparentModal',
                     animation: 'slide_from_bottom',
+                    contentStyle: {
+                        marginTop: detailsMovieCardHeight + headerHeight,
+                    }
                 }}
             />
 
@@ -36,6 +39,9 @@ export default function RootLayoutNav() {
                 options={{
                     presentation: 'transparentModal',
                     animation: 'slide_from_bottom',
+                    contentStyle: {
+                        marginTop: detailsMovieCardHeight + headerHeight,
+                    }
                 }}
             />
         </Stack >
