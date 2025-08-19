@@ -1,3 +1,4 @@
+import React from 'react';
 import {
     ActivityIndicator as AIndicator,
     View,
@@ -7,7 +8,7 @@ import { styles } from './styles';
 import { getActivityIndicatorColor } from '@/src/helpers/getActivityIndicatorColor';
 import { getActivityIndicatorSize } from '@/src/helpers/getActivityIndicatorSize';
 
-export function ActivityIndicator(props: ActivityIndicatorProps) {
+export const ActivityIndicator = React.memo((props: ActivityIndicatorProps) => {
 
     const {
         color = 'primary',
@@ -22,5 +23,5 @@ export function ActivityIndicator(props: ActivityIndicatorProps) {
             <AIndicator color={COLOR} size={SIZE} />
         </View>
     );
-}
+});
 
