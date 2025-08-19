@@ -1,3 +1,4 @@
+import React from 'react';
 import {
     Text,
     View,
@@ -5,7 +6,7 @@ import {
 import { ActorNameProps } from './types';
 import { styles } from './styles';
 
-export function ActorName(props: ActorNameProps) {
+export const ActorName = React.memo((props: ActorNameProps) => {
 
     const {
         name,
@@ -32,4 +33,4 @@ export function ActorName(props: ActorNameProps) {
             </Text>
         </View>
     );
-}
+});
