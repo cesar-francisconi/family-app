@@ -1,4 +1,4 @@
 export interface ActivityIndicatorProps {
-    COLOR?: 'primary' | 'second';
-    SIZE?: 'large' | 'medium' | 'small';
+    color?: 'primary' | 'second';
+    size?: 'large' | 'medium' | 'small';
 };

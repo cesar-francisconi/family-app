@@ -9,8 +9,8 @@ import { Colors } from '@/src/constants/Colors';
 export function ActivityIndicator(props: ActivityIndicatorProps) {
 
     const {
-        COLOR = 'primary',
-        SIZE = 'large',
+        color = 'primary',
+        size = 'large',
     } = props;
 
     const colorMap = {
@@ -24,12 +24,12 @@ export function ActivityIndicator(props: ActivityIndicatorProps) {
         small: 24,
     };
 
-    const color = colorMap[COLOR];
-    const size = sizeMap[SIZE];
+    const COLOR = colorMap[color];
+    const SIZE = sizeMap[size];
 
     return (
         <View style={styles.container}>
-            <AIndicator color={color} size={size} />
+            <AIndicator color={COLOR} size={SIZE} />
         </View>
     );
 }
