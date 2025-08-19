@@ -24,7 +24,7 @@ export function AddCommentWithAvatar(props: AddCommentWithAvatarProps) {
 
     const { movieId } = useGlobalSearchParams<AddCommentWithAvatarGlobalSearchParams>();
 
-    const { debounce } = useDebounce(1000);
+    const { debounce } = useDebounce();
 
     const route = useRouter();
 
@@ -40,7 +40,7 @@ export function AddCommentWithAvatar(props: AddCommentWithAvatarProps) {
 
             <AddComment
                 {...addCommentOptions}
-                fnAddComment={() => debounce(() => route.push(`/(app)/(details)/(comments)/comment?movieId=${movieId}&origin=isAddComment`))}
+                fnAddComment={() => debounce(() => route.push(`/(app)/(details)/(comments)/comments?movieId=${movieId}&origin=isAddComment`), 1000)}
             />
         </View>
     );
