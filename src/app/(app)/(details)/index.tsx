@@ -77,11 +77,7 @@ export default function Details(props: DetailsProps) {
         })();
     }, []);
 
-    useEffect(() => {
-        setCurrentMovieId(movieId);
-    }, [movieId]);
-
-    const { debounce } = useDebounce(1000);
+    const { debounce } = useDebounce();
 
     useEffect(() => {
         (async () => {
@@ -158,7 +154,10 @@ export default function Details(props: DetailsProps) {
                         buttonTitle='Mais'
                         withButton
                         withTitle={false}
-                        fnButton={() => debounce(() => route.push(`/(app)/(details)/(more)/more?movieId=${movieId}`))}
+                        fnButton={() => debounce(() => {
+                            route.push(`/(app)/(details)/(more)/more?movieId=${movieId}`);
+                        }, 1000)
+                        }
                     />
 
                     <ActionButtons
@@ -167,13 +166,14 @@ export default function Details(props: DetailsProps) {
 
                     <TouchableOpacity
                         activeOpacity={0.7}
-                        onPress={() => debounce(() => route.push(`/(app)/(details)/(comments)/comment?movieId=${movieId}`))}
+                        onPress={() => debounce(() => {
+                            route.push(`/(app)/(details)/(comments)/comments?movieId=${movieId}`);
+                        }, 1000)}
                     >
                         <CommentActionRow
                             avatarOptions={{
                                 ...avatarOptions,
                             }}
-                            count={movie.comments.length}
                             title='Comentários'
                             addCommentOptions={{
                                 text: 'Adicione um comentário...',
