@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
         position: 'absolute',
         backgroundColor: Colors.surface.main,
     },
-    text: {
+    name: {
         width: '100%',
         textAlign: 'center',
         color: Colors.surface.on,

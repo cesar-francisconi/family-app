@@ -27,7 +27,7 @@ export const ActorName = React.memo((props: ActorNameProps) => {
             />
 
             <Text
-                style={styles.text}
+                style={styles.name}
                 numberOfLines={1}
             >
                 {name}
