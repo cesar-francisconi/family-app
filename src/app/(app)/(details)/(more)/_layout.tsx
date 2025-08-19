@@ -123,7 +123,6 @@ export default function RootLayoutNav() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingTop: detailsMovieCardHeight + headerHeight,
     },
     content: {
         flex: 1,
@@ -134,7 +133,7 @@ const styles = StyleSheet.create({
     renderbackDrop: {
         position: 'absolute',
         width: '100%',
-        height: getScreenHeight,
-        marginTop: detailsMovieCardHeight + headerHeight,
+        height: '100%',
+        backgroundColor: Colors.surface.main,
     },
 });
