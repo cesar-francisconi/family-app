@@ -97,11 +97,14 @@ export const AuthorizedUserActionsSheet = (props: AuthorizedUserActionsSheetProp
 
                 <TouchableOpacity
                     style={styles.actionContainer}
-                    onPress={() => handleAuthorizedReply({
-                        bottomSheetRef,
-                        origin,
-                        param,
-                    })}
+                    onPress={() => {
+                        bottomSheetRef.current?.close();
+
+                        handleAuthorizedReply({
+                            origin,
+                            param,
+                        })
+                    }}
                 >
                     <Icon
                         name='MaterialCommunityIcons'
@@ -117,11 +120,14 @@ export const AuthorizedUserActionsSheet = (props: AuthorizedUserActionsSheetProp
 
                 <TouchableOpacity
                     style={styles.actionContainer}
-                    onPress={() => handleAuthorizedEdit({
-                        bottomSheetRef,
-                        origin,
-                        param,
-                    })}
+                    onPress={() => {
+                        bottomSheetRef.current?.close();
+
+                        handleAuthorizedEdit({
+                            origin,
+                            param,
+                        })
+                    }}
                 >
                     <Icon
                         name='Feather'
@@ -137,13 +143,16 @@ export const AuthorizedUserActionsSheet = (props: AuthorizedUserActionsSheetProp
 
                 <TouchableOpacity
                     style={styles.actionContainer}
-                    onPress={() => setConfirmDeleteCommentModal({
-                        isOpen: true,
-                        param: {
-                            bottomSheetRef,
-                            origin,
-                        }
-                    })}
+                    onPress={() => {
+                        bottomSheetRef.current?.close();
+
+                        setConfirmDeleteCommentModal({
+                            isOpen: true,
+                            param: {
+                                origin,
+                            }
+                        })
+                    }}
                 >
                     <Icon
                         name='Feather'
