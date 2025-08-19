@@ -15,6 +15,7 @@ import {
     formSchemaEmailChange,
 } from '@/src/helpers/formSchemaEmailChange';
 import { handleChangeEmail } from '@/src/helpers/handleChangeEmail';
+import { getAuth, signOut } from '@react-native-firebase/auth';
 
 export default function EmailChange(props: EmailChangeProps) {
 
@@ -39,10 +40,13 @@ export default function EmailChange(props: EmailChangeProps) {
 
     const onSubmit = async (data: FormDataEmailChange) => {
         setIsLoading(true);
+        
+        const auth = getAuth();
 
         try {
             await handleChangeEmail({ confirmEmail: data.confirmEmail, confirmPassword: data.confirmPassword, newEmail: data.newEmail });
 
+            await signOut(auth);
         } catch (error: any) {
             if (error.code === 'auth/invalid-credential') {
                 setError('confirmPassword', {
@@ -54,8 +58,8 @@ export default function EmailChange(props: EmailChangeProps) {
                     type: 'manual',
                     message: error.message,
                 });
-            }
-        } finally {
+            };
+
             setIsLoading(false);
         };
     };
