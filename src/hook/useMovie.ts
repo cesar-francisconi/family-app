@@ -21,12 +21,16 @@ import { getAuth } from '@react-native-firebase/auth';
 import Toast from 'react-native-toast-message';
 
 type CurrentMovieId = Movie['id'] | null;
+type currentMovieCommentCount = number | null;
 type CurrentCommentId = Comment['id'] | null;
 type CurrentAnswerId = CommentAnswer['id'] | null;
 type CurrentUserId = Comment['userId'] | null;
 
 interface InitialState {
+    currentMovie: Movie | null;
     currentMovieId: CurrentMovieId;
+    currentMovieComments: Comment[];
+    currentMovieCommentCount: currentMovieCommentCount;
     currentCommentId: CurrentCommentId;
     currentAnswerId: CurrentAnswerId;
     currentUserId: CurrentUserId;
@@ -34,7 +38,10 @@ interface InitialState {
 };
 
 const initialState: InitialState = {
+    currentMovie: null,
     currentMovieId: '',
+    currentMovieComments: [],
+    currentMovieCommentCount: 0,
     currentCommentId: '',
     currentAnswerId: '',
     currentUserId: '',
@@ -43,7 +50,7 @@ const initialState: InitialState = {
 
 export const useMovies = create(() => initialState);
 
-export const getAllMovies = async () => {
+export const getAllMovies = async (): Promise<Movie[] | null> => {
     const db = getFirestore();
 
     const q = query(collection(db, 'movies'));
@@ -52,7 +59,7 @@ export const getAllMovies = async () => {
 
     if (querySnapshot.empty) return null;
 
-    return querySnapshot.docs.map((movie) => {
+    return querySnapshot.docs.map((movie: { id: string; data: () => Omit<Movie, 'id'> }) => {
         return {
             id: movie.id,
             ...movie.data()
@@ -163,26 +170,14 @@ export const getCommentsById = (
 
 export const getCommentById = (
     commentId: Comment['id'],
-    onCommentsUpdate: (comment: Comment | null) => void,
 ) => {
-    const currentMovieId = getCurrentMovieId() as string;
-    const db = getFirestore();
-    const movieRef = doc(db, 'movies', currentMovieId);
+    const comments = useMovies((state) => state.currentMovieComments);
 
-    const unsubscribe = onSnapshot(movieRef, (docSnap) => {
-        if (!docSnap.exists()) {
-            onCommentsUpdate(null);
-            return;
-        }
+    const comment = comments.find((comment) => comment.id === commentId);
 
-        const data = docSnap.data() as Movie;
+    if (!comment) return null;
 
-        const comment = data.comments.filter((comment) => commentId === comment.id)[0];
-
-        onCommentsUpdate(comment ?? null);
-    });
-
-    return unsubscribe;
+    return comment;
 };
 
 export const getActorMoviesById = async (actorId: string) => {
@@ -343,6 +338,28 @@ export const toggleCommentLikeForUser = async (
     if (!(user && user.uid)) return;
 
     const uid = user.uid;
+
+    const currentMovieComments = getCurrentMovieComments();
+
+    const updatedCommentsNow = currentMovieComments.map((comment) => {
+        if (comment.id !== commentId) return comment;
+
+        const hasLiked = comment.likes.includes(uid);
+        const hasDesliked = comment.dislikes.includes(uid);
+
+        return {
+            ...comment,
+            likes: hasLiked
+                ? comment.likes.filter((id) => id !== uid)
+                : [...comment.likes, uid],
+            dislikes: hasDesliked
+                ? comment.dislikes.filter((id) => id !== uid)
+                : comment.dislikes,
+        };
+    });
+
+    setCurrentMovieComments(updatedCommentsNow);
+
     const currentMovieId = getCurrentMovieId();
 
     const db = getFirestore();
@@ -394,6 +411,34 @@ export const toggleAnswerLikeForUser = async (
     const uid = user.uid;
     const currentMovieId = getCurrentMovieId();
     const currentCommentId = getCurrentCommentId();
+
+    const currentMovieComments = getCurrentMovieComments();
+
+    const updatedCommentsNow = currentMovieComments.map((comment) => {
+        if (comment.id !== currentCommentId) return comment;
+
+        return {
+            ...comment,
+            answers: comment.answers.map((answer) => {
+                if (answer.id !== answerId) return answer;
+
+                const hasLiked = answer.likes.includes(uid);
+                const hasDesliked = answer.dislikes.includes(uid);
+
+                return {
+                    ...answer,
+                    likes: hasLiked
+                        ? answer.likes.filter((id) => id !== uid)
+                        : [...answer.likes, uid],
+                    dislikes: hasDesliked
+                        ? answer.dislikes.filter((id) => id !== uid)
+                        : answer.dislikes,
+                };
+            }),
+        };
+    });
+
+    setCurrentMovieComments(updatedCommentsNow);
 
     const db = getFirestore();
     const movieRef = doc(db, 'movies', currentMovieId as string);
@@ -449,6 +494,28 @@ export const toggleCommentDislikeForUser = async (
     if (!(user && user.uid)) return;
 
     const uid = user.uid;
+
+    const currentMovieComments = getCurrentMovieComments();
+
+    const updatedCommentsNow = currentMovieComments.map((comment) => {
+        if (comment.id !== commentId) return comment; // 
+
+        const hasDesliked = comment.dislikes.includes(uid);
+        const hasLiked = comment.likes.includes(uid);
+
+        return {
+            ...comment,
+            dislikes: hasDesliked
+                ? comment.dislikes.filter((id) => id !== uid)
+                : [...comment.dislikes, uid],
+            likes: hasLiked
+                ? comment.likes.filter((id) => id !== uid)
+                : comment.likes,
+        };
+    });
+
+    setCurrentMovieComments(updatedCommentsNow);
+
     const currentMovieId = getCurrentMovieId();
 
     const db = getFirestore();
@@ -498,8 +565,37 @@ export const toggleAnswerDislikeForUser = async (
     if (!(user && user.uid)) return;
 
     const uid = user.uid;
-    const currentMovieId = getCurrentMovieId();
     const currentCommentId = getCurrentCommentId();
+
+    const currentMovieComments = getCurrentMovieComments();
+
+    const updatedCommentsNow = currentMovieComments.map((comment) => {
+        if (comment.id !== currentCommentId) return comment;
+
+        return {
+            ...comment,
+            answers: comment.answers.map((answer) => {
+                if (answer.id !== answerId) return answer;
+
+                const hasDesliked = answer.dislikes.includes(uid);
+                const hasLiked = answer.likes.includes(uid);
+
+                return {
+                    ...answer,
+                    dislikes: hasDesliked
+                        ? answer.dislikes.filter((id) => id !== uid)
+                        : [...answer.dislikes, uid],
+                    likes: hasLiked
+                        ? answer.likes.filter((id) => id !== uid)
+                        : answer.likes,
+                };
+            }),
+        };
+    });
+
+    setCurrentMovieComments(updatedCommentsNow);
+
+    const currentMovieId = getCurrentMovieId();
 
     const db = getFirestore();
     const movieRef = doc(db, 'movies', currentMovieId as string);
@@ -596,6 +692,20 @@ export const changeCommentById = async (
     const currentMovieId = getCurrentMovieId();
     const currentCommentId = getCurrentCommentId();
 
+    const currentMovieComments = getCurrentMovieComments();
+
+    const updatedCommentsNow = currentMovieComments.map((comment) => {
+        if (comment.id !== currentCommentId) return comment;
+
+        return {
+            ...comment,
+            isEdit: true,
+            comment: newComment,
+        };
+    });
+
+    setCurrentMovieComments(updatedCommentsNow);
+
     const db = getFirestore();
     const movieRef = doc(db, 'movies', currentMovieId as string);
     const movieSnap = await getDoc(movieRef);
@@ -621,6 +731,13 @@ export const changeCommentById = async (
 
     await updateDoc(movieRef, {
         comments: updatedComments,
+    }).then(() => {
+        Toast.show({
+            type: 'customSuccess',
+            text2: 'Comentário alterado.',
+            position: 'bottom',
+            visibilityTime: 1700,
+        });
     });
 };
 
@@ -630,6 +747,27 @@ export const changeAnswerById = async (
     const currentMovieId = getCurrentMovieId();
     const currentCommentId = getCurrentCommentId();
     const currentAnswerId = getCurrentAnswerId();
+
+    const currentMovieComments = getCurrentMovieComments();
+
+    const updatedCommentsNow = currentMovieComments.map((comment) => {
+        if (comment.id !== currentCommentId) return comment;
+
+        return {
+            ...comment,
+            answers: comment.answers.map((answer) => {
+                if (answer.id !== currentAnswerId) return answer;
+
+                return {
+                    ...answer,
+                    isEdit: true,
+                    answer: newAnswer,
+                };
+            }),
+        };
+    });
+
+    setCurrentMovieComments(updatedCommentsNow);
 
     const db = getFirestore();
     const movieRef = doc(db, 'movies', currentMovieId as string);
@@ -663,6 +801,13 @@ export const changeAnswerById = async (
 
     await updateDoc(movieRef, {
         comments: updatedComments,
+    }).then(() => {
+        Toast.show({
+            type: 'customSuccess',
+            text2: 'Resposta alterada.',
+            position: 'bottom',
+            visibilityTime: 1700,
+        });
     });
 };
 
@@ -684,9 +829,16 @@ export const setComment = async (
         isEdit: false,
     };
 
+    const currentMovieComments = getCurrentMovieComments();
+
+    const updatedCommentsNow = [comment, ...currentMovieComments];
+
+    setCurrentMovieComments(updatedCommentsNow);
+
     const db = getFirestore();
     const movieRef = doc(db, 'movies', movieId as string);
     const movieSnap = await getDoc(movieRef);
+
 
     const data = movieSnap.data();
 
@@ -701,14 +853,16 @@ export const setComment = async (
 
     await updateDoc(movieRef, {
         comments: updatedComments,
+    }).then(() => {
+        Toast.show({
+            type: 'customSuccess',
+            text2: 'Comentário adicionado.',
+            position: 'bottom',
+            visibilityTime: 1700,
+        });
     });
 
-    Toast.show({
-        type: 'customSuccessBase',
-        text2: 'Comentário adicionado.',
-        position: 'top',
-        visibilityTime: 3000,
-    });
+    setCurrentMovieCommentCount(updatedComments.length);
 };
 
 export const setAnswer = async (
@@ -729,6 +883,23 @@ export const setAnswer = async (
     };
 
     const currentCommentId = getCurrentCommentId();
+
+    const currentMovieComments = getCurrentMovieComments();
+
+    const updatedCommentsNow = currentMovieComments.map((comment) => {
+        if (comment.id !== currentCommentId) return comment;
+
+        return {
+            ...comment,
+            answers: [
+                ...(comment.answers || []),
+                answer,
+            ],
+        };
+    });
+
+    setCurrentMovieComments(updatedCommentsNow);
+
     const db = getFirestore();
     const movieRef = doc(db, 'movies', movieId as string);
     const movieSnap = await getDoc(movieRef);
@@ -756,19 +927,25 @@ export const setAnswer = async (
 
     await updateDoc(movieRef, {
         comments: updatedComments,
-    });
-
-    Toast.show({
-        type: 'customSuccessBase',
-        text2: 'Resposta adicionada.',
-        position: 'top',
-        visibilityTime: 3000,
+    }).then(() => {
+        Toast.show({
+            type: 'customSuccess',
+            text2: 'Resposta adicionada.',
+            position: 'bottom',
+            visibilityTime: 1700,
+        });
     });
 };
 
 export const removeCommentById = async () => {
     const currentMovieId = getCurrentMovieId();
     const currentCommentId = getCurrentCommentId();
+
+    const currentMovieComments = getCurrentMovieComments();
+
+    const updatedCommentsNow = currentMovieComments.filter((comment) => comment.id !== currentCommentId);
+
+    setCurrentMovieComments(updatedCommentsNow);
 
     const db = getFirestore();
     const movieRef = doc(db, 'movies', currentMovieId as string);
@@ -787,13 +964,35 @@ export const removeCommentById = async () => {
 
     await updateDoc(movieRef, {
         comments: updatedComments,
+    }).then(() => {
+        Toast.show({
+            type: 'customSuccess',
+            text2: 'Comentário deletado.',
+            position: 'bottom',
+            visibilityTime: 1700,
+        });
     });
+
+    setCurrentMovieCommentCount(updatedComments.length);
 };
 
 export const removeAnswerById = async () => {
     const currentMovieId = getCurrentMovieId();
     const currentCommentId = getCurrentCommentId();
     const currentAnswerId = getCurrentAnswerId();
+
+    const currentMovieComments = getCurrentMovieComments();
+
+    const updatedCommentsNow = currentMovieComments.map((comment) => {
+        if (comment.id !== currentCommentId) return comment;
+
+        return {
+            ...comment,
+            answers: comment.answers.filter((answer) => answer.id !== currentAnswerId),
+        };
+    });
+
+    setCurrentMovieComments(updatedCommentsNow);
 
     const db = getFirestore();
     const movieRef = doc(db, 'movies', currentMovieId as string);
@@ -819,8 +1018,33 @@ export const removeAnswerById = async () => {
 
     await updateDoc(movieRef, {
         comments: updatedComments,
+    }).then(() => {
+        Toast.show({
+            type: 'customSuccess',
+            text2: 'Resposta deletada.',
+            position: 'bottom',
+            visibilityTime: 1700,
+        });
     });
 };
+
+export const setCurrentMovie = (movie: Movie) => useMovies.setState(() => {
+    return {
+        currentMovie: movie,
+    };
+});
+
+export const setCurrentMovieComments = (comments: Comment[]) => useMovies.setState(() => {
+    return {
+        currentMovieComments: comments,
+    };
+});
+
+export const setCurrentMovieCommentCount = (count: number) => useMovies.setState(() => {
+    return {
+        currentMovieCommentCount: count,
+    };
+});
 
 export const setCurrentMovieId = (id: CurrentMovieId) => useMovies.setState(() => {
     return {
@@ -845,6 +1069,10 @@ export const setCurrentUserId = (id: CurrentMovieId) => useMovies.setState((stat
         currentUserId: id,
     };
 });
+
+export const getCurrentMovieComments = () => useMovies.getState().currentMovieComments;
+
+export const getCurrentMovieCommentCount = () => useMovies.getState().currentMovieCommentCount;
 
 export const getCurrentMovieId = () => useMovies.getState().currentMovieId;
 
