@@ -10,6 +10,7 @@ import { UnauthorizedUserActionsSheet } from '../../components/UnauthorizedUserA
 import { Header } from '@/src/components/Header';
 import { ConfirmDeleteCommentModal } from '@/src/components/ConfirmDeleteCommentModal';
 import { ConfirmDeleteUserModal } from '@/src/components/ConfirmDeleteUserModal';
+import { ConfirmSignOutModal } from '@/src/components/ConfirmSignOutModal';
 
 export default function RootLayoutNav() {
 
@@ -130,6 +131,8 @@ export default function RootLayoutNav() {
       <ConfirmDeleteCommentModal />
 
       <ConfirmDeleteUserModal />
+
+      <ConfirmSignOutModal />
     </SafeAreaView>
   );
 }
