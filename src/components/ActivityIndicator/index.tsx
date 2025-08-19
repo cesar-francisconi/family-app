@@ -4,7 +4,8 @@ import {
 } from 'react-native';
 import { ActivityIndicatorProps } from './types';
 import { styles } from './styles';
-import { Colors } from '@/src/constants/Colors';
+import { getActivityIndicatorColor } from '@/src/helpers/getActivityIndicatorColor';
+import { getActivityIndicatorSize } from '@/src/helpers/getActivityIndicatorSize';
 
 export function ActivityIndicator(props: ActivityIndicatorProps) {
 
@@ -13,19 +14,8 @@ export function ActivityIndicator(props: ActivityIndicatorProps) {
         size = 'large',
     } = props;
 
-    const colorMap = {
-        primary: Colors.primary.main,
-        second: Colors.link,
-    };
-
-    const sizeMap = {
-        large: 40,
-        medium: 32,
-        small: 24,
-    };
-
-    const COLOR = colorMap[color];
-    const SIZE = sizeMap[size];
+    const COLOR = getActivityIndicatorColor(color);
+    const SIZE = getActivityIndicatorSize(size);
 
     return (
         <View style={styles.container}>
