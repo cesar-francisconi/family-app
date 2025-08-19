@@ -1,3 +1,4 @@
+import React from 'react';
 import {
     Image,
     TouchableOpacity,
@@ -8,7 +9,7 @@ import { ActorName } from '../ActorName';
 import { Colors } from '@/src/constants/Colors';
 import { BorderRadius } from '@/src/constants/BorderRadius';
 
-export function ActorCard(props: ActorCardProps) {
+export const ActorCard = React.memo((props: ActorCardProps) => {
 
     const {
         name,
@@ -51,4 +52,4 @@ export function ActorCard(props: ActorCardProps) {
             />
         </TouchableOpacity >
     );
-}
+});
