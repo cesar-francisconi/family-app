@@ -27,14 +27,14 @@ export const ActorCard = React.memo((props: ActorCardProps) => {
         <TouchableOpacity
             onPress={fnActorCardPress}
             style={
-                [styles.container, {
+                [styles.card, {
                     borderWidth,
                     borderColor,
                     borderRadius: radius,
                 }]}
         >
             <Image
-                style={styles.image}
+                style={styles.avatar}
                 src={avatar}
             />
 
