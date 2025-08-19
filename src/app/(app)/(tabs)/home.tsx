@@ -67,7 +67,6 @@ export default function Home(props: HomeProps) {
         })()
     }, []);
 
-
     const flatListRef = useRef<FlatList>(null);
 
     useEffect(() => {
@@ -147,7 +146,7 @@ export default function Home(props: HomeProps) {
                         renderItem={({ item }) => (
                             <TouchableOpacity
                                 activeOpacity={0.7}
-                                onPress={() => debounce(() => route.push(`/(app)/(details)?movieId=${item.id}`))}
+                                onPress={() => debounce(() => route.push(`/(app)/(details)?movieId=${item.id}`), 1000)}
                             >
                                 <FeaturedMovieCard {...item} />
                             </TouchableOpacity>
