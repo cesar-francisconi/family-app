@@ -3,6 +3,7 @@ import { Icon } from '@/src/components/Icon';
 import { Input } from '@/src/components/Input';
 import { useState } from 'react';
 import {
+    Keyboard,
     SafeAreaView,
 } from 'react-native';
 import { InputTwoGroup } from '../../components/InputTwoGroup';
@@ -41,10 +42,11 @@ export default function DeleteUser(props: DeleteUserProps) {
 
     const { control, handleSubmit, setError } = form;
 
-    const [isLoading, setIsLoading] = useState(false);
     const [isSecureTextEntry, setIsSecureTextEntry] = useState(true);
 
     const onSubmit = async (data: FormDataDeleteUser | FormDataDeleteGoogleUser) => {
+        Keyboard.dismiss();
+
         setConfirmDeleteUserModal({
             isOpen: true,
             data,
@@ -113,7 +115,6 @@ export default function DeleteUser(props: DeleteUserProps) {
 
             <Button
                 onPress={handleSubmit(onSubmit)}
-                isLoading={isLoading}
                 title='Excluir'
                 type='primary'
                 variant='filled'
