@@ -13,7 +13,6 @@ import {
 } from './types';
 import {
     getLoggedInUserAvatar,
-    getLoggedInUserBackground,
     getLoggedInUserUsername,
 } from '@/src/hook/useUser';
 import { Button } from '../Button';
@@ -32,7 +31,6 @@ export const CommentReplyField = forwardRef<TextInput, CommentReplyFieldProps>((
     const [onFocus, setOnFocus] = useState(false);
 
     const username = getLoggedInUserUsername();
-    const background = getLoggedInUserBackground();
     const avatar = getLoggedInUserAvatar();
 
     const borderWidth = onFocus ? 1 : 0;
@@ -52,7 +50,6 @@ export const CommentReplyField = forwardRef<TextInput, CommentReplyFieldProps>((
                 (<Avatar
                     mode='initial'
                     initial={getInitialsFromUsername(username)}
-                    background={background}
                     size='small'
                 />)}
 
