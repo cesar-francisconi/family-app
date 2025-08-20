@@ -7,7 +7,7 @@ import { ActorCardProps } from './types';
 import { styles } from './styles';
 import { ActorName } from '../ActorName';
 import { getActorCardBorderValue } from '@/src/helpers/getActorCardBorderValue';
-import { ActionDefaultOpacity } from '@/src/constants/opacity';
+import { ActionDefaultOpacity } from '@/src/constants/Opacity';
 
 export const ActorCard = React.memo((props: ActorCardProps) => {
 

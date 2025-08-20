@@ -1,4 +1,4 @@
-import { numberScale } from "./numberScale";
+import { numberScale } from "./NumberScale";
 
 export const Opacity = {
     'none': numberScale['0'],
