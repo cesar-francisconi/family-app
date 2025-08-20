@@ -23,7 +23,7 @@ export const openCommentActionsSheet = ({
 }: OpenCommentActionsSheetProps) => {
 
     const isAuthorizedUser = loggedInUserId === userId;
-    const isComment = pathname === '/comment';
+    const isComment = pathname === '/comments';
     
     const baseProps = { isOpen: true };
 

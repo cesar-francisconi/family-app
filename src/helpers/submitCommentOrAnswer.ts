@@ -47,7 +47,7 @@ export const submitCommentOrAnswer = async (props: SubmitCommentOrAnswerProps) =
 
     const auth = getAuth();
     const user = auth.currentUser;
-    const isComment = pathname === '/comment';
+    const isComment = pathname === '/comments';
     const isAnswers = pathname === '/answers';
 
     if (!(user && user.uid)) return;

@@ -125,7 +125,7 @@ export function ReactionGroup(props: ReactionGroupProps) {
     };
 
     const onCommentPress = () => {
-        const isComment = pathname === '/comment';
+        const isComment = pathname === '/comments';
         const isSelectedParentComment = commentId && pathname === '/answers';
         const isAnswer = pathname === '/answers';
 
