@@ -8,7 +8,6 @@ import {
 import { styles } from './styles';
 import { AddComment } from '../AddComment';
 import { Avatar } from '../Avatar';
-import { AvatarProps } from '../Avatar/types';
 import { useDebounce } from '@/src/helpers/debounce';
 import {
     useGlobalSearchParams,
@@ -24,19 +23,15 @@ export function AddCommentWithAvatar(props: AddCommentWithAvatarProps) {
 
     const { movieId } = useGlobalSearchParams<AddCommentWithAvatarGlobalSearchParams>();
 
-    const { debounce } = useDebounce();
-
     const route = useRouter();
 
-    const safeAvatarOptions: AvatarProps = {
-        ...avatarOptions,
-        size: avatarOptions.size ?? 'small',
-        withStroke: avatarOptions.withStroke ?? false,
-    };
+    const { debounce } = useDebounce();
+
+    const avatarSize = avatarOptions.size ?? 'small'; 
 
     return (
         <View style={styles.container}>
-            <Avatar {...safeAvatarOptions} />
+            <Avatar {...avatarOptions} size={avatarSize} />
 
             <AddComment
                 {...addCommentOptions}
