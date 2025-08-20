@@ -40,7 +40,6 @@ import {
 } from 'react';
 import {
     getLoggedInUserAvatar,
-    getLoggedInUserBackground,
     getLoggedInUserUsername,
 } from '../../../hook/useUser';
 import { Colors } from '@/src/constants/Colors';
@@ -88,8 +87,6 @@ export default function Details(props: DetailsProps) {
     const [videoSource, setVideoSource] = useState<VideoSource | null>(videoSourceInitial);
 
     const username = getLoggedInUserUsername();
-
-    const pathname = usePathName();
 
     const isFocused = useIsFocused(); // true quando a tela está visível
 
@@ -198,7 +195,6 @@ export default function Details(props: DetailsProps) {
     } : {
         mode: 'initial',
         initial: getInitialsFromUsername(username),
-        background: getLoggedInUserBackground(),
     };
 
     const { isPlaying } = useEvent(player, 'playingChange', {
