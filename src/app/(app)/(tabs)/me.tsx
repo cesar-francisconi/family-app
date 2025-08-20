@@ -5,7 +5,6 @@ import { Option } from '@/src/components/Option';
 import { OptionsList } from '@/src/components/OptionsList';
 import { setConfirmSignOutModal } from '@/src/hook/useConfirmSignOutModal';
 import {
-    getLoggedInUserBackground,
     getLoggedInUserAvatar,
     getLoggedInUserUsername,
 } from '@/src/hook/useUser';
@@ -32,7 +31,6 @@ export default function Me(props: MeProps) {
 
     const username = getLoggedInUserUsername();
     const avatar = getLoggedInUserAvatar();
-    const background = getLoggedInUserBackground();
 
     const handleSignOut = () => {
         setConfirmSignOutModal({ isOpen: true });
@@ -54,7 +52,6 @@ export default function Me(props: MeProps) {
                     avatarOptions={{
                         mode: 'initial',
                         initial: username,
-                        background,
                     }}
                     label={username}
                 />)}
