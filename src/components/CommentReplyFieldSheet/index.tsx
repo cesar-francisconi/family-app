@@ -91,7 +91,7 @@ export function CommentReplyFieldSheet(_: CommentReplyFieldSheetProps) {
         }
     );
 
-    const placeholder = pathname === '/' ? 'Adicione um comentário' : 'Adicione uma resposta';
+    const placeholder = pathname === '/comments' ? 'Adicione um comentário' : 'Adicione uma resposta';
 
     return (
         <BottomSheet
