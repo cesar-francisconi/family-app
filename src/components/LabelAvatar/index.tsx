@@ -48,7 +48,6 @@ export function LabelAvatar(props: LabelAvatarProps & Pick<ViewProps, 'style'>) 
             initial: getInitialsFromUsername(avatarOptions.initial),
             size: size,
             withStroke: avatarOptions.withStroke,
-            background: avatarOptions.background,
         };
     }
 
