@@ -1,4 +1,4 @@
-import { numberScale } from "./Spacing";
+import { numberScale } from "./numberScale";
 
 export const BorderRadius = {
     'none': numberScale[0],
@@ -8,4 +8,4 @@ export const BorderRadius = {
     'lg': numberScale[24],
     'xl': numberScale[32],
     '2xl': numberScale['999'],
-}
+};
