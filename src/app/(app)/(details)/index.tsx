@@ -299,22 +299,18 @@ export default function Details(props: DetailsProps) {
                         id={movieId}
                     />
 
-                    <TouchableOpacity
-                        activeOpacity={0.7}
-                        onPress={() => debounce(() => {
+                    <CommentActionRow
+                        title='Comentários'
+                        fnCommentActionRowPress={() => debounce(() => {
                             route.push(`/(app)/(details)/(comments)/comments?movieId=${movieId}`);
                         }, 1000)}
-                    >
-                        <CommentActionRow
-                            avatarOptions={{
-                                ...avatarOptions,
-                            }}
-                            title='Comentários'
-                            addCommentOptions={{
-                                placeholder: 'Adicione um comentário...',
-                            }}
-                        />
-                    </TouchableOpacity>
+                        avatarOptions={{
+                            ...avatarOptions,
+                        }}
+                        addCommentOptions={{
+                            placeholder: 'Adicione um comentário...',
+                        }}
+                    />
                 </View>
 
                 {!similarContentMovies ? (
