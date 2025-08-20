@@ -1,5 +1,5 @@
 export type AddCommentProps = {
-    text?: string;
+    placeholder?: string;
     borderRadius?: 'none' | 'small' | 'medium' | 'large';
-    fnAddComment?: () => void;
+    fnAddCommentPress?: () => void;
 };
