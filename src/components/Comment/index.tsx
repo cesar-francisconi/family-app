@@ -26,7 +26,6 @@ export function Comment(props: UserCommentProps) {
         time,
         avatar,
         comment,
-        background,
         likes,
         answers,
         answersText = 'answers',
@@ -40,7 +39,7 @@ export function Comment(props: UserCommentProps) {
     const getAvatarProps = useMemo((): AvatarProps =>
         avatar
             ? { mode: 'image', imageUrl: avatar, size: 'small' }
-            : { mode: 'initial', initial: getInitialsFromUsername(username), size: 'small', background }, [avatar, username, background]);
+            : { mode: 'initial', initial: getInitialsFromUsername(username), size: 'small' }, [avatar, username]);
 
     const showAnswers = useMemo(() => withAnswersText && answers.length > 0, [withAnswersText, answers.length]);
 
