@@ -6,6 +6,7 @@ import {
 import { AuthSuggestionProps } from './types';
 import { styles } from './styles';
 import { Colors } from '@/src/constants/Colors';
+import { ActionDefaultOpacity } from '@/src/constants/Opacity';
 
 export function AuthSuggestion(props: AuthSuggestionProps) {
 
@@ -31,6 +32,7 @@ export function AuthSuggestion(props: AuthSuggestionProps) {
 
             <TouchableOpacity
                 onPress={fnActionPress}
+                activeOpacity={ActionDefaultOpacity}
             >
                 <Text
                     style={[styles.actionLabel, {
