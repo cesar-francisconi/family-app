@@ -17,7 +17,6 @@ export interface CastMember {
 export interface CommentAnswer {
     id: string;
     username: string;
-    background: string | null;
     userId: string,
     time: number; // em segundos
     avatar: string | null;
@@ -30,7 +29,6 @@ export interface CommentAnswer {
 export interface Comment {
     id: string;
     username: string;
-    background: string | null;
     userId: string,
     time: number; // em segundos
     avatar: string | null;
