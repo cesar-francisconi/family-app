@@ -11,9 +11,9 @@ export const addCommentHeight = 36;
 export function AddComment(props: AddCommentProps) {
 
     const {
-        text = 'Add a comment...',
+        placeholder = 'Add a comment...',
         borderRadius = 'large',
-        fnAddComment,
+        fnAddCommentPress,
     } = props;
 
     const borderRadiusMap = {
@@ -32,13 +32,13 @@ export function AddComment(props: AddCommentProps) {
                 height: addCommentHeight,
                 borderRadius: radius,
             }]}
-            onPress={fnAddComment}
+            onPress={fnAddCommentPress}
         >
             <Text
-                style={styles.text}
+                style={styles.placeholder}
                 numberOfLines={1}
             >
-                {text}
+                {placeholder}
             </Text>
         </TouchableOpacity>
     );
