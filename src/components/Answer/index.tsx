@@ -18,7 +18,6 @@ export const Answer = memo(function Answer(props: AnswerProps) {
     const {
         id,
         username,
-        background,
         userId,
         time,
         avatar,
@@ -33,7 +32,7 @@ export const Answer = memo(function Answer(props: AnswerProps) {
     const getAvatarProps = useMemo((): AvatarProps =>
         avatar
             ? { mode: 'image', imageUrl: avatar, size: 'small' }
-            : { mode: 'initial', initial: getInitialsFromUsername(username), size: 'small', background }, [avatar, username, background]);
+            : { mode: 'initial', initial: getInitialsFromUsername(username), size: 'small' }, [avatar, username]);
 
     return (
         <View style={styles.commentContainer}>
