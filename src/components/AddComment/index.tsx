@@ -5,6 +5,7 @@ import {
 import { styles } from './styles';
 import { AddCommentProps } from './types';
 import { getAddCommentBorderRadius } from '@/src/helpers/getAddCommentBorderRadius';
+import { ActionDefaultOpacity } from '@/src/constants/Opacity';
 
 export const addCommentHeight = 36;
 
@@ -20,7 +21,7 @@ export function AddComment(props: AddCommentProps) {
 
     return (
         <TouchableOpacity
-            activeOpacity={0.7}
+            activeOpacity={ActionDefaultOpacity}
             style={[styles.container, {
                 height: addCommentHeight,
                 borderRadius: radius,
