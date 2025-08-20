@@ -1,4 +1,8 @@
-import { Text, TouchableOpacity, View } from 'react-native';
+import {
+    Text,
+    TouchableOpacity,
+    View,
+} from 'react-native';
 import { styles } from './styles';
 import { CommentActionRowProps } from './types';
 import { AddCommentWithAvatar } from '../AddCommentWithAvatar';
@@ -33,16 +37,14 @@ export function CommentActionRow(props: CommentActionRowProps) {
                 borderWidth: resolveBorderWidth,
             }]}
         >
-            {withTitle && (
-                <View style={styles.header}>
-                    <Text style={[styles.text, styles.title]} numberOfLines={1}>
-                        {title}
-                    </Text>
-                    <Text style={[styles.text, styles.count]} numberOfLines={1}>
-                        {commentCount}
-                    </Text>
-                </View>
-            )}
+            {withTitle && (<View style={styles.header}>
+                <Text style={[styles.text, styles.title]} numberOfLines={1}>
+                    {title}
+                </Text>
+                <Text style={[styles.text, styles.count]} numberOfLines={1}>
+                    {commentCount}
+                </Text>
+            </View>)}
 
             <AddCommentWithAvatar
                 avatarOptions={avatarOptions}
