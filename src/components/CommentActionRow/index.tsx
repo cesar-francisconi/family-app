@@ -1,8 +1,7 @@
-import { Text, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { styles } from './styles';
 import { CommentProps } from './types';
 import { AddCommentWithAvatar } from '../AddCommentWithAvatar';
-import { BorderRadius } from '@/src/constants/BorderRadius';
 import { getCurrentMovieComments } from '@/src/hook/useMovie';
 import { getCommentActionRowBorderRadiusValue } from '@/src/helpers/getCommentActionRowBorderRadiusValue';
 
@@ -11,6 +10,7 @@ export function CommentActionRow(props: CommentProps) {
     const {
         avatarOptions,
         addCommentOptions,
+        fnCommentActionRowPress,
         withTitle = true,
         title = 'Comments',
         borderRadius = 'medium',
@@ -24,10 +24,13 @@ export function CommentActionRow(props: CommentProps) {
     const resolveBorderWidth = withStroke ? 1 : undefined;
 
     return (
-        <View style={[styles.container, {
-            borderRadius: radius,
-            borderWidth: resolveBorderWidth,
-        }]}>
+        <TouchableOpacity
+            onPress={fnCommentActionRowPress}
+            style={[styles.container, {
+                borderRadius: radius,
+                borderWidth: resolveBorderWidth,
+            }]}
+        >
             {withTitle && (
                 <View style={styles.header}>
                     <Text style={[styles.text, styles.title]} numberOfLines={1}>
@@ -43,6 +46,6 @@ export function CommentActionRow(props: CommentProps) {
                 avatarOptions={avatarOptions}
                 addCommentOptions={addCommentOptions}
             />
-        </View>
+        </TouchableOpacity>
     );
 }
