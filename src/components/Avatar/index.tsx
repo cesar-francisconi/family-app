@@ -16,7 +16,6 @@ export function Avatar(props: AvatarProps) {
         initial = 'i',
         imageUrl,
         withStroke = false,
-        background,
         size = 'large',
     } = props;
 
