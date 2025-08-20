@@ -18,10 +18,11 @@ export const styles = StyleSheet.create({
         ...StyleSheet.flatten(Font.body.medium),
     },
     title: {
+        maxWidth: '50%',
         color: Colors.surface.on,
     },
     count: {
-        paddingRight: 20,
+        maxWidth: '50%',
         color: Colors.surface.onVariant,
     }
 });
