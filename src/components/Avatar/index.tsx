@@ -9,7 +9,7 @@ import { styles } from './styles';
 import { Font } from '@/src/constants/Font';
 import { Colors } from '@/src/constants/Colors';
 
-export function Avatar(props: AvatarProps) {
+export const Avatar = React.memo((props: AvatarProps) => {
 
     const {
         mode = 'initial',
@@ -58,5 +58,5 @@ export function Avatar(props: AvatarProps) {
                 />}
         </View>
     );
-}
+});
 
