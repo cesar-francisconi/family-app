@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import { styles } from './styles';
 import { AddCommentProps } from './types';
-import { BorderRadius } from '@/src/constants/BorderRadius';
+import { getAddCommentBorderRadius } from '@/src/helpers/getAddCommentBorderRadius';
 
 export const addCommentHeight = 36;
 
@@ -16,14 +16,7 @@ export function AddComment(props: AddCommentProps) {
         fnAddCommentPress,
     } = props;
 
-    const borderRadiusMap = {
-        large: BorderRadius['2xl'],
-        medium: BorderRadius['sm'],
-        small: BorderRadius['xs'],
-        none: BorderRadius['none'],
-    };
-
-    const radius = borderRadiusMap[borderRadius];
+    const radius = getAddCommentBorderRadius(borderRadius);
 
     return (
         <TouchableOpacity
