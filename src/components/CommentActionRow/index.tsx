@@ -3,7 +3,7 @@ import { styles } from './styles';
 import { CommentProps } from './types';
 import { AddCommentWithAvatar } from '../AddCommentWithAvatar';
 import { BorderRadius } from '@/src/constants/BorderRadius';
-import { getCurrentMovieCommentCount } from '@/src/hook/useMovie';
+import { getCurrentMovieComments } from '@/src/hook/useMovie';
 
 export function CommentActionRow(props: CommentProps) {
 
@@ -16,7 +16,7 @@ export function CommentActionRow(props: CommentProps) {
         withStroke,
     } = props;
 
-    const commentCount = getCurrentMovieCommentCount();
+    const commentCount = getCurrentMovieComments().length;
 
     const borderRadiusMap = {
         large: BorderRadius.md,
