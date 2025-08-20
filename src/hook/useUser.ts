@@ -60,7 +60,7 @@ export const setLoggedInUser = async () => {
     };
 };
 
-export const getLoggedInUserBackground = () => useUser.getState().background;
+export const getLoggedInUserInitialBackground = () => useUser.getState().background;
 
 export const getLoggedInUserIsGoogleAccount = () => useUser.getState().isGoogleAccount;
 
