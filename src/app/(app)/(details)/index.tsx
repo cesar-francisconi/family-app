@@ -315,7 +315,7 @@ export default function Details(props: DetailsProps) {
                             }}
                             title='Comentários'
                             addCommentOptions={{
-                                text: 'Adicione um comentário...',
+                                placeholder: 'Adicione um comentário...',
                             }}
                         />
                     </TouchableOpacity>
