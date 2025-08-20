@@ -4,7 +4,9 @@ import {
     Text,
     View,
 } from 'react-native';
-import { AvatarProps } from './types';
+import {
+    AvatarProps,
+} from './types';
 import { styles } from './styles';
 import { Font } from '@/src/constants/Font';
 import { Colors } from '@/src/constants/Colors';
