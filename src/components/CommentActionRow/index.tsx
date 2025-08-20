@@ -1,12 +1,12 @@
 import { Text, TouchableOpacity, View } from 'react-native';
 import { styles } from './styles';
-import { CommentProps } from './types';
+import { CommentActionRowProps } from './types';
 import { AddCommentWithAvatar } from '../AddCommentWithAvatar';
 import { getCurrentMovieComments } from '@/src/hook/useMovie';
 import { getCommentActionRowBorderRadiusValue } from '@/src/helpers/getCommentActionRowBorderRadiusValue';
 import { ActionDefaultOpacity } from '@/src/constants/Opacity';
 
-export function CommentActionRow(props: CommentProps) {
+export function CommentActionRow(props: CommentActionRowProps) {
 
     const {
         avatarOptions,
