@@ -4,6 +4,7 @@ import { CommentProps } from './types';
 import { AddCommentWithAvatar } from '../AddCommentWithAvatar';
 import { getCurrentMovieComments } from '@/src/hook/useMovie';
 import { getCommentActionRowBorderRadiusValue } from '@/src/helpers/getCommentActionRowBorderRadiusValue';
+import { ActionDefaultOpacity } from '@/src/constants/Opacity';
 
 export function CommentActionRow(props: CommentProps) {
 
@@ -26,6 +27,7 @@ export function CommentActionRow(props: CommentProps) {
     return (
         <TouchableOpacity
             onPress={fnCommentActionRowPress}
+            activeOpacity={ActionDefaultOpacity}
             style={[styles.container, {
                 borderRadius: radius,
                 borderWidth: resolveBorderWidth,
