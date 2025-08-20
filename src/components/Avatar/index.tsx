@@ -1,6 +1,5 @@
 import {
     Image,
-    StyleSheet,
     Text,
     View,
 } from 'react-native';
@@ -8,8 +7,11 @@ import {
     AvatarProps,
 } from './types';
 import { styles } from './styles';
-import { Font } from '@/src/constants/Font';
-import { Colors } from '@/src/constants/Colors';
+import { getAvatarBackgroundColor } from '@/src/helpers/getAvatarBackgroundColor';
+import { resolveAvatarBorderWidth } from '@/src/helpers/resolveAvatarBorderWidth';
+import { getAvatarInitialFont } from '@/src/helpers/getAvatarInitialFont';
+import { getAvatarDimension } from '@/src/helpers/getAvatarDimension';
+import React from 'react';
 
 export const Avatar = React.memo((props: AvatarProps) => {
 
@@ -21,22 +23,10 @@ export const Avatar = React.memo((props: AvatarProps) => {
         size = 'large',
     } = props;
 
-    const sizeMap = {
-        large: 48,
-        medium: 32,
-        small: 26,
-    };
-
-    const initialFontMap = {
-        large: StyleSheet.flatten(Font.headline.large),
-        medium: StyleSheet.flatten(Font.headline.medium),
-        small: StyleSheet.flatten(Font.label.small),
-    };
-
-    const initialFont = initialFontMap[size];
-    const width = sizeMap[size];
-    const height = sizeMap[size];
-    const borderWidth = withStroke ? 1 : 0;
+    const avatarInitialFont = getAvatarInitialFont(size);
+    const width = getAvatarDimension(size);
+    const height = getAvatarDimension(size);
+    const borderWidth = resolveAvatarBorderWidth(withStroke);
 
     return (
         <View
@@ -44,20 +34,20 @@ export const Avatar = React.memo((props: AvatarProps) => {
                 width,
                 height,
                 borderWidth,
-                backgroundColor: background ?? Colors.surface.main,
+                backgroundColor: getAvatarBackgroundColor(mode),
             }]}>
-            {mode === 'initial' ? <Text
+            {mode === 'initial' ? (<Text
                 style={[styles.initial, {
-                    ...initialFont,
+                    ...avatarInitialFont,
                 }]}
             >
                 {initial}
-            </Text>
+            </Text>)
                 :
-                <Image
+                (<Image
                     style={styles.image}
                     src={imageUrl}
-                />}
+                />)}
         </View>
     );
 });
