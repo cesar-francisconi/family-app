@@ -5,13 +5,14 @@ import {
 } from 'react-native';
 import { AuthSuggestionProps } from './types';
 import { styles } from './styles';
+import { Colors } from '@/src/constants/Colors';
 
 export function AuthSuggestion(props: AuthSuggestionProps) {
 
     const {
         message,
-        messageColor,
-        actionLabelColor,
+        messageColor = Colors.surface.on,
+        actionLabelColor = Colors.primary.main,
         actionLabel,
         fnActionPress,
     } = props;
