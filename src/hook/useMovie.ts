@@ -813,7 +813,7 @@ export const changeAnswerById = async (
 
 export const setComment = async (
     movieId: string,
-    user: Pick<Comment, 'username' | 'userId' | 'avatar' | 'comment' | 'background'>,
+    user: Pick<Comment, 'username' | 'userId' | 'avatar' | 'comment'>,
 ) => {
     const comment = {
         id: uuid.v4(),
@@ -821,7 +821,6 @@ export const setComment = async (
         userId: user.userId,
         time: Date.now(),
         avatar: user.avatar,
-        background: user.background,
         comment: user.comment,
         likes: [],
         dislikes: [],
@@ -867,14 +866,13 @@ export const setComment = async (
 
 export const setAnswer = async (
     movieId: string,
-    user: Pick<CommentAnswer, 'username' | 'userId' | 'avatar' | 'answer' | 'background'>,
+    user: Pick<CommentAnswer, 'username' | 'userId' | 'avatar' | 'answer'>,
 ) => {
     const answer = {
         id: uuid.v4(),
         username: user.username,
         userId: user.userId,
         time: Date.now(),
-        background: user.background,
         avatar: user.avatar,
         answer: user.answer,
         likes: [],
