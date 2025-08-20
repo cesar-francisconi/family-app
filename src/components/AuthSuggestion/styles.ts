@@ -10,12 +10,10 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         gap: Spacing['sm'],
     },
-    firstText: {
+    message: {
         ...StyleSheet.flatten(Font.label.extraLarge),
-        color: Colors.surface.on,
     },
-    secondText: {
+    actionLabel: {
         ...StyleSheet.flatten(Font.label.extraLargeProminent),
-        color: Colors.primary.main,
     }
 });

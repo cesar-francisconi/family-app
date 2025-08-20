@@ -9,28 +9,34 @@ import { styles } from './styles';
 export function AuthSuggestion(props: AuthSuggestionProps) {
 
     const {
-        firstText,
-        secondText,
-        fnSecondText,
+        message,
+        messageColor,
+        actionLabelColor,
+        actionLabel,
+        fnActionPress,
     } = props;
 
     return (
         <View style={styles.container}>
             <Text
-                style={styles.firstText}
+                style={[styles.message, {
+                    color: messageColor,
+                }]}
                 numberOfLines={2}
             >
 
-                {firstText}
+                {message}
             </Text>
 
             <TouchableOpacity
-                onPress={fnSecondText}
+                onPress={fnActionPress}
             >
                 <Text
-                    style={styles.secondText}
+                    style={[styles.actionLabel, {
+                        color: actionLabelColor,
+                    }]}
                 >
-                    {secondText}
+                    {actionLabel}
                 </Text>
             </TouchableOpacity>
         </View>

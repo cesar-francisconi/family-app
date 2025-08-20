@@ -1,5 +1,7 @@
 export type AuthSuggestionProps = {
-    firstText: string;
-    secondText: string;
-    fnSecondText: () => void;
+    message: string;
+    messageColor?: string;
+    actionLabel: string;
+    actionLabelColor?: string;
+    fnActionPress: () => void;
 };
