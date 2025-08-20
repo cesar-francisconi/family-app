@@ -201,9 +201,9 @@ export default function SignUp(props: SignUpProps) {
                 />
 
                 <AuthSuggestion
-                    firstText='Já tem cadastro?'
-                    secondText='Acesse sua conta.'
-                    fnSecondText={() => {
+                    message='Já tem cadastro?'
+                    actionLabel='Acesse sua conta.'
+                    fnActionPress={() => {
                         route.back();
                     }}
                 />

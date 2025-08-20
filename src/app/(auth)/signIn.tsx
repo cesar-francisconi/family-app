@@ -235,9 +235,9 @@ export default function SignIn(props: SignInProps) {
         />
 
         <AuthSuggestion
-          firstText='Não tem uma conta?'
-          secondText='Cadastre-se.'
-          fnSecondText={() => {
+          message='Não tem uma conta?'
+          actionLabel='Cadastre-se.'
+          fnActionPress={() => {
             route.navigate('/signUp');
           }}
         />
