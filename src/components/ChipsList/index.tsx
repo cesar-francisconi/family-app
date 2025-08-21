@@ -6,6 +6,7 @@ import {
 import { styles } from './styles';
 import { ChipsListProps } from './types';
 import { Chip } from '../Chip';
+import { ActionDefaultOpacity } from '@/src/constants/Opacity';
 
 export function ChipsList(props: ChipsListProps) {
 
@@ -34,7 +35,7 @@ export function ChipsList(props: ChipsListProps) {
                 {data.map((item) => {
                     return (
                         <TouchableOpacity
-                            activeOpacity={0.7}
+                            activeOpacity={ActionDefaultOpacity}
                             key={item}
                             style={styles.button}
                             onPress={() => fnChip(item)}
