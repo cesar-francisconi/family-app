@@ -1,3 +1,4 @@
+import React from 'react';
 import {
     Text,
     View,
@@ -7,7 +8,7 @@ import { ChipProps } from './types';
 import { BorderRadius } from '@/src/constants/BorderRadius';
 import { Colors } from '@/src/constants/Colors';
 
-export function Chip(props: ChipProps) {
+export const Chip = React.memo((props: ChipProps) => {
 
     const {
         text,
@@ -45,5 +46,5 @@ export function Chip(props: ChipProps) {
             </Text>
         </View>
     );
-}
+});
 
