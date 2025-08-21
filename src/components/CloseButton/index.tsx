@@ -5,13 +5,17 @@ import {
 import { Icon } from "../Icon";
 import { styles } from "./styles";
 import { CloseButtonProps } from "./types";
+import { ActionDefaultOpacity } from "@/src/constants/Opacity";
 
 export function CloseButton(props: CloseButtonProps & TouchableOpacityProps) {
 
-    const { } = props;
+    const {
+        activeOpacity = ActionDefaultOpacity,
+    } = props;
 
     return (
         <TouchableOpacity
+            activeOpacity={activeOpacity}
             style={styles.container}
             {...props}
         >
