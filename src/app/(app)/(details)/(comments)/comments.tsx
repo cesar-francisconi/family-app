@@ -29,8 +29,6 @@ import { usePathName } from '@/src/hook/usePathname';
 import { Colors } from '@/src/constants/Colors';
 import { FlatList } from 'react-native-gesture-handler';
 
-export const screenHeight = Dimensions.get('window').height;
-
 const PAGE_SIZE = 5;
 
 export default function Comments(props: CommentsProps) {

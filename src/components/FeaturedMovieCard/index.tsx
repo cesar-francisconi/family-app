@@ -8,8 +8,7 @@ import { BorderRadius } from '@/src/constants/BorderRadius';
 import Animated, {
     FadeInRight,
 } from 'react-native-reanimated';
-
-const screenWidth = Dimensions.get('window').width;
+import { screenWidth } from '@/src/constants/ScreenDimensions';
 
 const sizeMap = {
     large: { width: 304 },

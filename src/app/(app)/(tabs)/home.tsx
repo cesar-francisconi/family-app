@@ -23,7 +23,6 @@ import Animated, {
     useAnimatedStyle,
     useSharedValue,
 } from 'react-native-reanimated';
-import { getScreenHeight } from '@/src/helpers/getScreenHeight';
 import { Movie } from '@/movie';
 import { ActivityIndicator } from '@/src/components/ActivityIndicator';
 import {
@@ -32,6 +31,7 @@ import {
 } from '@react-native-firebase/auth';
 import { getMostRecentMovies } from '@/src/hook/useMovie';
 import { setLoggedInUser } from '@/src/hook/useUser';
+import { screenHeight } from '@/src/constants/ScreenDimensions';
 
 export default function Home(props: HomeProps) {
 
@@ -92,7 +92,7 @@ export default function Home(props: HomeProps) {
         },
     });
 
-    const outputRangeHeader = getScreenHeight / 4;
+    const outputRangeHeader = screenHeight / 4;
 
     const animatedHeaderStyle = useAnimatedStyle(() => {
         const backgroundColor = interpolateColor(
@@ -106,7 +106,7 @@ export default function Home(props: HomeProps) {
         };
     });
 
-    const outputRangeBackground = getScreenHeight / 2;
+    const outputRangeBackground = screenHeight / 2;
 
     const animatedBackgroundStyle = useAnimatedStyle(() => {
         const backgroundColor = interpolateColor(

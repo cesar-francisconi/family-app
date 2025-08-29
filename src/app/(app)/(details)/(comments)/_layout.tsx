@@ -22,10 +22,10 @@ import {
   GestureDetector,
   Gesture,
 } from 'react-native-gesture-handler';
-import { getScreenHeight } from '@/src/helpers/getScreenHeight';
 import { Indicator } from '@/src/components/Indicator';
 import { useMemo } from 'react';
 import { CloseButton } from '@/src/components/CloseButton';
+import { screenHeight } from '@/src/constants/ScreenDimensions';
 
 const detailsMovieCardHeight = 216;
 
@@ -34,7 +34,6 @@ type Routes = 'comments' | 'answers'
 export default function RootLayoutNav() {
 
   const translateY = useSharedValue(0);
-  const screenHeight = Dimensions.get('window').height;
 
   const navigationRef = useNavigationContainerRef();
   const route = useRouter();

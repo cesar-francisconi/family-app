@@ -1,14 +1,14 @@
 import { BorderRadius } from "@/src/constants/BorderRadius";
 import { Colors } from "@/src/constants/Colors";
 import { Font } from "@/src/constants/Font";
+import { screenHeight } from "@/src/constants/ScreenDimensions";
 import { Spacing } from "@/src/constants/Spacing";
-import { getScreenHeight } from "@/src/helpers/getScreenHeight";
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
     container: {
         width: '100%',
-        height: getScreenHeight,
+        height: screenHeight,
         zIndex: 999,
         position: 'absolute',
         justifyContent: 'center',
@@ -32,7 +32,7 @@ export const styles = StyleSheet.create({
     description: {
         ...StyleSheet.flatten(Font.body.medium),
         color: Colors.inverseSurface.on,
-        textAlign:'center',
+        textAlign: 'center',
     },
     buttonsContainer: {
         flexDirection: 'row',

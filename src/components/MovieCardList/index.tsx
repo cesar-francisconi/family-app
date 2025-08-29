@@ -10,8 +10,7 @@ import { Spacing } from '@/src/constants/Spacing';
 import { MovieCardFlex } from '../MovieCardFlex';
 import { chunkArray } from '@/src/helpers/chunkArray';
 import { useRouter } from 'expo-router';
-
-const screenWidth = Dimensions.get('window').width;
+import { screenWidth } from '@/src/constants/ScreenDimensions';
 
 export function MovieCardList(props: MovieCardListProps) {
 

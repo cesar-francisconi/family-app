@@ -18,18 +18,17 @@ import Animated, {
 } from 'react-native-reanimated';
 import { headerHeight } from '@/src/components/Header';
 import { CloseButton } from '@/src/components/CloseButton';
-import { getScreenHeight } from '@/src/helpers/getScreenHeight';
 import { detailsMovieCardHeight } from '..';
 import {
     Gesture,
     GestureDetector,
 } from 'react-native-gesture-handler';
 import { Indicator } from '@/src/components/Indicator';
+import { screenHeight } from '@/src/constants/ScreenDimensions';
 
 export default function RootLayoutNav() {
 
     const translateY = useSharedValue(0);
-    const screenHeight = Dimensions.get('window').height;
 
     const route = useRouter();
 

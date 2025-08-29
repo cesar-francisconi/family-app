@@ -1,7 +1,5 @@
 import { useMemo } from "react";
-import { Dimensions } from "react-native";
 import { headerHeight } from "../components/Header";
-
-const screenHeight = Dimensions.get('window').height;
+import { screenHeight } from "../constants/ScreenDimensions";
 
 export const snapPoints = () => useMemo(() => [screenHeight - (216 + headerHeight)], []);

@@ -52,10 +52,9 @@ import { useIsFocused } from '@react-navigation/native';
 import { usePathName } from '@/src/hook/usePathname';
 import { formatArrayToString } from '@/src/helpers/formatArraytoString';
 import { TouchableOpacity } from '@gorhom/bottom-sheet';
+import { screenWidth } from '@/src/constants/ScreenDimensions';
 
 export const detailsMovieCardHeight = 216;
-export const screenHeight = Dimensions.get('window').height;
-export const screenWidth = Dimensions.get('window').width;
 
 const videoSourceInitial: VideoSource = {
     uri: '',
