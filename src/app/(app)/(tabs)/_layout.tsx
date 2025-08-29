@@ -38,6 +38,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="categories"
         options={{
+          lazy: false,
           title: 'Categorias',
           tabBarIcon: ({ color }) => {
             return (
