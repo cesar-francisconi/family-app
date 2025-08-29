@@ -51,20 +51,38 @@ const initialState: InitialState = {
 export const useMovies = create(() => initialState);
 
 export const getAllMovies = async (): Promise<Movie[] | null> => {
-    const db = getFirestore();
+    try {
+        const db = getFirestore();
 
-    const q = query(collection(db, 'movies'));
+        const q = query(collection(db, 'movies'));
 
-    const querySnapshot = await getDocs(q);
+        const querySnapshot = await getDocs(q);
 
-    if (querySnapshot.empty) return null;
+        if (querySnapshot.empty) {
+            console.log("[DEBUG] A coleção 'movies' está vazia ou não existe!");
 
-    return querySnapshot.docs.map((movie: { id: string; data: () => Omit<Movie, 'id'> }) => {
-        return {
-            id: movie.id,
-            ...movie.data()
-        } as Movie;
-    });
+            return null;
+        };
+
+        return querySnapshot.docs.map((movie: { id: string; data: () => Omit<Movie, 'id'> }) => {
+            return {
+                id: movie.id,
+                ...movie.data()
+            } as Movie;
+        });
+    } catch (error) {
+        console.error("[DEBUG] Erro ao buscar todos os filmes:", error);
+
+        Toast.show({
+            type: 'customError',
+            text1: "Erro ao carregar filmes",
+            text2: "Tente novamente mais tarde.",
+            position: 'top',
+            visibilityTime: 6000,
+        });
+
+        return null;
+    };
 };
 
 export const sortByPopularity = async (): Promise<Movie[] | null> => {
@@ -236,7 +254,7 @@ export const filterMoviesBySearchTerm = async (searchTerm: string): Promise<Movi
     return data;
 };
 
-interface FilterMoviesState {
+export interface FilterMoviesState {
     actor: string;
     genre: string;
     year: string;
