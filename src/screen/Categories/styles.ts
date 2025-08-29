@@ -11,4 +11,8 @@ export const styles = StyleSheet.create({
         borderColor: Colors.outline.variant,
         paddingTop: Spacing['2xl'] + headerHeight,
     },
+    noResultsText: {
+        color: Colors.primary.main,
+        padding: Spacing['2xl'],
+    },
 });
