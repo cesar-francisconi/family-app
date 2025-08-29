@@ -1,50 +1,50 @@
 import React from 'react';
 import {
     Text,
-    View,
+    TouchableOpacity,
+    TouchableOpacityProps,
 } from 'react-native';
 import { styles } from './styles';
 import { ChipProps } from './types';
-import { BorderRadius } from '@/src/constants/BorderRadius';
-import { Colors } from '@/src/constants/Colors';
+import { ActionDefaultOpacity } from '@/src/constants/Opacity';
+import { resolveChipBorderRadius } from '@/src/helpers/resolveChipBorderRadius';
+import { resolveChipBackgroundColor } from '@/src/helpers/resolveChipBackgroundColor';
+import { resolveChipTextColor } from '@/src/helpers/resolveChipTextColor';
 
-export const Chip = React.memo((props: ChipProps) => {
+export const Chip = React.memo((props: ChipProps & Pick<TouchableOpacityProps, 'onLayout'>) => {
 
     const {
         text,
-        isActive = 'active',
+        isActive = true,
         borderRadius = 'none',
-        textTransform = 'capitalize',
+        textStyle,
+        fnChipPress,
+        onLayout,
     } = props;
 
-    const borderRadiusMap = {
-        large: BorderRadius['md'],
-        medium: BorderRadius['sm'],
-        small: BorderRadius['xs'],
-        none: BorderRadius['none'],
-    };
-
-    const radius = borderRadiusMap[borderRadius];
-    const backgroundColor = isActive ? Colors.surface.containerHigh : undefined;
-    const color = isActive ? Colors.surface.on : Colors.surface.onVariant;
+    const radius = resolveChipBorderRadius(borderRadius);
+    const backgroundColor = resolveChipBackgroundColor(isActive);
+    const color = resolveChipTextColor(isActive);
 
     return (
-        <View
+        <TouchableOpacity
+            onPress={fnChipPress}
+            activeOpacity={ActionDefaultOpacity}
             style={[styles.container, {
                 borderRadius: radius,
                 backgroundColor,
             }]}
+            onLayout={onLayout}
         >
             <Text
                 numberOfLines={1}
                 style={[styles.text, {
                     color,
-                    textTransform,
-                }]}
+                }, textStyle]}
             >
                 {text}
             </Text>
-        </View>
+        </TouchableOpacity>
     );
 });
 
