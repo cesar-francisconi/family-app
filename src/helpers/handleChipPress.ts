@@ -1,32 +1,31 @@
 import {
-    isQuartiaryOption,
-    QuartiaryOption,
-} from './extractChips';
+    OrderOptions,
+} from './extractMovieFilters';
 
 type HandleChipsPressParams = {
     item: string;
     index: number;
-    chipsCarouselIndex: number;
-    setIsActiveIndex: (index: number) => void;
+    filterCategoryIndex: number;
+    setIsActiveChip: (index: number) => void;
     setActor: (value: string) => void;
     setGenre: (value: string) => void;
     setYear: (value: string) => void;
-    setOrder: (value: QuartiaryOption) => void;
+    setOrder: (value: OrderOptions) => void;
 };
 
 export function handleChipPress({
     item,
     index,
-    chipsCarouselIndex,
-    setIsActiveIndex,
+    filterCategoryIndex,
+    setIsActiveChip,
     setActor,
     setGenre,
     setYear,
     setOrder,
 }: HandleChipsPressParams) {
-    setIsActiveIndex(index);
+    setIsActiveChip(index);
 
-    switch (chipsCarouselIndex) {
+    switch (filterCategoryIndex) {
         case 0:
             setActor(item);
             break;
@@ -37,9 +36,7 @@ export function handleChipPress({
             setYear(item);
             break;
         case 3:
-            if (isQuartiaryOption(item)) {
-                setOrder(item);
-            }
+            setOrder(item as OrderOptions);
             break;
     }
 }
