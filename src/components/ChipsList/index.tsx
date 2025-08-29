@@ -34,19 +34,16 @@ export function ChipsList(props: ChipsListProps) {
             <View style={styles.container}>
                 {data.map((item) => {
                     return (
-                        <TouchableOpacity
-                            activeOpacity={ActionDefaultOpacity}
+                        <Chip
+                            text={item}
                             key={item}
-                            style={styles.button}
-                            onPress={() => fnChip(item)}
-                        >
-                            <Chip
-                                text={item}
-                                borderRadius={chipBorderRadius}
-                                isActive={chipIsActive}
-                                textTransform={textTransform}
-                            />
-                        </TouchableOpacity>
+                            fnChipPress={() => fnChip(item)}
+                            borderRadius={chipBorderRadius}
+                            isActive={chipIsActive}
+                            textStyle={{
+                                textTransform,
+                            }}
+                        />
                     );
                 })}
             </View>
