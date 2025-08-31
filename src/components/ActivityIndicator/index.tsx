@@ -15,12 +15,12 @@ export const ActivityIndicator = React.memo((props: ActivityIndicatorProps) => {
         size = 'large',
     } = props;
 
-    const COLOR = getActivityIndicatorColor(color);
-    const SIZE = getActivityIndicatorSize(size);
+    const indicatorColor = getActivityIndicatorColor(color);
+    const indicatorSize = getActivityIndicatorSize(size);
 
     return (
         <View style={styles.container}>
-            <AIndicator color={COLOR} size={SIZE} />
+            <AIndicator color={indicatorColor} size={indicatorSize} />
         </View>
     );
 });
