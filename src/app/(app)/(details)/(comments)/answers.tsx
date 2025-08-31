@@ -4,7 +4,7 @@ import { useLocalSearchParams } from 'expo-router';
 
 import { Comment } from '@/src/components/Comment';
 import { Answer } from '@/src/components/Answer';
-import { CommentReplyField } from '@/src/components/CommentReplyField';
+import CommentReplyField from '@/src/components/CommentReplyField';
 import { ActivityIndicator } from '@/src/components/ActivityIndicator';
 
 import { Colors } from '@/src/constants/Colors';

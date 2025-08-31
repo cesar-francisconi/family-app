@@ -13,7 +13,7 @@ import {
     CommentsLocalSearchParams,
     CommentsProps,
 } from '../../../../screen/Comments/types';
-import { CommentReplyField } from '../../../../components/CommentReplyField';
+import CommentReplyField from '../../../../components/CommentReplyField';
 import { setCommentReplySheet } from '@/src/hook/useCommentReplySheet';
 import {
     useEffect,
