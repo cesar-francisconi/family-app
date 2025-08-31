@@ -4,6 +4,9 @@ import {
 } from 'react-native';
 import {
     forwardRef,
+    memo,
+    useCallback,
+    useMemo,
     useState,
 } from 'react';
 import { styles } from './styles';
@@ -19,14 +22,19 @@ import { Button } from '../Button';
 import { Icon } from '../Icon';
 import { getInitialsFromUsername } from '@/src/helpers/getInitialsFromUsername';
 
-export const CommentReplyField = forwardRef<TextInput, CommentReplyFieldProps>((props, ref) => {
+const CommentReplyField = forwardRef<TextInput, CommentReplyFieldProps>((props, ref) => {
 
     const {
         editable = true,
-        fnButton,
-        buttonDisabled,
-        isButtonLoading,
+        buttonOptions,
     } = props;
+
+    const {
+        onPress,
+        disabled,
+        isLoading,
+        leftIcon = <Icon name="Ionicons" icon="send" />,
+    } = buttonOptions ?? {};
 
     const [onFocus, setOnFocus] = useState(false);
 
@@ -65,17 +73,17 @@ export const CommentReplyField = forwardRef<TextInput, CommentReplyFieldProps>((
             />
 
             {editable && <Button
-                onPress={fnButton}
-                disabled={buttonDisabled}
+                onPress={onPress}
+                disabled={disabled}
+                isLoading={isLoading}
                 type="primary"
-                isLoading={isButtonLoading}
                 variant="filled"
                 size='small'
                 borderRadius='large'
-                leftIcon={<Icon name="Ionicons" icon="send" />}
+                leftIcon={leftIcon}
             />}
         </View>
     );
 });
 
-
+export default memo(CommentReplyField);
