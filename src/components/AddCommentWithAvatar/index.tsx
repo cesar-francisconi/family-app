@@ -13,6 +13,7 @@ import {
     useGlobalSearchParams,
     useRouter,
 } from 'expo-router';
+import { resolveAddCommentWithAvatarSize } from '@/src/helpers/resolveAddCommentWithAvatarSize';
 
 export function AddCommentWithAvatar(props: AddCommentWithAvatarProps) {
 
@@ -27,7 +28,7 @@ export function AddCommentWithAvatar(props: AddCommentWithAvatarProps) {
 
     const { debounce } = useDebounce();
 
-    const avatarSize = avatarOptions.size ?? 'small'; 
+    const avatarSize = resolveAddCommentWithAvatarSize(avatarOptions);
 
     return (
         <View style={styles.container}>
