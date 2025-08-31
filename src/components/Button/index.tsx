@@ -1,19 +1,23 @@
+import React, {
+    useMemo
+} from "react";
 import {
-    StyleSheet,
     Text,
     TouchableOpacity,
-    TouchableOpacityProps,
     View,
 } from "react-native";
 import { styles } from "./styles";
-import { ButtonProps } from "./types";
 import { getButtonToken } from "@/src/helpers/getButtonToken";
-import { Colors } from "@/src/constants/Colors";
-import React from "react";
 import { IconProps } from "../Icon/types";
 import { ActivityIndicator } from "../ActivityIndicator";
+import { getButtonBackgroundColor } from "@/src/helpers/getButtonBackgroundColor";
+import { getButtonTextColor } from "@/src/helpers/getButtonTextColor";
+import { getButtonIconSize } from "@/src/helpers/getButtonIconSize";
+import { extractButtonStyle } from "@/src/helpers/extractButtonStyle";
+import { ActionDefaultOpacity } from "@/src/constants/Opacity";
+import { ButtonPropsExtended } from "./types";
 
-export function Button(props: ButtonProps & Omit<TouchableOpacityProps, 'style'>) {
+export const Button = React.memo((props: ButtonPropsExtended) => {
 
     const {
         title,
@@ -24,20 +28,22 @@ export function Button(props: ButtonProps & Omit<TouchableOpacityProps, 'style'>
         isLoading = false,
     } = props;
 
-    const token = getButtonToken(props);
+    const token = useMemo(() => getButtonToken({
+        type: props.type,
+        variant: props.variant,
+        size: props.size,
+        borderRadius: props.borderRadius,
+    }), [props.type, props.variant, props.size, props.borderRadius]);
 
-    const background = StyleSheet.flatten(token.background);
-    const border = StyleSheet.flatten(token.border);
-    const text = StyleSheet.flatten(token.text);
+    const { background, border, text } = extractButtonStyle(token);
 
-    const backgroundColor = disabled ? Colors.disabled.background : background.backgroundColor;
-    const color = disabled ? Colors.disabled.text : text.color;
-
-    const Size = size === 'medium' ? 'small' : 'extraSmall';
+    const backgroundColor = getButtonBackgroundColor(disabled, background);;
+    const textColor = getButtonTextColor(disabled, text);
+    const iconSize = getButtonIconSize(size);
 
     return (
         <TouchableOpacity
-            activeOpacity={0.7}
+            activeOpacity={ActionDefaultOpacity}
             {...props}
             style={[{
                 ...background,
@@ -52,22 +58,22 @@ export function Button(props: ButtonProps & Omit<TouchableOpacityProps, 'style'>
                 }, styles.button]}
             >
                 {leftIcon && React.cloneElement(leftIcon, {
-                    color,
-                    size: Size,
+                    color: textColor,
+                    size: iconSize,
                 } as IconProps)}
 
                 {title && <Text
                     style={[{
                         ...text,
-                        color,
+                        color: textColor,
                     }, styles.title]}
                 >
                     {title}
                 </Text>}
 
                 {rightIcon && React.cloneElement(rightIcon, {
-                    color,
-                    size: Size,
+                    color: textColor,
+                    size: iconSize,
                 } as IconProps)}
             </View>
             <View
@@ -83,4 +89,4 @@ export function Button(props: ButtonProps & Omit<TouchableOpacityProps, 'style'>
             </View>
         </TouchableOpacity>
     );
-}
+});
