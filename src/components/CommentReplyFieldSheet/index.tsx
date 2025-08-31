@@ -3,7 +3,9 @@ import {
     TextInput,
 } from 'react-native';
 import {
+    useCallback,
     useEffect,
+    useMemo,
     useRef,
     useState,
 } from 'react';
@@ -11,7 +13,7 @@ import BottomSheet, {
     BottomSheetView,
 } from '@gorhom/bottom-sheet';
 import { styles } from './styles';
-import { CommentReplyField } from '../CommentReplyField';
+import CommentReplyField from '../CommentReplyField';
 import {
     CommentReplyFieldSheetGlobalSearchParams,
     CommentReplyFieldSheetProps,
@@ -29,6 +31,7 @@ import { Colors } from '@/src/constants/Colors';
 import { getButtonDisabled } from '@/src/helpers/getButtonDisabled';
 import { useExpandCommentReplyFieldBottomSheetOnOpen } from '@/src/hook/useExpandCommentReplyFieldBottomSheetOnOpen';
 import { useBottomSheetBackdrop } from '../Backdrop';
+import { Icon } from '../Icon';
 
 export function CommentReplyFieldSheet(_: CommentReplyFieldSheetProps) {
 
@@ -93,6 +96,30 @@ export function CommentReplyFieldSheet(_: CommentReplyFieldSheetProps) {
 
     const placeholder = pathname === '/comments' ? 'Adicione um comentário' : 'Adicione uma resposta';
 
+    const submit = useCallback(() => {
+        const inputValueTrim = inputValue.trim();
+
+        // define a função a ser executada quando o teclado fechar
+        submitAfterKeyboardHide.current = () => {
+            submitCommentOrAnswer({
+                movieId,
+                inputValue: inputValueTrim,
+                pathname,
+                inputRef,
+                commentReplySheetOptions,
+                bottomSheetRef,
+                resetInput: () => setInputValue(''),
+                setIsLoading,
+            });
+        };
+
+        Keyboard.dismiss(); // isso vai disparar o evento 'keyboardDidHide'
+    }, [inputValue, submitAfterKeyboardHide, Keyboard]);
+
+    const buttonLeftIcon = useMemo(() => (
+        <Icon name="Ionicons" icon="send" />
+    ), []);
+
     return (
         <BottomSheet
             ref={bottomSheetRef}
@@ -111,30 +138,15 @@ export function CommentReplyFieldSheet(_: CommentReplyFieldSheetProps) {
                     placeholder={placeholder}
                     placeholderTextColor={Colors.surface.onVariant}
                     value={inputValue}
-                    buttonDisabled={getButtonDisabled({
-                        inputValue,
-                        commentReplySheetOptions,
-                    })}
-                    isButtonLoading={isLoading}
                     onChangeText={setInputValue}
-                    fnButton={() => {
-                        const inputValueTrim = inputValue.trim();
-
-                        // define a função a ser executada quando o teclado fechar
-                        submitAfterKeyboardHide.current = () => {
-                            submitCommentOrAnswer({
-                                movieId,
-                                inputValue: inputValueTrim,
-                                pathname,
-                                inputRef,
-                                commentReplySheetOptions,
-                                bottomSheetRef,
-                                resetInput: () => setInputValue(''),
-                                setIsLoading,
-                            });
-                        };
-
-                        Keyboard.dismiss(); // isso vai disparar o evento 'keyboardDidHide'
+                    buttonOptions={{
+                        isLoading: isLoading,
+                        disabled: getButtonDisabled({
+                            inputValue,
+                            commentReplySheetOptions,
+                        }),
+                        onPress: submit,
+                        leftIcon: buttonLeftIcon,
                     }}
                     ref={inputRef}
                 />
