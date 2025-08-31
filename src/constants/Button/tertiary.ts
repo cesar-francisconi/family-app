@@ -11,9 +11,9 @@ import {
 } from "react-native";
 
 export type ButtonStyleTokens = {
-  background: StyleProp<ViewStyle>;
-  text: StyleProp<TextStyle>;
-  border: StyleProp<ViewStyle>;
+  background: ViewStyle;
+  text: TextStyle;
+  border: ViewStyle;
 };
 
 type ButtonVariantSize = {
