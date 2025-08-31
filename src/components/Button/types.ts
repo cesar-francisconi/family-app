@@ -1,4 +1,5 @@
 import { JSX } from "react";
+import { TouchableOpacityProps } from "react-native";
 
 type CommonButtonProps = {
   type: 'primary' | 'secondary' | 'tertiary';
@@ -25,3 +26,5 @@ type ButtonNoIcon = CommonButtonProps & {
 };
 
 export type ButtonProps = ButtonLeftIcon | ButtonRightIcon | ButtonNoIcon;
+
+export type ButtonPropsExtended = ButtonProps & Omit<TouchableOpacityProps, 'style'>
