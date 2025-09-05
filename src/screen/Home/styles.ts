@@ -1,5 +1,4 @@
-import { headerHeight } from "@/src/components/Header";
-import { Colors } from "@/src/constants/Colors";
+import { headerHeight } from "@/src/constants/DefautConfig";
 import { Spacing } from "@/src/constants/Spacing";
 import { StyleSheet } from "react-native";
 

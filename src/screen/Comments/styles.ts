@@ -1,8 +1,4 @@
-import { detailsMovieCardHeight, screenHeight } from "@/src/app/(app)/(details)";
-import { headerHeight } from "@/src/components/Header";
-import { BorderRadius } from "@/src/constants/BorderRadius";
 import { Colors } from "@/src/constants/Colors";
-import { Font } from "@/src/constants/Font";
 import { Spacing } from "@/src/constants/Spacing";
 import { StyleSheet } from "react-native";
 

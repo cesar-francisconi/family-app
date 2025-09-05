@@ -1,5 +1,5 @@
 import { Colors } from "@/src/constants/Colors";
-import { headerHeight } from "@/src/constants/defautConfig";
+import { headerHeight } from "@/src/constants/DefautConfig";
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({

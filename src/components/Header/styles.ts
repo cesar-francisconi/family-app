@@ -1,8 +1,8 @@
 import { Colors } from "@/src/constants/Colors";
+import { headerHeight } from "@/src/constants/DefautConfig";
 import { Font } from "@/src/constants/Font";
 import { Spacing } from "@/src/constants/Spacing";
 import { StyleSheet } from "react-native";
-import { headerHeight } from ".";
 
 export const styles = StyleSheet.create({
     container: {
@@ -10,6 +10,7 @@ export const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         flexDirection: 'row',
+        height: headerHeight,
         paddingHorizontal: Spacing['2xl'],
         position: 'absolute',
         zIndex: 1,

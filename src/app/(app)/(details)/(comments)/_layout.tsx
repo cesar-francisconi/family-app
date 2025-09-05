@@ -4,12 +4,10 @@ import {
   useRouter,
 } from 'expo-router';
 import {
-  Dimensions,
   SafeAreaView,
   StyleSheet,
 } from 'react-native';
 import { Colors } from '@/src/constants/Colors';
-import { headerHeight } from '@/src/components/Header';
 import Animated, {
   Extrapolation,
   interpolate,
@@ -26,6 +24,7 @@ import { Indicator } from '@/src/components/Indicator';
 import { useMemo } from 'react';
 import { CloseButton } from '@/src/components/CloseButton';
 import { screenHeight } from '@/src/constants/ScreenDimensions';
+import { headerHeight } from '@/src/constants/DefautConfig';
 
 const detailsMovieCardHeight = 216;
 

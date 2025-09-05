@@ -16,7 +16,6 @@ import Animated, {
     useSharedValue,
     withTiming,
 } from 'react-native-reanimated';
-import { headerHeight } from '@/src/components/Header';
 import { CloseButton } from '@/src/components/CloseButton';
 import { detailsMovieCardHeight } from '..';
 import {
@@ -25,6 +24,7 @@ import {
 } from 'react-native-gesture-handler';
 import { Indicator } from '@/src/components/Indicator';
 import { screenHeight } from '@/src/constants/ScreenDimensions';
+import { headerHeight } from '@/src/constants/DefautConfig';
 
 export default function RootLayoutNav() {
 

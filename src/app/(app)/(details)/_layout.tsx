@@ -2,7 +2,7 @@ import {
     Stack,
 } from 'expo-router';
 import { detailsMovieCardHeight } from '.';
-import { headerHeight } from '@/src/components/Header';
+import { headerHeight } from '@/src/constants/DefautConfig';
 
 export default function RootLayoutNav() {
 
