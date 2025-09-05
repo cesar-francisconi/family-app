@@ -4,7 +4,7 @@ import {
 import { MovieCardCarouselGroupProps } from './types';
 import { styles } from './styles';
 import { MovieCardCarousel } from '../MovieCardCarousel/Index';
-import {
+import React, {
     useEffect,
     useState,
 } from 'react';
@@ -12,7 +12,7 @@ import { Movie } from '@/movie';
 import { ActivityIndicator } from '../ActivityIndicator';
 import { getMoviesForMovieCardCarouselGroup } from '@/src/hook/useMovie';
 
-export function MovieCardCarouselGroup(props: MovieCardCarouselGroupProps) {
+export const MovieCardCarouselGroup = React.memo((props: MovieCardCarouselGroupProps) => {
 
     const {
 
@@ -20,7 +20,7 @@ export function MovieCardCarouselGroup(props: MovieCardCarouselGroupProps) {
 
     const [movies, setMovies] = useState<{
         id: string;
-        category: string;
+        title: string;
         movies: Movie[];
     }[] | null>(null);
 
@@ -46,5 +46,5 @@ export function MovieCardCarouselGroup(props: MovieCardCarouselGroupProps) {
             })}
         </View>
     );
-}
+});
 
