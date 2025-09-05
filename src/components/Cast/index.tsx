@@ -1,3 +1,4 @@
+import React from 'react';
 import {
     FlatList,
     Text,
@@ -8,10 +9,10 @@ import { styles } from './styles';
 import { ActorCard } from '../ActorCard';
 import { useRouter } from 'expo-router';
 
-export function Cast(props: CastProps) {
+export const Cast = React.memo((props: CastProps) => {
 
     const {
-        data,
+        actors,
         title = 'Actors',
         withTitle = true,
         actorCardOptions,
@@ -22,26 +23,28 @@ export function Cast(props: CastProps) {
 
     return (
         <View
-            style={styles.mainContainer}
+            style={styles.container}
         >
-            {withTitle && <Text
+            {withTitle && (<Text
                 style={styles.title}
             >
                 {title}
-            </Text>}
+            </Text>)}
 
             <FlatList
                 horizontal
                 contentContainerStyle={styles.contentContainerStyle}
-                style={styles.container}
+                style={styles.cast}
                 showsHorizontalScrollIndicator
-                data={data}
+                data={actors}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => {
                     return (
                         <ActorCard
                             {...item}
-                            fnActorCardPress={() => route.push(`/actorDetails?actorId=${item.id}&actorName=${item.name}`)}
+                            fnActorCardPress={() =>
+                                route.push(`/actorDetails?actorId=${item.id}&actorName=${item.name}`)
+                            }
                             {...actorCardOptions}
                             {...actorNameOptions}
                         />
@@ -50,4 +53,4 @@ export function Cast(props: CastProps) {
             />
         </View>
     );
-}
+});

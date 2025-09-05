@@ -5,10 +5,10 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
     container: {
-        flexGrow: 0,
-    },
-    mainContainer: {
         gap: Spacing.sm,
+    },
+    cast: {
+        flexGrow: 0,
     },
     title: {
         ...StyleSheet.flatten(Font.headline.medium),

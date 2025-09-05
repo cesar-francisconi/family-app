@@ -3,7 +3,7 @@ import { ActorCardProps } from "../ActorCard/types";
 import { ActorNameProps } from "../ActorName/types";
 
 export type CastProps = {
-    data: CastMember[];
+    actors: CastMember[];
     title?: string;
     withTitle?: boolean;
     actorCardOptions?: ActorCardProps;
