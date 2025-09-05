@@ -1,16 +1,15 @@
-import { CategoryParam } from "@/movie";
+import { TitleParam } from "@/movie";
 import {
     MovieCardProps,
     MovieCardPropsDefault,
 } from "../MovieCard/types";
 
 export type MovieCardCarouselGlobalSearchParams = {
-    actorId: string;
-    actorName: string;
+
 };
 
 export type MovieCardCarouselProps = {
-    category: CategoryParam;
+    title: TitleParam;
     movies: MovieCardProps[];
     movieCardOptions?: Pick<MovieCardPropsDefault, 'withTitle'>,
 };

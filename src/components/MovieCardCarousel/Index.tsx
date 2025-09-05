@@ -1,3 +1,4 @@
+import React from 'react';
 import {
     FlatList,
     Text,
@@ -5,54 +6,29 @@ import {
     View,
 } from 'react-native';
 import {
-    useGlobalSearchParams,
-    useRouter,
-} from 'expo-router';
-import {
-    MovieCardCarouselGlobalSearchParams,
     MovieCardCarouselProps,
 } from './types';
 import { styles } from './styles';
 import { MovieCard } from '../MovieCard';
-import { setCurrentMovieId } from '@/src/hook/useMovie';
-import { useDebounce } from '@/src/helpers/debounce';
+import { maxVisibleMovies } from '@/src/constants/DefautConfig';
+import { useMovieCardCarouselNavigation } from '@/src/hook/useMovieCardCarouselNavigation';
 
-export function MovieCardCarousel(props: MovieCardCarouselProps) {
+export const MovieCardCarousel = React.memo((props: MovieCardCarouselProps) => {
 
     const {
-        category,
+        title,
         movies,
-        movieCardOptions = { withTitle: true },
+        movieCardOptions,
     } = props;
 
-    const { debounce } = useDebounce();
-
-    const router = useRouter();
-
-    const rawParams = useGlobalSearchParams<MovieCardCarouselGlobalSearchParams>();
-
-    const genre = movies[0]?.genre[0];
-    const maxVisibleMovies = 8;
-
-    const handleSeeMorePress = () => {
-        if (rawParams.actorId) {
-            router.push(`/explorer?category=${category}&genre=${genre}&actorId=${rawParams.actorId}`);
-        } else {
-            router.push(`/explorer?category=${category}&genre=${genre}`);
-        };
-    };
-
-    const handleMoviePress = (movieId: string) => {
-        setCurrentMovieId(movieId);
-
-        router.push(`/(app)/(details)?movieId=${movieId}`);
-    };
+    const { mainGenre } = movies[0];
+    const { handleMovieCardPress } = useMovieCardCarouselNavigation(title, mainGenre);
 
     return (
-        <View style={styles.mainContainer}>
+        <View style={styles.container}>
             <View style={styles.headerContainer}>
                 <Text style={styles.title}>
-                    {category} {rawParams.actorName && <Text>{rawParams.actorName}</Text>}
+                    {title}
                 </Text>
             </View>
 
@@ -64,22 +40,22 @@ export function MovieCardCarousel(props: MovieCardCarouselProps) {
                 showsHorizontalScrollIndicator={false}
                 renderItem={({ item, index }) => {
 
-                    const lastMaxVisibleMovies = index === maxVisibleMovies - 1;
-                    const withMore = movies.length >= maxVisibleMovies && lastMaxVisibleMovies;
+                    const lastMaxVisibleMovies = index === (maxVisibleMovies - 1);
+                    const withMore = lastMaxVisibleMovies;
 
                     return (
-                        <TouchableOpacity activeOpacity={0.7} onPress={() => debounce(() => {
-                            if (lastMaxVisibleMovies) {
-                                handleSeeMorePress();
-                            } else {
-                                handleMoviePress(item.id);
-                            };
-                        }, 1000)}>
-                            <MovieCard {...item} withTitle={movieCardOptions.withTitle} withMore={withMore} />
+                        <TouchableOpacity
+                            onPress={() => handleMovieCardPress(lastMaxVisibleMovies, item.id)}
+                        >
+                            <MovieCard
+                                withMore={withMore}
+                                {...movieCardOptions}
+                                {...item}
+                            />
                         </TouchableOpacity>
                     );
                 }}
             />
         </View>
     );
-}
+});
