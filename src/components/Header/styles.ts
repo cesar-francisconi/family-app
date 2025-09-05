@@ -16,11 +16,13 @@ export const styles = StyleSheet.create({
         borderColor: Colors.outline.variant,
     },
     headerLeftAndTitleContainer: {
+        flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
         gap: Spacing['3xl'],
     },
     title: {
+        flex: 1,
         ...StyleSheet.flatten(Font.headline.medium),
         color: Colors.surface.on,
     },

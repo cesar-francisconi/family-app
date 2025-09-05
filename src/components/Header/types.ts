@@ -1,5 +1,5 @@
 export type HeaderGlobalSearchParams = {
-    category: string;
+    title: string;
     movieId: string;
     actorId: string;
     actorName: string;
