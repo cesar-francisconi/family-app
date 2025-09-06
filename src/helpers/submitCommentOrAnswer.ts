@@ -60,7 +60,7 @@ export const submitCommentOrAnswer = async (props: SubmitCommentOrAnswerProps) =
     const data = userSnap.data() as Omit<User, 'id'>;
 
     if (!data) {
-        console.error(`User com ID ${uid} não encontrado.`);
+        console.log(`[DEBUG] User com ID ${uid} não encontrado.`);
         return;
     };
 
