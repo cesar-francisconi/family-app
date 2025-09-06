@@ -1,9 +1,9 @@
 import {
-    CategoryParam,
     Comment,
     CommentAnswer,
     Movie,
     MovieGenreType,
+    TitleParam,
 } from '@/movie';
 import { create } from 'zustand'
 import uuid from 'react-native-uuid';
@@ -19,6 +19,7 @@ import {
 } from '@react-native-firebase/firestore';
 import { getAuth } from '@react-native-firebase/auth';
 import Toast from 'react-native-toast-message';
+import { hasDuplicateTitles } from '../helpers/hasDuplicateTitles';
 
 type CurrentMovieId = Movie['id'] | null;
 type currentMovieCommentCount = number | null;
@@ -93,34 +94,34 @@ export const sortByPopularity = async (): Promise<Movie[] | null> => {
     return [...movies].sort((a, b) => b.like - a.like);
 };
 
-export const getMoviesForMovieCardCarouselGroup = async (categories: CategoryParam[]) => {
+export const getMoviesForMovieCardCarouselGroup = async (titles: TitleParam[]) => {
     const movies = await getAllMovies();
 
     if (!movies) return null;
 
-    const uniqueCategories = new Set(categories);
+    if (hasDuplicateTitles(titles)) {
+        console.log('[DEBUG] Categorias duplicadas não são permitidas.');
 
-    if (uniqueCategories.size !== categories.length) {
-        throw new Error('Categorias duplicadas não são permitidas.');
+        return null;
     }
 
     const results = await Promise.all(
-        [...uniqueCategories].map(async (category, index) => {
-            if (category === 'Todos') {
+        titles.map(async (title, index) => {
+            if (title === 'Todos') {
                 return {
                     id: `0${index + 1}`,
-                    category,
+                    title,
                     movies,
                 };
             }
 
-            const moviesByGenre = await getMoviesByGenre(category.toLowerCase());
+            const moviesByGenre = await getMoviesByGenre(title.toLowerCase());
 
             if (!moviesByGenre) return null;
 
             return {
                 id: `0${index + 1}`,
-                category,
+                title,
                 movies: moviesByGenre,
             };
         })
