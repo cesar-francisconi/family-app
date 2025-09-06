@@ -16,7 +16,7 @@ export interface HeaderOptions {
 export type RouteKey =
     | 'signIn' | 'signUp' | 'resetPassword' | 'home' | 'categories' | 'me' | 'search'
     | 'explorer' | 'details' | 'actorDetails'
-    | 'moviesYouLiked' | 'myList' | 'account' | 'passwordChange' | 'usernameChange' | 'deleteUser' | 'emailChange';
+    | 'moviesYouLiked' | 'myList' | 'account' | 'passwordChange' | 'usernameChange' | 'deleteUser' | 'emailChange' | 'similarContentExplorer' | 'actorExplorer';
 
 export type SetHeaderOptionsProps = {
     [key in RouteKey]: HeaderOptions;
@@ -34,6 +34,8 @@ export function setHeaderOptions(props: SetHeaderOptionsProps) {
         resetPassword: 'resetPassword',
         search: 'search',
         explorer: 'explorer',
+        similarContentExplorer: 'similarContentExplorer',
+        actorExplorer: 'actorExplorer',
         '(details)': 'details',
         actorDetails: 'actorDetails',
         moviesYouLiked: 'moviesYouLiked',
