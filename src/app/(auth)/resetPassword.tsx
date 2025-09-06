@@ -53,7 +53,7 @@ export default function ResetPassword(props: ResetPasswordProps) {
 
             route.back();
         } catch (error: any) {
-            console.error('Erro ao enviar o email:', error.message);
+            console.log('[DEBUG] Erro ao enviar o email:', error.message);
 
             setIsLoading(false);
         };
