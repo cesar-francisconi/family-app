@@ -10,7 +10,7 @@ import { styles } from './styles';
 import {
     SimilarContentMovieCardCarouselProps,
 } from './types';
-import { maxVisibleMovies } from '@/src/constants/defautConfig';
+import { maxVisibleMovies } from '@/src/constants/DefautConfig';
 import { useSimilarContentNavigation } from '@/src/hook/useSimilarContentNavigation';
 
 export const SimilarContentMovieCardCarousel = React.memo((props: SimilarContentMovieCardCarouselProps) => {
