@@ -1,11 +1,13 @@
-import { ChipsList } from '@/src/components/ChipsList';
+import { SearchHistory } from '@/src/components/SearchHistory';
 import { MovieListItemGroup } from '@/src/components/MovieListItemGroup';
 import { MovieCardList } from '@/src/components/MovieCardList';
 import { Search } from '@/src/components/Search';
 import { styles } from '@/src/screen/Search/styles';
 import { SearchProps } from '@/src/screen/Search/types';
 import {
+    useCallback,
     useEffect,
+    useMemo,
     useRef,
     useState,
 } from 'react';
@@ -24,6 +26,7 @@ import {
     filterMoviesBySearchTerm,
     sortByPopularity,
 } from '@/src/hook/useMovie';
+import { ChipProps } from '@/src/components/Chip/types';
 
 export default function SearchScreen(props: SearchProps) {
 
@@ -80,6 +83,16 @@ export default function SearchScreen(props: SearchProps) {
         })();
     }, []);
 
+    const fnSearchHistoryChip = useCallback((item: string) => {
+        setSearchInputValue(item)
+    }, [setSearchInputValue]);
+
+    const chipOptions = useMemo((): Omit<ChipProps, 'text' | 'fnChipPress'> => ({
+        textStyle: {
+            textTransform: 'none',
+        }
+    }), []);
+
     if (!searchHistory) return <ActivityIndicator />
 
     return (
@@ -97,12 +110,12 @@ export default function SearchScreen(props: SearchProps) {
             <View
                 style={styles.contentContainer}
             >
-                <ChipsList
-                    textTransform='none'
-                    data={searchHistory}
-                    title='Histórico de pesquisa'
+                <SearchHistory
                     withTitle
-                    fnChip={(item) => setSearchInputValue(item)}
+                    chipOptions={chipOptions}
+                    searchHistory={searchHistory}
+                    title='Histórico de pesquisa'
+                    fnSearchHistoryChip={fnSearchHistoryChip}
                 />
 
                 {isReady ? (
