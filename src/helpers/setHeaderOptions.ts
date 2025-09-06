@@ -3,12 +3,10 @@ import {
 } from "expo-router";
 import { HeaderRightProps } from "../components/HeaderRight/types";
 
-interface HeaderOptions {
-    category: string;
-    actorName: string;
+export interface HeaderOptions {
+    title: string;
     transparentBackground: boolean;
     withBottomStroke: boolean;
-    withHeaderActions: boolean;
     withHeaderLeft: boolean;
     withHeaderRight: boolean;
     headerRightOptions: HeaderRightProps;
