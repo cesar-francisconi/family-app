@@ -25,6 +25,7 @@ import {
     getActorById,
     getActorMoviesById,
 } from '@/src/hook/useMovie';
+import { ActorMovieCardCarousel } from '@/src/components/ActorMovieCardCarousel';
 
 export default function ActorDetails(props: ActorDetailsProps) {
 
@@ -67,10 +68,10 @@ export default function ActorDetails(props: ActorDetailsProps) {
                 />
             </View>
 
-            <MovieCardCarousel
+            <ActorMovieCardCarousel
                 movies={actorMovies}
-                category={'Filmes com'}
-
+                title={'Filmes com ' + actor.name}
+                actorId={actor.id}
             />
         </SafeAreaView>
     );
