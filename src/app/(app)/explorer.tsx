@@ -14,7 +14,7 @@ import {
 } from 'react';
 import { Movie } from '@/movie';
 import { ActivityIndicator } from '@/src/components/ActivityIndicator';
-import { getMoviesByCategory } from '@/src/hook/useMovie';
+import { getMoviesByTitle } from '@/src/hook/useMovie';
 
 export default function Explorer(props: ExplorerProps) {
 
@@ -23,16 +23,15 @@ export default function Explorer(props: ExplorerProps) {
     } = props;
 
     const {
-        category,
+        title,
         genre,
-        actorId,
     } = useLocalSearchParams<ExplorerLocalSearchParams>();
 
     const [data, setData] = useState<Movie[] | null>(null);
 
     useEffect(() => {
         (async () => {
-            const data = await getMoviesByCategory(category, genre, actorId);
+            const data = await getMoviesByTitle(title, genre);
 
             setData(data);
         })();
