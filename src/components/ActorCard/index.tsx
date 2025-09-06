@@ -6,7 +6,7 @@ import {
 import { ActorCardProps } from './types';
 import { styles } from './styles';
 import { ActorName } from '../ActorName';
-import { getActorCardBorderValue } from '@/src/helpers/getActorCardBorderValue';
+import { resolveActorCardStyle } from '@/src/helpers/resolveActorCardStyle';
 import { ActionDefaultOpacity } from '@/src/constants/Opacity';
 
 export const ActorCard = React.memo((props: ActorCardProps) => {
@@ -20,20 +20,14 @@ export const ActorCard = React.memo((props: ActorCardProps) => {
         fnActorCardPress,
     } = props;
 
-    const borderWidth = getActorCardBorderValue('borderWidth', withStroke);
-    const borderColor = getActorCardBorderValue('borderColor', withStroke);
-    const radius = getActorCardBorderValue('borderRadius', borderRadius);
+    const cardStyle = resolveActorCardStyle(withStroke, borderRadius);
 
     return (
         <TouchableOpacity
             onPress={fnActorCardPress}
             activeOpacity={ActionDefaultOpacity}
             style={
-                [styles.card, {
-                    borderWidth,
-                    borderColor,
-                    borderRadius: radius,
-                }]}
+                [styles.card, cardStyle]}
         >
             <Image
                 style={styles.avatar}
