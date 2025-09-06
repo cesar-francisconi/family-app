@@ -1,9 +1,11 @@
-import { CategoryParam, MovieGenreType } from "@/movie";
+import {
+    TitleParam,
+    MovieGenreType,
+} from "@/movie";
 
 export type ExplorerLocalSearchParams = {
-    category: CategoryParam;
+    title: TitleParam;
     genre: MovieGenreType;
-    actorId: string;
 };
 
 export interface ExplorerProps {
