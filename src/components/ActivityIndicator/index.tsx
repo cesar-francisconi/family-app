@@ -5,8 +5,7 @@ import {
 } from 'react-native';
 import { ActivityIndicatorProps } from './types';
 import { styles } from './styles';
-import { getActivityIndicatorColor } from '@/src/helpers/getActivityIndicatorColor';
-import { getActivityIndicatorSize } from '@/src/helpers/getActivityIndicatorSize';
+import { resolveActivityIndicatorStyle } from '@/src/helpers/resolveActivityIndicatorStyle';
 
 export const ActivityIndicator = React.memo((props: ActivityIndicatorProps) => {
 
@@ -15,12 +14,11 @@ export const ActivityIndicator = React.memo((props: ActivityIndicatorProps) => {
         size = 'large',
     } = props;
 
-    const indicatorColor = getActivityIndicatorColor(color);
-    const indicatorSize = getActivityIndicatorSize(size);
+    const indicatorStyle = resolveActivityIndicatorStyle(color, size);
 
     return (
         <View style={styles.container}>
-            <AIndicator color={indicatorColor} size={indicatorSize} />
+            <AIndicator color={indicatorStyle.color} size={indicatorStyle.size} />
         </View>
     );
 });
