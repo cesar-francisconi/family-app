@@ -1,7 +1,7 @@
 export type GenderType = 'masculino' | 'feminino' | 'outro';
 export type MovieGenreType = string;
 
-export type CategoryParam = string;
+export type TitleParam = string;
 
 export interface CastMember {
     id: string;
@@ -52,6 +52,7 @@ export interface Movie {
     category: string;
     director: string;
     genre: MovieGenreType[]; // gêneros como "ficção científica", "aventura", etc.
+    mainGenre: MovieGenreType; // gêneros como "ficção científica", "aventura", etc.
     cast: CastMember[];
     comments: Comment[];
 };
