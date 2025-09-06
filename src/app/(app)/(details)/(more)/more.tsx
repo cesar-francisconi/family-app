@@ -74,7 +74,7 @@ export default function More(props: MoreProps) {
                 />
 
                 <Cast
-                    data={movie.cast}
+                    actors={movie.cast}
                     title='Elenco'
                 />
             </View>
