@@ -49,7 +49,7 @@ export const setLoggedInUser = async () => {
         const data = userSnap.data() as User;
 
         if (!data) {
-            console.error(`Usuário com ID ${uid} não encontrado.`);
+            console.log(`[DEBUG] Usuário com ID ${uid} não encontrado.`);
             return null;
         }
 
@@ -88,7 +88,7 @@ export const addToMyList = async (movieId: string) => {
         const data = userSnap.data();
 
         if (!data) {
-            console.error(`Usuário com ID ${uid} não encontrado.`);
+            console.log(`[DEBUG] Usuário com ID ${uid} não encontrado.`);
             return;
         }
 
@@ -120,7 +120,7 @@ export const removeFromMyList = async (MOVIEID: string) => {
         const data = userSnap.data();
 
         if (!data) {
-            console.error(`Usuário com ID ${uid} não encontrado.`);
+            console.log(`[DEBUG] Usuário com ID ${uid} não encontrado.`);
             return;
         }
 
@@ -153,7 +153,7 @@ export const getMyList = async () => {
     const data = userSnap.data() as User;
 
     if (!data) {
-        console.error(`User com ID ${uid} não encontrado.`);
+        console.log(`[DEBUG] User com ID ${uid} não encontrado.`);
         return null;
     }
 
@@ -190,7 +190,7 @@ export const addToLikedMovies = async (movieId: string) => {
         const data = userSnap.data();
 
         if (!data) {
-            console.error(`Usuário com ID ${uid} não encontrado.`);
+            console.log(`[DEBUG] Usuário com ID ${uid} não encontrado.`);
             return;
         }
 
@@ -222,7 +222,7 @@ export const removeFromLikedMovies = async (MOVIEID: string) => {
         const data = userSnap.data();
 
         if (!data) {
-            console.error(`Usuário com ID ${uid} não encontrado.`);
+            console.log(`[DEBUG] Usuário com ID ${uid} não encontrado.`);
             return;
         }
 
@@ -255,7 +255,7 @@ export const getMoviesYouLiked = async () => {
     const data = userSnap.data() as User;
 
     if (!data) {
-        console.error(`User com ID ${uid} não encontrado.`);
+        console.log(`[DEBUG] User com ID ${uid} não encontrado.`);
         return null;
     }
 
@@ -292,7 +292,7 @@ export const setUserSearchHistory = async (search: string) => {
     const data = userSnap.data();
 
     if (!data) {
-        console.error(`User com ID ${uid} não encontrado.`);
+        console.log(`[DEBUG] User com ID ${uid} não encontrado.`);
         return;
     };
 
