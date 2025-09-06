@@ -53,6 +53,7 @@ import { usePathName } from '@/src/hook/usePathname';
 import { formatArrayToString } from '@/src/helpers/formatArraytoString';
 import { TouchableOpacity } from '@gorhom/bottom-sheet';
 import { screenWidth } from '@/src/constants/ScreenDimensions';
+import { SimilarContentMovieCardCarousel } from '@/src/components/SimilarContentMovieCardCarousel';
 
 export const detailsMovieCardHeight = 216;
 
@@ -316,9 +317,9 @@ export default function Details(props: DetailsProps) {
                     <ActivityIndicator />
                 )
                     :
-                    (<MovieCardCarousel
+                    (<SimilarContentMovieCardCarousel
+                        title='Conteúdos similares'
                         movies={similarContentMovies}
-                        category='Conteúdos similares'
                     />)}
             </ScrollView>
 
