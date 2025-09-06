@@ -1,21 +1,15 @@
-import React, {
-    useMemo
-} from "react";
+import React from "react";
 import {
     Text,
     TouchableOpacity,
     View,
 } from "react-native";
 import { styles } from "./styles";
-import { getButtonToken } from "@/src/helpers/getButtonToken";
 import { IconProps } from "../Icon/types";
 import { ActivityIndicator } from "../ActivityIndicator";
-import { getButtonBackgroundColor } from "@/src/helpers/getButtonBackgroundColor";
-import { getButtonTextColor } from "@/src/helpers/getButtonTextColor";
-import { getButtonIconSize } from "@/src/helpers/getButtonIconSize";
-import { extractButtonStyle } from "@/src/helpers/extractButtonStyle";
 import { ActionDefaultOpacity } from "@/src/constants/Opacity";
 import { ButtonPropsExtended } from "./types";
+import { useButtonStyles } from "@/src/hook/useButtonStyles";
 
 export const Button = React.memo((props: ButtonPropsExtended) => {
 
@@ -23,23 +17,11 @@ export const Button = React.memo((props: ButtonPropsExtended) => {
         title,
         leftIcon,
         rightIcon,
-        disabled,
-        size = 'medium',
         isLoading = false,
     } = props;
 
-    const token = useMemo(() => getButtonToken({
-        type: props.type,
-        variant: props.variant,
-        size: props.size,
-        borderRadius: props.borderRadius,
-    }), [props.type, props.variant, props.size, props.borderRadius]);
-
-    const { background, border, text } = extractButtonStyle(token);
-
-    const backgroundColor = getButtonBackgroundColor(disabled, background);;
-    const textColor = getButtonTextColor(disabled, text);
-    const iconSize = getButtonIconSize(size);
+    const { background, border, text, backgroundColor, textColor, iconSize } =
+        useButtonStyles(props);
 
     return (
         <TouchableOpacity
