@@ -2,27 +2,23 @@ import { HeaderGlobalSearchParams } from "../components/Header/types";
 import { setHeaderOptions } from "./setHeaderOptions";
 
 interface GetHeaderOptionsProps {
-    params: HeaderGlobalSearchParams;
+    headerGlobalSearchParams: HeaderGlobalSearchParams;
 };
 
-export function getHeaderOptions({ params }: GetHeaderOptionsProps) {
+export function getHeaderOptions({ headerGlobalSearchParams }: GetHeaderOptionsProps) {
     const {
-        category,
-        actorName,
+        title,
         transparentBackground,
         withBottomStroke,
-        withHeaderActions,
         withHeaderLeft,
         withHeaderRight,
         headerRightOptions,
         pointerEvents,
     } = setHeaderOptions({
         signIn: {
-            category: '',
-            actorName: '',
+            title: '',
             transparentBackground: false,
             withBottomStroke: false,
-            withHeaderActions: false,
             withHeaderLeft: false,
             withHeaderRight: false,
             headerRightOptions: {
@@ -33,11 +29,9 @@ export function getHeaderOptions({ params }: GetHeaderOptionsProps) {
             pointerEvents: 'auto',
         },
         signUp: {
-            category: '',
-            actorName: '',
+            title: '',
             transparentBackground: false,
             withBottomStroke: true,
-            withHeaderActions: true,
             withHeaderLeft: true,
             withHeaderRight: false,
             headerRightOptions: {
@@ -48,11 +42,9 @@ export function getHeaderOptions({ params }: GetHeaderOptionsProps) {
             pointerEvents: 'auto',
         },
         resetPassword: {
-            category: '',
-            actorName: '',
+            title: '',
             transparentBackground: false,
             withBottomStroke: true,
-            withHeaderActions: true,
             withHeaderLeft: true,
             withHeaderRight: false,
             headerRightOptions: {
@@ -63,11 +55,9 @@ export function getHeaderOptions({ params }: GetHeaderOptionsProps) {
             pointerEvents: 'auto',
         },
         home: {
-            category: '',
-            actorName: '',
+            title: '',
             transparentBackground: true,
             withBottomStroke: false,
-            withHeaderActions: true,
             withHeaderLeft: false,
             withHeaderRight: true,
             headerRightOptions: {
@@ -78,11 +68,9 @@ export function getHeaderOptions({ params }: GetHeaderOptionsProps) {
             pointerEvents: 'auto',
         },
         categories: {
-            category: 'Categorias',
-            actorName: '',
+            title: 'Categorias',
             transparentBackground: false,
             withBottomStroke: true,
-            withHeaderActions: true,
             withHeaderLeft: false,
             withHeaderRight: true,
             headerRightOptions: {
@@ -93,11 +81,9 @@ export function getHeaderOptions({ params }: GetHeaderOptionsProps) {
             pointerEvents: 'auto',
         },
         me: {
-            category: 'Eu',
-            actorName: '',
+            title: 'Eu',
             transparentBackground: false,
             withBottomStroke: true,
-            withHeaderActions: true,
             withHeaderLeft: false,
             withHeaderRight: true,
             headerRightOptions: {
@@ -108,11 +94,9 @@ export function getHeaderOptions({ params }: GetHeaderOptionsProps) {
             pointerEvents: 'auto',
         },
         search: {
-            category: '',
-            actorName: '',
+            title: '',
             transparentBackground: false,
             withBottomStroke: false,
-            withHeaderActions: true,
             withHeaderLeft: true,
             withHeaderRight: true,
             headerRightOptions: {
@@ -123,11 +107,35 @@ export function getHeaderOptions({ params }: GetHeaderOptionsProps) {
             pointerEvents: 'auto',
         },
         explorer: {
-            category: params.category,
-            actorName: params?.actorName,
+            title: headerGlobalSearchParams.title,
             transparentBackground: false,
             withBottomStroke: true,
-            withHeaderActions: true,
+            withHeaderLeft: true,
+            withHeaderRight: true,
+            headerRightOptions: {
+                withFirstAction: true,
+                withSecondAction: true,
+                withTertiaryAction: true,
+            },
+            pointerEvents: 'auto',
+        },
+        similarContentExplorer: {
+            title: 'Conteúdos similares',
+            transparentBackground: false,
+            withBottomStroke: true,
+            withHeaderLeft: true,
+            withHeaderRight: true,
+            headerRightOptions: {
+                withFirstAction: true,
+                withSecondAction: true,
+                withTertiaryAction: true,
+            },
+            pointerEvents: 'auto',
+        },
+        actorExplorer: {
+            title: headerGlobalSearchParams.title,
+            transparentBackground: false,
+            withBottomStroke: true,
             withHeaderLeft: true,
             withHeaderRight: true,
             headerRightOptions: {
@@ -138,11 +146,9 @@ export function getHeaderOptions({ params }: GetHeaderOptionsProps) {
             pointerEvents: 'auto',
         },
         details: {
-            category: '',
-            actorName: '',
+            title: '',
             transparentBackground: false,
             withBottomStroke: false,
-            withHeaderActions: true,
             withHeaderLeft: true,
             withHeaderRight: true,
             headerRightOptions: {
@@ -153,11 +159,9 @@ export function getHeaderOptions({ params }: GetHeaderOptionsProps) {
             pointerEvents: 'auto',
         },
         actorDetails: {
-            category: params?.actorName,
-            actorName: '',
+            title: headerGlobalSearchParams?.actorName,
             transparentBackground: false,
             withBottomStroke: false,
-            withHeaderActions: true,
             withHeaderLeft: true,
             withHeaderRight: true,
             headerRightOptions: {
@@ -168,11 +172,9 @@ export function getHeaderOptions({ params }: GetHeaderOptionsProps) {
             pointerEvents: 'auto',
         },
         moviesYouLiked: {
-            category: 'Você curtiu',
-            actorName: '',
+            title: 'Você curtiu',
             transparentBackground: false,
             withBottomStroke: true,
-            withHeaderActions: true,
             withHeaderLeft: true,
             withHeaderRight: true,
             headerRightOptions: {
@@ -183,11 +185,9 @@ export function getHeaderOptions({ params }: GetHeaderOptionsProps) {
             pointerEvents: 'auto',
         },
         myList: {
-            category: 'Minha lista',
-            actorName: '',
+            title: 'Minha lista',
             transparentBackground: false,
             withBottomStroke: true,
-            withHeaderActions: true,
             withHeaderLeft: true,
             withHeaderRight: true,
             headerRightOptions: {
@@ -198,11 +198,9 @@ export function getHeaderOptions({ params }: GetHeaderOptionsProps) {
             pointerEvents: 'auto',
         },
         account: {
-            category: 'Conta',
-            actorName: '',
+            title: 'Conta',
             transparentBackground: false,
             withBottomStroke: false,
-            withHeaderActions: true,
             withHeaderLeft: true,
             withHeaderRight: false,
             headerRightOptions: {
@@ -213,11 +211,9 @@ export function getHeaderOptions({ params }: GetHeaderOptionsProps) {
             pointerEvents: 'auto',
         },
         passwordChange: {
-            category: 'Alterar senha',
-            actorName: '',
+            title: 'Alterar senha',
             transparentBackground: false,
             withBottomStroke: false,
-            withHeaderActions: true,
             withHeaderLeft: true,
             withHeaderRight: false,
             headerRightOptions: {
@@ -228,11 +224,9 @@ export function getHeaderOptions({ params }: GetHeaderOptionsProps) {
             pointerEvents: 'auto',
         },
         deleteUser: {
-            category: 'Excluir conta',
-            actorName: '',
+            title: 'Excluir conta',
             transparentBackground: false,
             withBottomStroke: false,
-            withHeaderActions: true,
             withHeaderLeft: true,
             withHeaderRight: false,
             headerRightOptions: {
@@ -243,11 +237,9 @@ export function getHeaderOptions({ params }: GetHeaderOptionsProps) {
             pointerEvents: 'auto',
         },
         emailChange: {
-            category: 'Alterar o e-mail da conta',
-            actorName: '',
+            title: 'Alterar o e-mail da conta',
             transparentBackground: false,
             withBottomStroke: false,
-            withHeaderActions: true,
             withHeaderLeft: true,
             withHeaderRight: false,
             headerRightOptions: {
@@ -258,11 +250,9 @@ export function getHeaderOptions({ params }: GetHeaderOptionsProps) {
             pointerEvents: 'auto',
         },
         usernameChange: {
-            category: 'Alterar usuário',
-            actorName: '',
+            title: 'Alterar usuário',
             transparentBackground: false,
             withBottomStroke: false,
-            withHeaderActions: true,
             withHeaderLeft: true,
             withHeaderRight: false,
             headerRightOptions: {
@@ -275,11 +265,9 @@ export function getHeaderOptions({ params }: GetHeaderOptionsProps) {
     });
 
     return {
-        category,
-        actorName,
+        title,
         transparentBackground,
         withBottomStroke,
-        withHeaderActions,
         withHeaderLeft,
         withHeaderRight,
         headerRightOptions,
