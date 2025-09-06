@@ -58,6 +58,20 @@ export default function RootLayoutNav() {
         />
 
         <Stack.Screen
+          name="similarContentExplorer"
+          options={{
+
+          }}
+        />
+
+        <Stack.Screen
+          name="actorExplorer"
+          options={{
+
+          }}
+        />
+
+        <Stack.Screen
           name="account"
           options={{
 
