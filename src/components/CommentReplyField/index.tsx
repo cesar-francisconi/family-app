@@ -5,8 +5,6 @@ import {
 import {
     forwardRef,
     memo,
-    useCallback,
-    useMemo,
     useState,
 } from 'react';
 import { styles } from './styles';
