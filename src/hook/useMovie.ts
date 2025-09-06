@@ -129,29 +129,24 @@ export const getMoviesForMovieCardCarouselGroup = async (titles: TitleParam[]) =
 
     const hasNull = results.some((group) => group === null);
 
-    return hasNull ? null : results as { id: string; category: string; movies: Movie[] }[];
+    return hasNull ? null : results as { id: string; title: TitleParam; movies: Movie[] }[];
 };
 
-export const getMoviesByCategory = async (
-    category: CategoryParam,
+export const getMoviesByTitle = async (
+    title: TitleParam,
     genre: MovieGenreType,
-    actorId: string,
 ) => {
     const movies = await getAllMovies();
 
     if (!movies) return null;
 
-    if (category === 'Todos') {
+    if (title === 'Todos') {
         return movies;
-    }
-
-    if (category === 'Filmes com' && actorId) {
-        return await getActorMoviesById(actorId);
-    }
+    };
 
     if (genre) {
         return await getMoviesByGenre(genre);
-    }
+    };
 
     return [];
 };
