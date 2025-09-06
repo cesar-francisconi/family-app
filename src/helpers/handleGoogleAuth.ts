@@ -129,7 +129,7 @@ export const handleGoogleAuth = async (mode: GoogleAuthMode) => {
         } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
             console.log("Google Play Services não está disponível");
         } else {
-            console.error("Erro no login/cadastro com Google:", error);
+            console.log("[DEBUG] Erro no login/cadastro com Google:", error);
         }
     }
 };
