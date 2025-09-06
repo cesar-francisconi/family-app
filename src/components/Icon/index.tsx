@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import {
     iconMap,
     IconFontName,
@@ -6,8 +6,9 @@ import {
     glyphMap,
 } from "./types";
 import { Colors } from "@/src/constants/Colors";
+import { resolveIconSize } from "@/src/helpers/resolveIconSize";
 
-export function Icon<K extends IconFontName>(props: IconProps<K>): React.ReactNode {
+function IconBase<K extends IconFontName>(props: IconProps<K>): React.ReactNode {
 
     const {
         name,
@@ -22,19 +23,13 @@ export function Icon<K extends IconFontName>(props: IconProps<K>): React.ReactNo
         color?: string;
     }>;
 
-    const sizeMap = {
-        extraLarge: 86,
-        large: 38,
-        medium: 24,
-        small: 18,
-        extraSmall: 14,
-    } as const;
-
-    const resolvedSize = sizeMap[size] ?? sizeMap.large;
+    const resolvedSize = resolveIconSize(size);
 
     return <IconComponent
         name={icon}
         size={resolvedSize}
         color={color}
     />;
-}
+};
+
+export const Icon = memo(IconBase);
