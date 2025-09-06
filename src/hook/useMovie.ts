@@ -71,7 +71,7 @@ export const getAllMovies = async (): Promise<Movie[] | null> => {
             } as Movie;
         });
     } catch (error) {
-        console.error("[DEBUG] Erro ao buscar todos os filmes:", error);
+        console.log("[DEBUG] Erro ao buscar todos os filmes:", error);
 
         Toast.show({
             type: 'customError',
@@ -387,7 +387,7 @@ export const toggleCommentLikeForUser = async (
     const data = movieSnap.data();
 
     if (!data) {
-        console.error(`Filme com ID ${currentMovieId} não encontrado.`);
+        console.log(`Filme com ID ${currentMovieId} não encontrado.`);
         return;
     };
 
@@ -465,7 +465,7 @@ export const toggleAnswerLikeForUser = async (
     const data = movieSnap.data();
 
     if (!data) {
-        console.error(`Filme com ID ${currentMovieId} não encontrado.`);
+        console.log(`Filme com ID ${currentMovieId} não encontrado.`);
         return;
     };
 
@@ -543,7 +543,7 @@ export const toggleCommentDislikeForUser = async (
     const data = movieSnap.data();
 
     if (!data) {
-        console.error(`Filme com ID ${currentMovieId} não encontrado.`);
+        console.log(`Filme com ID ${currentMovieId} não encontrado.`);
         return;
     };
 
@@ -622,7 +622,7 @@ export const toggleAnswerDislikeForUser = async (
     const data = movieSnap.data();
 
     if (!data) {
-        console.error(`Filme com ID ${currentMovieId} não encontrado.`);
+        console.log(`Filme com ID ${currentMovieId} não encontrado.`);
         return;
     };
 
@@ -731,7 +731,7 @@ export const changeCommentById = async (
     const data = movieSnap.data();
 
     if (!data) {
-        console.error(`Filme com ID ${currentMovieId} não encontrado.`);
+        console.log(`Filme com ID ${currentMovieId} não encontrado.`);
         return;
     };
 
@@ -794,7 +794,7 @@ export const changeAnswerById = async (
     const data = movieSnap.data();
 
     if (!data) {
-        console.error(`Filme com ID ${currentMovieId} não encontrado.`);
+        console.log(`Filme com ID ${currentMovieId} não encontrado.`);
         return;
     };
 
@@ -860,7 +860,7 @@ export const setComment = async (
     const data = movieSnap.data();
 
     if (!data) {
-        console.error(`Filme com ID ${movieId} não encontrado.`);
+        console.log(`Filme com ID ${movieId} não encontrado.`);
         return;
     }
 
@@ -923,7 +923,7 @@ export const setAnswer = async (
     const data = movieSnap.data();
 
     if (!data) {
-        console.error(`Filme com ID ${movieId} não encontrado.`);
+        console.log(`Filme com ID ${movieId} não encontrado.`);
         return;
     };
 
@@ -970,7 +970,7 @@ export const removeCommentById = async () => {
     const data = movieSnap.data();
 
     if (!data) {
-        console.error(`Filme com ID ${currentMovieId} não encontrado.`);
+        console.log(`Filme com ID ${currentMovieId} não encontrado.`);
         return;
     };
 
@@ -1017,7 +1017,7 @@ export const removeAnswerById = async () => {
     const data = movieSnap.data();
 
     if (!data) {
-        console.error(`Filme com ID ${currentMovieId} não encontrado.`);
+        console.log(`Filme com ID ${currentMovieId} não encontrado.`);
         return;
     };
 
