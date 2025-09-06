@@ -10,7 +10,7 @@ import { styles } from './styles';
 import {
     ActorMovieCardCarouselProps,
 } from './types';
-import { maxVisibleMovies } from '@/src/constants/defautConfig';
+import { maxVisibleMovies } from '@/src/constants/DefautConfig';
 import { useActorMovieCardCarouselNavigation } from '@/src/hook/useActorMovieCardCarouselNavigation';
 
 export const ActorMovieCardCarousel = React.memo((props: ActorMovieCardCarouselProps) => {
