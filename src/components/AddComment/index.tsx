@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import { styles } from './styles';
 import { AddCommentProps } from './types';
-import { getAddCommentBorderRadius } from '@/src/helpers/getAddCommentBorderRadius';
+import { resolveAddCommentBorderRadius } from '@/src/helpers/resolveAddCommentBorderRadius';
 import { ActionDefaultOpacity } from '@/src/constants/Opacity';
 
 export const addCommentHeight = 36;
@@ -17,7 +17,7 @@ export function AddComment(props: AddCommentProps) {
         fnAddCommentPress,
     } = props;
 
-    const radius = getAddCommentBorderRadius(borderRadius);
+    const radius = resolveAddCommentBorderRadius(borderRadius);
 
     return (
         <TouchableOpacity
