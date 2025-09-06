@@ -97,7 +97,6 @@ export const submitCommentOrAnswer = async (props: SubmitCommentOrAnswerProps) =
         await setComment(movieId, {
             username,
             avatar,
-            background,
             userId,
             comment: inputValue,
         });
@@ -105,7 +104,6 @@ export const submitCommentOrAnswer = async (props: SubmitCommentOrAnswerProps) =
         await setAnswer(movieId, {
             username,
             avatar,
-            background,
             userId,
             answer: inputValue,
         });
