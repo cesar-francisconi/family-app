@@ -7,9 +7,7 @@ import {
 import { styles } from './styles';
 import { ChipProps } from './types';
 import { ActionDefaultOpacity } from '@/src/constants/Opacity';
-import { resolveChipBorderRadius } from '@/src/helpers/resolveChipBorderRadius';
-import { resolveChipBackgroundColor } from '@/src/helpers/resolveChipBackgroundColor';
-import { resolveChipTextColor } from '@/src/helpers/resolveChipTextColor';
+import { resolveChipStyle } from '@/src/helpers/resolveChipStyle';
 
 export const Chip = React.memo((props: ChipProps & Pick<TouchableOpacityProps, 'onLayout'>) => {
 
@@ -22,9 +20,7 @@ export const Chip = React.memo((props: ChipProps & Pick<TouchableOpacityProps, '
         onLayout,
     } = props;
 
-    const radius = resolveChipBorderRadius(borderRadius);
-    const backgroundColor = resolveChipBackgroundColor(isActive);
-    const color = resolveChipTextColor(isActive);
+    const { radius, backgroundColor, color } = resolveChipStyle({ isActive, borderRadius });
 
     return (
         <TouchableOpacity
