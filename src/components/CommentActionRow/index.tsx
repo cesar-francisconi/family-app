@@ -7,8 +7,8 @@ import { styles } from './styles';
 import { CommentActionRowProps } from './types';
 import { AddCommentWithAvatar } from '../AddCommentWithAvatar';
 import { getCurrentMovieComments } from '@/src/hook/useMovie';
-import { getCommentActionRowBorderRadiusValue } from '@/src/helpers/getCommentActionRowBorderRadiusValue';
 import { ActionDefaultOpacity } from '@/src/constants/Opacity';
+import { resolveCommentActionRowStyle } from '@/src/helpers/resolveCommentActionRowStyle';
 
 export function CommentActionRow(props: CommentActionRowProps) {
 
@@ -24,18 +24,13 @@ export function CommentActionRow(props: CommentActionRowProps) {
 
     const commentCount = getCurrentMovieComments().length;
 
-    const radius = getCommentActionRowBorderRadiusValue(borderRadius);
-
-    const resolveBorderWidth = withStroke ? 1 : undefined;
+    const containerStyle = resolveCommentActionRowStyle(borderRadius, withStroke);
 
     return (
         <TouchableOpacity
             onPress={fnCommentActionRowPress}
             activeOpacity={ActionDefaultOpacity}
-            style={[styles.container, {
-                borderRadius: radius,
-                borderWidth: resolveBorderWidth,
-            }]}
+            style={[styles.container, containerStyle]}
         >
             {withTitle && (<View style={styles.header}>
                 <Text style={[styles.text, styles.title]} numberOfLines={1}>
