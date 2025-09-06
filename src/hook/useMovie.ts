@@ -294,15 +294,21 @@ export const filterMovies = async ({ actor, genre, year, order }: FilterMoviesSt
 };
 
 
-export const getMoviesByGenre = async (genre: MovieGenreType): Promise<Movie[] | null> => {
+export const getMoviesByGenre = async (mainGenre: Movie['mainGenre']): Promise<Movie[] | null> => {
     const movies = await getAllMovies();
-
     if (!movies) return null;
 
-    const filteredMovies = movies.filter((movie) => genre === movie.genre[0]);
+    const filteredMovies = movies.filter(
+        (movie) => movie.mainGenre.toLowerCase().trim() === mainGenre.toLowerCase().trim()
+    );
+
+    if (filteredMovies.length === 0) {
+        console.log(`[DEBUG] Nenhum filme encontrado para o gênero: "${mainGenre}"`);
+        return null;
+    }
 
     return filteredMovies;
-}
+};
 
 export const getMovieById = async (id: string) => {
     const db = getFirestore();
