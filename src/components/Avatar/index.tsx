@@ -8,9 +8,8 @@ import {
 } from './types';
 import { styles } from './styles';
 import { getAvatarBackgroundColor } from '@/src/helpers/getAvatarBackgroundColor';
-import { resolveAvatarBorderWidth } from '@/src/helpers/resolveAvatarBorderWidth';
 import { getAvatarInitialFont } from '@/src/helpers/getAvatarInitialFont';
-import { getAvatarDimension } from '@/src/helpers/getAvatarDimension';
+import { resolveAvatarStyle } from '@/src/helpers/resolveAvatarStyle';
 import React from 'react';
 
 export const Avatar = React.memo((props: AvatarProps) => {
@@ -24,9 +23,7 @@ export const Avatar = React.memo((props: AvatarProps) => {
     } = props;
 
     const avatarInitialFont = getAvatarInitialFont(size);
-    const width = getAvatarDimension(size);
-    const height = getAvatarDimension(size);
-    const borderWidth = resolveAvatarBorderWidth(withStroke);
+    const { width, height, borderWidth } = resolveAvatarStyle(size, withStroke);
 
     return (
         <View
