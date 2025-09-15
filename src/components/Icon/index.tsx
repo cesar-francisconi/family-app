@@ -32,4 +32,6 @@ function IconBase<K extends IconFontName>(props: IconProps<K>): React.ReactNode 
     />;
 };
 
-export const Icon = memo(IconBase);
+export const Icon = memo(IconBase) as <K extends IconFontName>(
+    props: IconProps<K>
+) => React.ReactNode;
