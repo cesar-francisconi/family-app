@@ -1,3 +1,4 @@
+import React from 'react';
 import {
     Text,
     View,
@@ -5,7 +6,7 @@ import {
 import { styles } from './styles';
 import { WelcomeProps } from './types';
 
-export function Welcome(props: WelcomeProps) {
+export const Welcome = React.memo((props: WelcomeProps) => {
 
     const { title, description } = props;
 
@@ -24,5 +25,5 @@ export function Welcome(props: WelcomeProps) {
             </Text>
         </View>
     );
-}
+});
 
