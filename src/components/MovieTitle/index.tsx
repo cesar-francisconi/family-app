@@ -1,3 +1,4 @@
+import React from 'react';
 import {
     Text,
     View,
@@ -9,7 +10,7 @@ import { Colors } from '@/src/constants/Colors';
 import { formatDuration } from '@/src/helpers/formatDuration';
 import { formatDate } from '@/src/helpers/formatDate';
 
-export function MovieTitle(props: MovieTitleProps) {
+export const MovieTitle = React.memo((props: MovieTitleProps) => {
 
     const {
         title,
@@ -63,5 +64,5 @@ export function MovieTitle(props: MovieTitleProps) {
             </View>}
         </View>
     );
-}
+});
 
