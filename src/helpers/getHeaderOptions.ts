@@ -61,7 +61,7 @@ export function getHeaderOptions({ headerGlobalSearchParams }: GetHeaderOptionsP
             withHeaderLeft: false,
             withHeaderRight: true,
             headerRightOptions: {
-                withFirstAction: true,
+                withFirstAction: false,
                 withSecondAction: true,
                 withTertiaryAction: true,
             },
@@ -74,7 +74,7 @@ export function getHeaderOptions({ headerGlobalSearchParams }: GetHeaderOptionsP
             withHeaderLeft: false,
             withHeaderRight: true,
             headerRightOptions: {
-                withFirstAction: true,
+                withFirstAction: false,
                 withSecondAction: true,
                 withTertiaryAction: true,
             },
@@ -87,7 +87,7 @@ export function getHeaderOptions({ headerGlobalSearchParams }: GetHeaderOptionsP
             withHeaderLeft: false,
             withHeaderRight: true,
             headerRightOptions: {
-                withFirstAction: true,
+                withFirstAction: false,
                 withSecondAction: true,
                 withTertiaryAction: true,
             },
@@ -100,7 +100,7 @@ export function getHeaderOptions({ headerGlobalSearchParams }: GetHeaderOptionsP
             withHeaderLeft: true,
             withHeaderRight: true,
             headerRightOptions: {
-                withFirstAction: true,
+                withFirstAction: false,
                 withSecondAction: true,
                 withTertiaryAction: false,
             },
@@ -113,7 +113,7 @@ export function getHeaderOptions({ headerGlobalSearchParams }: GetHeaderOptionsP
             withHeaderLeft: true,
             withHeaderRight: true,
             headerRightOptions: {
-                withFirstAction: true,
+                withFirstAction: false,
                 withSecondAction: true,
                 withTertiaryAction: true,
             },
@@ -126,7 +126,7 @@ export function getHeaderOptions({ headerGlobalSearchParams }: GetHeaderOptionsP
             withHeaderLeft: true,
             withHeaderRight: true,
             headerRightOptions: {
-                withFirstAction: true,
+                withFirstAction: false,
                 withSecondAction: true,
                 withTertiaryAction: true,
             },
@@ -139,7 +139,7 @@ export function getHeaderOptions({ headerGlobalSearchParams }: GetHeaderOptionsP
             withHeaderLeft: true,
             withHeaderRight: true,
             headerRightOptions: {
-                withFirstAction: true,
+                withFirstAction: false,
                 withSecondAction: true,
                 withTertiaryAction: true,
             },
@@ -152,7 +152,7 @@ export function getHeaderOptions({ headerGlobalSearchParams }: GetHeaderOptionsP
             withHeaderLeft: true,
             withHeaderRight: true,
             headerRightOptions: {
-                withFirstAction: true,
+                withFirstAction: false,
                 withSecondAction: true,
                 withTertiaryAction: true,
             },
@@ -165,7 +165,7 @@ export function getHeaderOptions({ headerGlobalSearchParams }: GetHeaderOptionsP
             withHeaderLeft: true,
             withHeaderRight: true,
             headerRightOptions: {
-                withFirstAction: true,
+                withFirstAction: false,
                 withSecondAction: true,
                 withTertiaryAction: true,
             },
@@ -178,7 +178,7 @@ export function getHeaderOptions({ headerGlobalSearchParams }: GetHeaderOptionsP
             withHeaderLeft: true,
             withHeaderRight: true,
             headerRightOptions: {
-                withFirstAction: true,
+                withFirstAction: false,
                 withSecondAction: true,
                 withTertiaryAction: true,
             },
@@ -191,7 +191,7 @@ export function getHeaderOptions({ headerGlobalSearchParams }: GetHeaderOptionsP
             withHeaderLeft: true,
             withHeaderRight: true,
             headerRightOptions: {
-                withFirstAction: true,
+                withFirstAction: false,
                 withSecondAction: true,
                 withTertiaryAction: true,
             },
