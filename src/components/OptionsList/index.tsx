@@ -1,11 +1,10 @@
+import React from 'react';
 import {
     View,
 } from 'react-native';
 import { OptionsListProps } from './types';
-import React from 'react';
 import { styles } from './styles';
-import { Colors } from '@/src/constants/Colors';
-import { Spacing } from '@/src/constants/Spacing';
+import { resolveOptionsListStyle } from '@/src/helpers/resolveOptionsListStyle';
 
 export function OptionsList(props: OptionsListProps) {
 
@@ -15,22 +14,14 @@ export function OptionsList(props: OptionsListProps) {
         isBackground
     } = props;
 
-    const borderWidth = withStroke ? 1 : undefined;
-    const backgroundColor = isBackground ? Colors.surface.containerExtraHigh : undefined;
-    const paddingHorizontal = isBackground ? Spacing['2xl'] : Spacing['none'];
-
     return (
         <View
-            style={[styles.container, {
-                backgroundColor,
-                paddingHorizontal,
-                borderWidth,
-            }]}
+            style={[styles.container, resolveOptionsListStyle({ withStroke, isBackground })]}
         >
             {options.map((option, index) => {
                 return React.cloneElement(option, { key: index });
             })}
         </View>
     );
-}
+};
 
