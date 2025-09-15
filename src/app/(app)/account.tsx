@@ -1,10 +1,10 @@
-import { Icon } from '@/src/components/Icon';
 import { Option } from '@/src/components/Option';
 import { OptionsList } from '@/src/components/OptionsList';
+import { useIcon } from '@/src/hook/useIcon';
+import { usePush } from '@/src/hook/usePush';
 import { getLoggedInUserIsGoogleAccount } from '@/src/hook/useUser';
 import { styles } from '@/src/screen/Account/styles';
 import { AccountProps } from '@/src/screen/Account/types';
-import { useRouter } from 'expo-router';
 import {
     SafeAreaView,
 } from 'react-native';
@@ -13,7 +13,12 @@ export default function Account(props: AccountProps) {
 
     const { } = props;
 
-    const route = useRouter();
+    const pushUsernameChange = usePush({ href: '/usernameChange' });
+    const pushEmailChange = usePush({ href: '/emailChange' });
+    const pushPasswordChange = usePush({ href: '/passwordChange' });
+    const pushDeleteUser = usePush({ href: '/deleteUser' });
+
+    const entypoCHEVRONTHINRIGHT = useIcon({ name: 'Entypo', icon: 'chevron-thin-right' });
 
     const isGoogleAccount = getLoggedInUserIsGoogleAccount();
 
@@ -25,24 +30,14 @@ export default function Account(props: AccountProps) {
                 options={[
                     <Option
                         withStroke
-                        onPress={() => route.push('/usernameChange')}
+                        onPress={pushUsernameChange}
                         text='Alterar usuário'
-                        rightIcon={
-                            <Icon
-                                name='Entypo'
-                                icon='chevron-thin-right'
-                            />
-                        }
+                        rightIcon={entypoCHEVRONTHINRIGHT}
                     />,
                     <Option
-                        onPress={() => route.push('/deleteUser')}
+                        onPress={pushDeleteUser}
                         text='Excluir conta'
-                        rightIcon={
-                            <Icon
-                                name='Entypo'
-                                icon='chevron-thin-right'
-                            />
-                        }
+                        rightIcon={entypoCHEVRONTHINRIGHT}
                     />,
                 ]
                 }
@@ -54,46 +49,26 @@ export default function Account(props: AccountProps) {
                     options={[
                         <Option
                             withStroke
-                            onPress={() => route.push('/usernameChange')}
+                            onPress={pushUsernameChange}
                             text='Alterar usuário'
-                            rightIcon={
-                                <Icon
-                                    name='Entypo'
-                                    icon='chevron-thin-right'
-                                />
-                            }
+                            rightIcon={entypoCHEVRONTHINRIGHT}
                         />,
                         <Option
                             withStroke
-                            onPress={() => route.push('/emailChange')}
+                            onPress={pushEmailChange}
                             text='Alterar e-mail da conta'
-                            rightIcon={
-                                <Icon
-                                    name='Entypo'
-                                    icon='chevron-thin-right'
-                                />
-                            }
+                            rightIcon={entypoCHEVRONTHINRIGHT}
                         />,
                         <Option
                             withStroke
-                            onPress={() => route.push('/passwordChange')}
+                            onPress={pushPasswordChange}
                             text='Alterar senha'
-                            rightIcon={
-                                <Icon
-                                    name='Entypo'
-                                    icon='chevron-thin-right'
-                                />
-                            }
+                            rightIcon={entypoCHEVRONTHINRIGHT}
                         />,
                         <Option
-                            onPress={() => route.push('/deleteUser')}
+                            onPress={pushDeleteUser}
                             text='Excluir conta'
-                            rightIcon={
-                                <Icon
-                                    name='Entypo'
-                                    icon='chevron-thin-right'
-                                />
-                            }
+                            rightIcon={entypoCHEVRONTHINRIGHT}
                         />,
                     ]
                     }
