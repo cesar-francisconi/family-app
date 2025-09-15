@@ -1,4 +1,4 @@
-import { ButtonProps } from "../Button/types";
+import { ButtonPropsExtended } from "../Button/types";
 
 export type PlotProps = {
     title?: string;
@@ -7,6 +7,5 @@ export type PlotProps = {
     descriptionNumberOfLines?: number;
     description: string;
     withButton?: boolean;
-    buttonTitle?: ButtonProps['title'];
-    fnButton?: () => void;
+    buttonOptions?: Pick<ButtonPropsExtended, 'title' | 'onPress'>;
 };
