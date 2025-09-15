@@ -60,6 +60,20 @@ export default function SearchScreen(props: SearchProps) {
         return () => clearTimeout(timeout);
     }, []);
 
+    const {
+        control,
+        handleSubmit,
+        setValue,
+        watch,
+    } = useForm<FormDataSearch>({
+        defaultValues: {
+            search: "",
+        },
+        resolver: zodResolver(formSchemaSearch),
+    });
+
+    const searchValue = watch("search");
+
     useEffect(() => {
         if (trimmedInput === '') setIsReady(false);
     }, [searchInputValue]);
@@ -73,7 +87,10 @@ export default function SearchScreen(props: SearchProps) {
         setSearchInputValue(trimmedInput);
     };
 
-    const buttonDisabled = trimmedInput === '';
+    const buttonOptions = useMemo((): SearchComponentProps['buttonOptions'] => ({
+        title: 'Pesquisar',
+        onPress: handleSubmit(handleSearch),
+    }), [handleSubmit, handleSearch]);
 
     useEffect(() => {
         (async () => {
@@ -98,13 +115,11 @@ export default function SearchScreen(props: SearchProps) {
     return (
         <SafeAreaView style={styles.container}>
             <Search
+                control={control}
+                name='search'
                 ref={inputRef}
-                value={searchInputValue}
-                onChangeText={setSearchInputValue}
                 placeholder='Pesquise por um filme, gênero, e.t.c'
-                buttonTitle='Pesquisar'
-                buttonDisabled={buttonDisabled}
-                fnButton={handleSearch}
+                buttonOptions={buttonOptions}
             />
 
             <View
