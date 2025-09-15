@@ -1,3 +1,4 @@
+import React from 'react';
 import {
     Text,
     View,
@@ -5,7 +6,7 @@ import {
 import { styles } from './styles';
 import { InfoProps } from './types';
 
-export function Info(props: InfoProps) {
+export const Info = React.memo((props: InfoProps) => {
 
     const {
         prop,
@@ -28,5 +29,5 @@ export function Info(props: InfoProps) {
             </Text>
         </View>
     );
-}
+})
 
