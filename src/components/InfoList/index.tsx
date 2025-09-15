@@ -1,3 +1,4 @@
+import React from 'react';
 import {
     View,
 } from 'react-native';
@@ -5,7 +6,7 @@ import { styles } from './styles';
 import { InfoListProps } from './types';
 import { Info } from '../Info';
 
-export function InfoList(props: InfoListProps) {
+export const InfoList = React.memo((props: InfoListProps) => {
 
     const { infos } = props;
 
@@ -21,4 +22,4 @@ export function InfoList(props: InfoListProps) {
             })}
         </View>
     );
-}
+})
