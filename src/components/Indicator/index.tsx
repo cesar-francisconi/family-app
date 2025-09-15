@@ -1,7 +1,8 @@
+import React from "react";
 import { View } from "react-native";
 import { styles } from "./styles";
 
-export function Indicator() {
+export const Indicator = React.memo(() => {
 
     return (
         <View
@@ -10,7 +11,7 @@ export function Indicator() {
             <View
                 style={styles.indicator}
             />
-        </View>
+        </View >
     );
-}
+});
 
