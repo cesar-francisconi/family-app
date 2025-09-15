@@ -1,34 +1,17 @@
+import React from 'react';
 import { TouchableOpacity } from 'react-native';
-import { useRouter } from 'expo-router';
 import { Icon } from '../Icon';
 import { styles } from './styles';
-import {
-    AppRoutes,
-    usePathName,
-} from '@/src/hook/usePathname';
+import { useBackNavigation } from '@/src/hook/useBackNavigation';
+import { ActionDefaultOpacity } from '@/src/constants/Opacity';
 
-export function HeaderLeft() {
+export const HeaderLeft = React.memo(() => {
 
-    const router = useRouter();
-    const pathname = usePathName();
-    
-    const handleBack = () => {
-        const backTimes: Partial<Record<AppRoutes, number>> = {
-            '/more': 2,
-            '/comments': 2,
-            '/answers': 3,
-        };
-
-        const times = backTimes[pathname] ?? 1;
-
-        for (let i = 0; i < times; i++) {
-            router.back();
-        };
-    };
+    const { resolveBackNavigation } = useBackNavigation();
 
     return (
-        <TouchableOpacity activeOpacity={0.7} style={styles.container} onPress={handleBack}>
+        <TouchableOpacity activeOpacity={ActionDefaultOpacity} style={styles.container} onPress={resolveBackNavigation}>
             <Icon name="Entypo" icon="chevron-thin-left" size="medium" />
         </TouchableOpacity>
     );
-}
+});
