@@ -1,3 +1,4 @@
+import React from 'react';
 import {
     Text,
     View,
@@ -5,7 +6,7 @@ import {
 import { OrProps } from './types';
 import { styles } from './styles';
 
-export function Or(props: OrProps) {
+export const Or = React.memo((props: OrProps) => {
 
     const {
         withText = true,
@@ -24,5 +25,5 @@ export function Or(props: OrProps) {
             )}
         </View>
     );
-}
+});
 
