@@ -1,4 +1,4 @@
-export function formatArrayToString(value: string | string[]): string {
+export function formatArrayToString(value: string[]): string {
     const capitalize = (str: string) =>
         str.charAt(0).toUpperCase() + str.slice(1);
 
