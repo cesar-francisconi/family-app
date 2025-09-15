@@ -1,9 +1,9 @@
-import { useRef } from "react";
+import { useCallback, useRef } from "react";
 
 export const useDebounce = () => {
   const busy = useRef(false);
 
-  const debounce = async (callback: Function, bounceRate = 1000) => {
+  const debounce = useCallback((callback: Function, bounceRate = 1000) => {
     if (!busy.current) {
       busy.current = true;
       callback();
@@ -11,7 +11,7 @@ export const useDebounce = () => {
         busy.current = false;
       }, bounceRate);
     }
-  };
+  }, []);
 
   return { debounce };
 };
