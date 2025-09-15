@@ -14,6 +14,7 @@ import {
 import { useLocalSearchParams } from 'expo-router';
 import {
     useEffect,
+    useMemo,
     useState,
 } from 'react';
 import {
@@ -31,7 +32,7 @@ export default function ActorDetails(props: ActorDetailsProps) {
 
     const { } = props;
 
-    const [actor, setActor] = useState<CastMember | undefined>(undefined);
+    const [actor, setActor] = useState<CastMember | null>(null);
     const [actorMovies, setActorMovies] = useState<Movie[] | null>(null);
 
     const { actorId } = useLocalSearchParams<ActorDetailsLocalSearchParams>();
@@ -49,18 +50,18 @@ export default function ActorDetails(props: ActorDetailsProps) {
         })();
     }, []);
 
-    if (!actor || !actorMovies) return <ActivityIndicator />;
+    const infos = useMemo(() => actor && getActorInfos(actor), [actor]);
 
-    const infos = getActorInfos(actor);
+    if (!actor || !actorMovies) return <ActivityIndicator />;
 
     return (
         <SafeAreaView style={styles.mainContainer}>
             <View
                 style={styles.container}
             >
-                <InfoList
+                {infos && <InfoList
                     infos={infos}
-                />
+                />}
 
                 <Plot
                     description={actor.description}
