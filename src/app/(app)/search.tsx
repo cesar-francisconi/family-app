@@ -32,7 +32,6 @@ export default function SearchScreen(props: SearchProps) {
 
     const { } = props;
 
-    const [searchInputValue, setSearchInputValue] = useState('');
     const searchTerm = useRef('');
     const [isReady, setIsReady] = useState(false);
     const [data, setData] = useState<Movie[] | null>(null);
@@ -84,7 +83,7 @@ export default function SearchScreen(props: SearchProps) {
         setUserSearchHistory(trimmedInput);
         setData(results);
         setIsReady(true);
-        setSearchInputValue(trimmedInput);
+        setValue('search', trimmedInput);
     };
 
     const buttonOptions = useMemo((): SearchComponentProps['buttonOptions'] => ({
@@ -101,8 +100,8 @@ export default function SearchScreen(props: SearchProps) {
     }, []);
 
     const fnSearchHistoryChip = useCallback((item: string) => {
-        setSearchInputValue(item)
-    }, [setSearchInputValue]);
+        setValue('search', item);
+    }, [setValue]);
 
     const chipOptions = useMemo((): Omit<ChipProps, 'text' | 'fnChipPress'> => ({
         textStyle: {
