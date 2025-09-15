@@ -1,13 +1,14 @@
+import React from 'react';
 import {
     TouchableOpacity,
     View,
 } from 'react-native';
 import { HeaderRightProps } from './types';
-import React from 'react';
 import { styles } from './styles';
 import { IconProps } from '../Icon/types';
+import { ActionDefaultOpacity } from '@/src/constants/Opacity';
 
-export function HeaderRight(props: HeaderRightProps) {
+export const HeaderRight = React.memo((props: HeaderRightProps) => {
 
     const {
         withFirstAction,
@@ -27,7 +28,7 @@ export function HeaderRight(props: HeaderRightProps) {
         >
             {withFirstAction && <TouchableOpacity
                 style={styles.actions}
-                activeOpacity={0.7}
+                activeOpacity={ActionDefaultOpacity}
                 onPress={fnfirstAction}
             >
                 {firstAction && React.cloneElement(firstAction, { size: 'medium' } as IconProps)}
@@ -35,7 +36,7 @@ export function HeaderRight(props: HeaderRightProps) {
 
             {withSecondAction && <TouchableOpacity
                 style={styles.actions}
-                activeOpacity={0.7}
+                activeOpacity={ActionDefaultOpacity}
                 onPress={fnSecondAction}
             >
                 {secondAction && React.cloneElement(secondAction, { size: 'medium' } as IconProps)}
@@ -43,7 +44,7 @@ export function HeaderRight(props: HeaderRightProps) {
 
             {withTertiaryAction && <TouchableOpacity
                 style={styles.actions}
-                activeOpacity={0.7}
+                activeOpacity={ActionDefaultOpacity}
                 onPress={fnTertiaryAction}
             >
                 {tertiaryAction && React.cloneElement(tertiaryAction, { size: 'medium' } as IconProps)}
@@ -51,4 +52,4 @@ export function HeaderRight(props: HeaderRightProps) {
         </View>
 
     );
-}
+});
