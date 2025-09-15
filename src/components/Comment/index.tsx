@@ -1,3 +1,4 @@
+import React from 'react';
 import {
     Text,
     TouchableOpacity,
@@ -10,14 +11,10 @@ import { Avatar } from '../Avatar';
 import { Icon } from '../Icon';
 import { formatTimeAgo } from '@/src/helpers/formatTimeAgo';
 import { formatToK } from '@/src/helpers/formatTok';
-import { getInitialsFromUsername } from '@/src/helpers/getInitialsFromUsername';
-import { AvatarProps } from '../Avatar/types';
-import {
-    memo,
-    useMemo,
-} from 'react';
+import { resolveShowAnswers } from '@/src/helpers/resolveShowAnswers';
+import { useGetAvatarProps } from '@/src/hook/useGetAvatarProps';
 
-export function Comment(props: UserCommentProps) {
+export const Comment = React.memo((props: UserCommentProps) => {
 
     const {
         id,
@@ -36,15 +33,13 @@ export function Comment(props: UserCommentProps) {
         handleAnswersPress,
     } = props;
 
-    const getAvatarProps = useMemo((): AvatarProps =>
-        avatar
-            ? { mode: 'image', imageUrl: avatar, size: 'small' }
-            : { mode: 'initial', initial: getInitialsFromUsername(username), size: 'small' }, [avatar, username]);
+    const getAvatarProps = useGetAvatarProps({ avatar, username });
 
-    const showAnswers = useMemo(() => withAnswersText && answers.length > 0, [withAnswersText, answers.length]);
+    const showAnswers = resolveShowAnswers({ withAnswersText, answers });
 
-    const formattedTime = useMemo(() => formatTimeAgo(time), [time]);
-    const answersCount = useMemo(() => formatToK(answers.length), [answers]);
+    const formattedTime = formatTimeAgo(time);
+
+    const answersCount = formatToK(answers.length);
 
     return (
         <View style={styles.commentContainer}>
@@ -75,16 +70,16 @@ export function Comment(props: UserCommentProps) {
                 </View>
 
                 {showAnswers && (
-                    <TouchableOpacity onPress={handleAnswersPress} style={styles.answersButton}>
+                    <TouchableOpacity onPress={() => handleAnswersPress && handleAnswersPress(props)} style={styles.answersButton}>
                         <Text style={styles.answersCount}>{answersCount}</Text>
                         <Text style={styles.answersText}>{answersText}</Text>
                     </TouchableOpacity>
                 )}
             </View>
 
-            <TouchableOpacity style={styles.moreButton} onPress={onMorePress}>
+            <TouchableOpacity style={styles.moreButton} onPress={() => onMorePress(props)}>
                 <Icon name="Feather" icon="more-vertical" size="small" />
             </TouchableOpacity>
         </View >
     );
-};
+});
