@@ -1,3 +1,4 @@
+import React from 'react';
 import {
     Text,
     TouchableOpacity,
@@ -6,10 +7,10 @@ import {
 } from 'react-native';
 import { styles } from './styles';
 import { OptionProps } from './types';
-import React from 'react';
 import { IconProps } from '../Icon/types';
+import { ActionDefaultOpacity } from '@/src/constants/Opacity';
 
-export function Option(props: OptionProps & Omit<TouchableOpacityProps, 'style'>) {
+export const Option = React.memo((props: OptionProps & Omit<TouchableOpacityProps, 'style'>) => {
 
     const {
         text,
@@ -28,7 +29,7 @@ export function Option(props: OptionProps & Omit<TouchableOpacityProps, 'style'>
         >
             <TouchableOpacity
                 style={styles.button}
-                activeOpacity={0.7}
+                activeOpacity={ActionDefaultOpacity}
                 {...props}
             >
                 <View
@@ -46,5 +47,5 @@ export function Option(props: OptionProps & Omit<TouchableOpacityProps, 'style'>
             </TouchableOpacity>
         </View>
     );
-}
+});
 
