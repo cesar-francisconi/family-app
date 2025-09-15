@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { BackHandler } from "react-native";
 
-interface Props {
+interface UseBackHandlerForReplySheet {
     isOpen: boolean;
     onClose: () => void;
 }
 
-export function useBackHandlerForReplySheet({ isOpen, onClose }: Props) {
+export function useBackHandlerForReplySheet({ isOpen, onClose }: UseBackHandlerForReplySheet) {
     useEffect(() => {
         const onBackPress = () => {
             if (isOpen) {
