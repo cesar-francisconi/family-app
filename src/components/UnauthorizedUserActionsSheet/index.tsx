@@ -3,7 +3,7 @@ import {
     TouchableOpacity,
 } from 'react-native';
 import { Icon } from '@/src/components/Icon';
-import {
+import React, {
     useRef,
 } from 'react';
 import BottomSheet, {
@@ -11,7 +11,6 @@ import BottomSheet, {
 } from '@gorhom/bottom-sheet';
 import { styles } from './styles';
 import { UnauthorizedUserActionsSheetProps } from './types';
-import { usePathName } from '@/src/hook/usePathname';
 import {
     handleUnauthorizedReply,
     setUnauthorizedUserActionsSheet,
@@ -22,8 +21,10 @@ import { useBackHandlerForReplySheet } from '@/src/hook/useBackHandlerForReplySh
 import { useHandleSheetChange } from '@/src/hook/useHandleSheetChange';
 import { useExpandBottomSheetOnOpen } from '@/src/hook/useExpandBottomSheetOnOpen';
 import { useBottomSheetBackdrop } from '../Backdrop';
+import { ActionDefaultOpacity } from '@/src/constants/Opacity';
+import { resolveAuthorizedOrUnauthorizedUserActionsSheetTitle } from '@/src/helpers/resolveAuthorizedOrUnauthorizedUserActionsSheetTitle';
 
-export const UnauthorizedUserActionsSheet = (props: UnauthorizedUserActionsSheetProps) => {
+export const UnauthorizedUserActionsSheet = React.memo((props: UnauthorizedUserActionsSheetProps) => {
 
     const {
         replyTitle,
@@ -35,15 +36,12 @@ export const UnauthorizedUserActionsSheet = (props: UnauthorizedUserActionsSheet
     const origin = options.origin;
     const param = options.param;
 
-    const pathname = usePathName();
-
-    const title = pathname === '/' ? 'Comentários' : 'Respostas';
+    const title = resolveAuthorizedOrUnauthorizedUserActionsSheetTitle({ origin });
 
     useBackHandlerForReplySheet({
         isOpen: options.isOpen,
         onClose: () => {
             bottomSheetRef.current?.close();
-            setUnauthorizedUserActionsSheet({ isOpen: false });
         },
     });
 
@@ -54,7 +52,7 @@ export const UnauthorizedUserActionsSheet = (props: UnauthorizedUserActionsSheet
 
     const renderBackdrop = useBottomSheetBackdrop({
         onPress: () => {
-            setUnauthorizedUserActionsSheet({ isOpen: false });
+            bottomSheetRef.current?.close();
         },
         style: styles.renderBackdrop,
     });
@@ -98,6 +96,7 @@ export const UnauthorizedUserActionsSheet = (props: UnauthorizedUserActionsSheet
                         origin,
                         param,
                     })}
+                    activeOpacity={ActionDefaultOpacity}
                 >
                     <Icon
                         name='MaterialCommunityIcons'
@@ -113,6 +112,6 @@ export const UnauthorizedUserActionsSheet = (props: UnauthorizedUserActionsSheet
             </BottomSheetView>
         </BottomSheet >
     );
-};
+});
 
 
