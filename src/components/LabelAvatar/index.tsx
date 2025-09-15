@@ -1,3 +1,4 @@
+import React from 'react';
 import {
     Text,
     View,
@@ -6,12 +7,11 @@ import {
 import { styles } from './styles';
 import { LabelAvatarProps } from './types';
 import { Avatar } from '../Avatar';
-import { Font } from '@/src/constants/Font';
-import { Spacing } from '@/src/constants/Spacing';
-import { getInitialsFromUsername } from '@/src/helpers/getInitialsFromUsername';
-import { AvatarProps } from '../Avatar/types';
+import { resolveAvatarProps } from '@/src/helpers/resolveAvatarProps';
+import { resolveLabelAvatarGapSize } from '@/src/helpers/resolveLabelAvatarGapSize';
+import { resolveLabelAvatarStyle } from '@/src/helpers/resolveLabelAvatarStyle';
 
-export function LabelAvatar(props: LabelAvatarProps & Pick<ViewProps, 'style'>) {
+export const LabelAvatar = React.memo((props: LabelAvatarProps & Pick<ViewProps, 'style'>) => {
 
     const {
         avatarOptions,
@@ -21,35 +21,11 @@ export function LabelAvatar(props: LabelAvatarProps & Pick<ViewProps, 'style'>) 
         style,
     } = props;
 
-    const fontSize = {
-        large: Font.label.extraLargeProminent,
-        small: Font.label.smallProminent,
-    }[size];
+    const { flexDirection, fontSize } = resolveLabelAvatarStyle({ orientation, size });
 
-    const flexDirection = orientation === 'vertical' ? 'column' : 'row';
+    const gap = resolveLabelAvatarGapSize({ orientation, size });
 
-    const gap = {
-        horizontal: { large: Spacing.lg, small: Spacing.md },
-        vertical: { large: Spacing.sm, small: Spacing.xs },
-    }[orientation][size];
-
-    let avatarProps: AvatarProps;
-
-    if (avatarOptions.mode === 'image') {
-        avatarProps = {
-            mode: 'image',
-            imageUrl: avatarOptions.imageUrl,
-            size: size,
-            withStroke: avatarOptions.withStroke,
-        };
-    } else {
-        avatarProps = {
-            mode: 'initial',
-            initial: getInitialsFromUsername(avatarOptions.initial),
-            size: size,
-            withStroke: avatarOptions.withStroke,
-        };
-    }
+    const avatarProps = resolveAvatarProps({ avatarOptions, size });
 
     return (
         <View style={[styles.container, { gap, flexDirection }, style]}>
@@ -58,4 +34,4 @@ export function LabelAvatar(props: LabelAvatarProps & Pick<ViewProps, 'style'>) 
             <Text style={[styles.label, fontSize]}>{label}</Text>
         </View>
     );
-}
+});
