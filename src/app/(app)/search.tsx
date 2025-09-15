@@ -103,7 +103,7 @@ export default function SearchScreen(props: SearchProps) {
         setValue('search', item);
     }, [setValue]);
 
-    const chipOptions = useMemo((): Omit<ChipProps, 'text' | 'fnChipPress'> => ({
+    const chipOptions = useMemo((): Omit<ChipProps, 'text'> => ({
         textStyle: {
             textTransform: 'none',
         }
