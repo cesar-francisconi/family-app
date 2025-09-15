@@ -1,3 +1,4 @@
+import React from 'react';
 import {
     Text,
     View,
@@ -6,7 +7,7 @@ import { LabelCheckProps } from './types';
 import { styles } from './styles';
 import { Icon } from '../Icon';
 
-export function LabelCheck(props: LabelCheckProps) {
+export const LabelCheck = React.memo((props: LabelCheckProps) => {
 
     const {
         label,
@@ -30,4 +31,4 @@ export function LabelCheck(props: LabelCheckProps) {
             </Text>
         </View>
     );
-}
+});
