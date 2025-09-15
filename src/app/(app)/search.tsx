@@ -3,7 +3,6 @@ import { MovieListItemGroup } from '@/src/components/MovieListItemGroup';
 import { MovieCardList } from '@/src/components/MovieCardList';
 import { Search } from '@/src/components/Search';
 import { styles } from '@/src/screen/Search/styles';
-import { SearchProps } from '@/src/screen/Search/types';
 import {
     useCallback,
     useEffect,
@@ -27,6 +26,11 @@ import {
     sortByPopularity,
 } from '@/src/hook/useMovie';
 import { ChipProps } from '@/src/components/Chip/types';
+import { SearchProps } from '@/src/screen/Search/types';
+import { SearchProps as SearchComponentProps } from '@/src/components/Search/types';
+import { useForm } from 'react-hook-form';
+import { FormDataSearch, formSchemaSearch } from '@/src/helpers/formSchemaSearch';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 export default function SearchScreen(props: SearchProps) {
 
@@ -37,8 +41,6 @@ export default function SearchScreen(props: SearchProps) {
     const [data, setData] = useState<Movie[] | null>(null);
     const [sSortByPopularity, setSortByPopularity] = useState<Movie[] | null>(null);
     const [searchHistory, setSearchHistory] = useState<string[] | null>(null);
-
-    const trimmedInput = searchInputValue.trim();
 
     useEffect(() => {
         const unsubscribe = getUserSearchHistory((newSearchHistory) => {
@@ -74,12 +76,14 @@ export default function SearchScreen(props: SearchProps) {
     const searchValue = watch("search");
 
     useEffect(() => {
-        if (trimmedInput === '') setIsReady(false);
-    }, [searchInputValue]);
+        if (searchValue === '') setIsReady(false);
+    }, [searchValue]);
 
-    const handleSearch = async () => {
-        const results = await filterMoviesBySearchTerm(searchInputValue);
-        searchTerm.current = searchInputValue;
+    const handleSearch = async (data: FormDataSearch) => {
+        const trimmedInput = data.search.trim();
+
+        const results = await filterMoviesBySearchTerm(data.search);
+        searchTerm.current = trimmedInput;
         setUserSearchHistory(trimmedInput);
         setData(results);
         setIsReady(true);
