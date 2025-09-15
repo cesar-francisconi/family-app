@@ -42,6 +42,7 @@ export const Input = forwardRef<TextInput, Omit<InputProps, 'state'>>((props, re
         fnHelpMessage,
         isAt,
         style,
+        borderRadius,
         ...inputProps
     } = props;
 
