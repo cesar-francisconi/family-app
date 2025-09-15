@@ -1,3 +1,4 @@
+import React from 'react';
 import {
     Text,
     View,
@@ -5,17 +6,16 @@ import {
 import { styles } from './styles';
 import { PlotProps } from './types';
 import { Button } from '../Button';
-import { Icon } from '../Icon';
+import { useIcon } from '@/src/hook/useIcon';
 
-export function Plot(props: PlotProps) {
+export const Plot = React.memo((props: PlotProps) => {
 
     const {
         title = 'Title',
         withTitle = false,
         description = 'Lorem ipsum dolor sit amet consectetur. Pulvinar in pellentesque eu ridiculus tellus aliquam tempor nulla. Ac dui scelerisque enim eu sem fringilla facilisi faucibus dictumst. Est lacus bibendum vitae id. Sagittis ultrices in nunc scelerisque elementum diam diam. Lorem ipsum dolor sit amet consectetur. Pulvinar in pellentesque eu ridiculus tellus aliquam tempor nulla. Ac dui scelerisque enim eu sem fringilla facilisi faucibus dictumst. Est lacus bibendum vitae id. Sagittis ultrices in nunc scelerisque elementum diam diam. Lorem ipsum dolor sit amet consectetur. Pulvinar in pellentesque eu ridiculus tellus aliquam tempor nulla. Ac dui scelerisque enim eu sem fringilla facilisi faucibus dictumst. Est lacus bibendum vitae id. Sagittis ultrices in nunc scelerisque elementum diam diam.',
-        fnButton,
         withButton = false,
-        buttonTitle = 'Button Title',
+        buttonOptions = { title: 'Button Title' },
         descriptionNumberOfLines = 3,
         fullPlot = false,
     } = props;
@@ -39,19 +39,14 @@ export function Plot(props: PlotProps) {
             </Text>
 
             {withButton && < Button
-                onPress={fnButton}
+                onPress={buttonOptions.onPress}
                 type='primary'
                 variant='text'
                 size='medium'
-                title={buttonTitle}
-                rightIcon={
-                    <Icon
-                        name='Entypo'
-                        icon='chevron-thin-down'
-                    />
-                }
+                title={buttonOptions.title}
+                rightIcon={useIcon({ name: 'Entypo', icon: 'chevron-thin-down' })}
             />}
         </View>
     );
-}
+});
 
