@@ -3,7 +3,7 @@ import {
     TouchableOpacity,
 } from 'react-native';
 import { Icon } from '@/src/components/Icon';
-import {
+import React, {
     useRef,
 } from 'react';
 import BottomSheet, {
@@ -11,7 +11,6 @@ import BottomSheet, {
 } from '@gorhom/bottom-sheet';
 import { styles } from './styles';
 import { AuthorizedUserActionsSheetProps } from './types';
-import { usePathName } from '@/src/hook/usePathname';
 import {
     handleAuthorizedEdit,
     handleAuthorizedReply,
@@ -24,8 +23,10 @@ import { useHandleSheetChange } from '@/src/hook/useHandleSheetChange';
 import { useExpandBottomSheetOnOpen } from '@/src/hook/useExpandBottomSheetOnOpen';
 import { useBottomSheetBackdrop } from '../Backdrop';
 import { setConfirmDeleteCommentModal } from '@/src/hook/useConfirmDeleteCommentModal';
+import { ActionDefaultOpacity } from '@/src/constants/Opacity';
+import { resolveAuthorizedOrUnauthorizedUserActionsSheetTitle } from '@/src/helpers/resolveAuthorizedOrUnauthorizedUserActionsSheetTitle';
 
-export const AuthorizedUserActionsSheet = (props: AuthorizedUserActionsSheetProps) => {
+export const AuthorizedUserActionsSheet = React.memo((props: AuthorizedUserActionsSheetProps) => {
 
     const {
         replyTitle,
@@ -35,19 +36,16 @@ export const AuthorizedUserActionsSheet = (props: AuthorizedUserActionsSheetProp
 
     const bottomSheetRef = useRef<BottomSheet>(null);
 
-    const pathname = usePathName();
-
     const options = useAuthorizedUserActionsSheet(state => state.options);
     const origin = options.origin;
     const param = options.param;
 
-    const title = pathname === '/' ? 'Comentários' : 'Respostas';
+    const title = resolveAuthorizedOrUnauthorizedUserActionsSheetTitle({ origin });
 
     useBackHandlerForReplySheet({
         isOpen: options.isOpen,
         onClose: () => {
             bottomSheetRef.current?.close();
-            setAuthorizedUserActionsSheet({ isOpen: false });
         },
     });
 
@@ -58,7 +56,7 @@ export const AuthorizedUserActionsSheet = (props: AuthorizedUserActionsSheetProp
 
     const renderBackdrop = useBottomSheetBackdrop({
         onPress: () => {
-            setAuthorizedUserActionsSheet({ isOpen: false });
+            bottomSheetRef.current?.close();
         },
         style: styles.renderBackdrop,
     });
@@ -105,6 +103,7 @@ export const AuthorizedUserActionsSheet = (props: AuthorizedUserActionsSheetProp
                             param,
                         })
                     }}
+                    activeOpacity={ActionDefaultOpacity}
                 >
                     <Icon
                         name='MaterialCommunityIcons'
@@ -168,6 +167,6 @@ export const AuthorizedUserActionsSheet = (props: AuthorizedUserActionsSheetProp
             </BottomSheetView>
         </BottomSheet >
     );
-};
+});
 
 
