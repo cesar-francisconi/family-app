@@ -20,6 +20,9 @@ import {
     DetailsProps,
 } from '@/src/screen/Details/types';
 import {
+    ExpoRouter,
+    Href,
+    Route,
     useLocalSearchParams,
     useNavigationContainerRef,
     useRouter,
@@ -34,7 +37,9 @@ import {
 } from 'react-native';
 import { useDebounce } from '../../../helpers/debounce';
 import {
+    useCallback,
     useEffect,
+    useMemo,
     useRef,
     useState,
 } from 'react';
@@ -54,6 +59,9 @@ import { formatArrayToString } from '@/src/helpers/formatArraytoString';
 import { TouchableOpacity } from '@gorhom/bottom-sheet';
 import { screenWidth } from '@/src/constants/ScreenDimensions';
 import { SimilarContentMovieCardCarousel } from '@/src/components/SimilarContentMovieCardCarousel';
+import { NavigationOptions } from 'expo-router/build/global-state/routing';
+import { usePush } from '@/src/hook/usePush';
+import { PlotProps } from '@/src/components/Plot/types';
 
 export const detailsMovieCardHeight = 216;
 
@@ -207,6 +215,13 @@ export default function Details(props: DetailsProps) {
         };
     }), [isPlaying];
 
+    const pushMore = usePush({ href: `/(app)/(details)/(more)/more?movieId=${movieId}` });
+
+    const buttonOptions = useMemo((): PlotProps['buttonOptions'] => ({
+        title: 'Mais',
+        onPress: pushMore,
+    }), []);
+
     const videoRef = useRef<VideoView>(null);
 
     if (!username) return;
@@ -286,13 +301,9 @@ export default function Details(props: DetailsProps) {
 
                     <Plot
                         description={movie.description}
-                        buttonTitle='Mais'
+                        buttonOptions={buttonOptions}
                         withButton
                         withTitle={false}
-                        fnButton={() => debounce(() => {
-                            route.push(`/(app)/(details)/(more)/more?movieId=${movieId}`);
-                        }, 1000)
-                        }
                     />
 
                     <ActionButtons
