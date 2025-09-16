@@ -1,5 +1,4 @@
 import {
-    Dimensions,
     TouchableOpacity,
     View,
 } from 'react-native';
@@ -7,46 +6,31 @@ import { Comment } from '@/src/components/Comment';
 import { styles } from '@/src/screen/Comments/styles';
 import {
     useLocalSearchParams,
-    useRouter,
 } from 'expo-router';
 import {
     CommentsLocalSearchParams,
-    CommentsProps,
 } from '../../../../screen/Comments/types';
 import CommentReplyField from '../../../../components/CommentReplyField';
 import { setCommentReplySheet } from '@/src/hook/useCommentReplySheet';
 import {
     useEffect,
-    useMemo,
     useState,
 } from 'react';
 import { ActivityIndicator } from '@/src/components/ActivityIndicator';
-import { setCurrentCommentId, setCurrentUserId, useMovies } from '@/src/hook/useMovie';
-import { useDebounce } from '@/src/helpers/debounce';
-import { getLoggedInUserId } from '@/src/hook/useUser';
-import { openCommentActionsSheet } from '@/src/helpers/openCommentActionsSheet';
-import { usePathName } from '@/src/hook/usePathname';
+import { useMovies } from '@/src/hook/useMovie';
 import { Colors } from '@/src/constants/Colors';
 import { FlatList } from 'react-native-gesture-handler';
+import { useCommentActions } from '@/src/hook/useCommentActions';
 
 const PAGE_SIZE = 5;
 
-export default function Comments(props: CommentsProps) {
-
-    const {
-
-    } = props;
-
-    const { debounce } = useDebounce();
-    const loggedInUserId = useMemo(() => getLoggedInUserId(), []);
-    const pathname = usePathName();
-    const router = useRouter();
-
-    const { movieId, origin } = useLocalSearchParams<CommentsLocalSearchParams>();
-
-    const comments = useMovies((state) => state.currentMovieComments);
+export default function Comments() {
 
     const [visibleComments, setVisibleComments] = useState(5);
+
+    const { origin } = useLocalSearchParams<CommentsLocalSearchParams>();
+
+    const comments = useMovies((state) => state.currentMovieComments);
 
     useEffect(() => {
         if (origin === 'isAddComment') {
@@ -56,6 +40,8 @@ export default function Comments(props: CommentsProps) {
             });
         };
     }, [origin]);
+
+    const { commentMorePress, commentAnswersPress } = useCommentActions();
 
     if (!comments) return <ActivityIndicator />
 
@@ -89,19 +75,8 @@ export default function Comments(props: CommentsProps) {
                             <Comment
                                 {...item}
                                 answersText={'respostas'}
-                                onMorePress={() => debounce(() => openCommentActionsSheet({
-                                    loggedInUserId,
-                                    pathname,
-                                    comment: item.comment,
-                                    id: item.id,
-                                    userId: item.userId,
-                                }), 1000)}
-                                handleAnswersPress={() => debounce(() => {
-                                    setCurrentUserId(item.userId);
-                                    setCurrentCommentId(item.id);
-
-                                    router.push(`/(app)/(details)/(comments)/answers?commentId=${item.id}`);
-                                }, 1000)}
+                                onMorePress={commentMorePress}
+                                handleAnswersPress={commentAnswersPress}
                             />
                         );
                     }}
