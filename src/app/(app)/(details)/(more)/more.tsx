@@ -18,6 +18,7 @@ import { getMovieById } from '@/src/hook/useMovie';
 import { getMovieInfos } from '@/src/helpers/getMovieInfos';
 import {
     useEffect,
+    useMemo,
     useState,
 } from 'react';
 import { Movie } from '@/movie';
@@ -53,18 +54,18 @@ export default function More(props: MoreProps) {
         }
     }, [movie, navigation]);
 
-    if (!movie) return <ActivityIndicator />
+    const infos = useMemo(() => movie && getMovieInfos(movie), [movie]);
 
-    const INFOS = getMovieInfos(movie);
+    if (!movie) return <ActivityIndicator />
 
     return (
         <SafeAreaView style={styles.mainContainer}>
             <View
                 style={styles.container}
             >
-                <InfoList
-                    infos={INFOS}
-                />
+                {infos && <InfoList
+                    infos={infos}
+                />}
 
                 <Plot
                     withTitle={false}
