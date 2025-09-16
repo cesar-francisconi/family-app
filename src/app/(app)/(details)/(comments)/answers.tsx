@@ -22,6 +22,7 @@ import { setCommentReplySheet } from '@/src/hook/useCommentReplySheet';
 import { openCommentActionsSheet } from '@/src/helpers/openCommentActionsSheet';
 import { usePathName } from '@/src/hook/usePathname';
 import { FlatList } from 'react-native-gesture-handler';
+import { useCommentActions } from '@/src/hook/useCommentActions';
 
 const PAGE_SIZE = 2;
 
@@ -55,6 +56,8 @@ export default function Answers() {
     useEffect(() => {
         getAnswerUsernamesByIds().then(setAnswerUsernames);
     }, []);
+
+    const { commentMorePress } = useCommentActions();
 
     // Delay showing answers for smoother UX
     useEffect(() => {
@@ -116,13 +119,7 @@ export default function Answers() {
                             <Comment
                                 {...comment}
                                 withAnswersText={false}
-                                onMorePress={() => debounce(() => openCommentActionsSheet({
-                                    loggedInUserId,
-                                    pathname,
-                                    comment: comment.comment,
-                                    id: comment.id,
-                                    userId: comment.userId,
-                                }), 1000)}
+                                onMorePress={commentMorePress}
                             />
                         </View>
                     }
